@@ -31,13 +31,16 @@ export class SchedulingListComponent implements OnInit {
           debug: true
         }
       },
+      audio: {
+        disableWebAudio: true
+      }
     };
 
   game: Phaser.Game;
 
   constructor(private schedulingService: SchedulingService, private schedulingTypeService: SchedulingTypeService, private spinner: NgxSpinnerService, private modalService: BsModalService) {
 
-    this.config.scene = new MyScene(this.config, null, null);
+    this.config.scene = new sceneMenu(this.config, null, null);
     this.game = new Phaser.Game(this.config);
   }
 

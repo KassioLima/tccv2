@@ -35,6 +35,7 @@ export class MyScene extends Phaser.Scene {
     logo.setCollideWorldBounds(true);
 
     emitter.startFollow(logo);
+
   }
 
   update(){
