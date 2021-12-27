@@ -1,0 +1,305 @@
+
+
+
+.pointer{
+    cursor: pointer;
+}
+.table-responsive-overflow {
+    overflow-y: auto;
+    max-height: 355px;
+}
+.ng2-flatpickr-input{
+    border: 0;
+    outline: 0;
+}
+
+.table-height-500{
+    height: 500px !important;
+}
+
+/* in-flight clone */
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter: alpha(opacity=80);
+    pointer-events: none;
+  }
+  /* high-performance display:none; helper */
+  .gu-hide {
+    left: -9999px !important;
+  }
+  /* added to mirrorContainer (default = body) while dragging */
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  /* added to the source element while its mirror is dragged */
+  .gu-transit {
+    opacity: 0.2;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+  }
+
+
+  .loading{
+    position: fixed;
+    top: 41%;
+    left: 54.5%;
+    z-index: 1;
+}
+
+.external-width-2{
+  width: 91.06%;
+}
+
+.external-width-1{
+  width: 81.06%;
+}
+
+/* List Lead Destination Houses */
+.select-houses-leads .ng-dropdown-panel .ng-dropdown-panel-items{
+  max-height: 130px;
+}
+
+/* Filter Date Field */
+.input-search-list .form-control[readonly]{
+  background-color: transparent;
+  position: relative;
+  top: -8px;
+  left: -14px;
+  width: 117%;
+}
+
+.input-search-dashboardcrm .form-control[readonly]{
+  width: 110%;
+  position: relative;
+  right: 11%;
+}
+
+.team-member-click {
+  border: 2px solid #11ca6d;
+  border-radius: 50px;
+}
+
+.border-disables {
+  border: 2px solid #f1556c
+}
+
+/* Filter Date Field */
+.input-search-list .form-control[readonly]{
+  background-color: transparent;
+  position: relative;
+  top: -8px;
+  left: -14px;
+  width: 117%;
+}
+
+.input-search-dashboardcrm .form-control[readonly]{
+  width: 110%;
+  position: relative;
+  right: 11%;
+}
+
+.team-member-click {
+  border: 2px solid #11ca6d;
+  border-radius: 50px;
+}
+
+.border-disables {
+  border: 2px solid #f1556c
+}
+
+
+@media (max-width: 1366px){
+  .external-width-1{
+      width: 85.636%;
+  }
+
+  .external-width-2{
+      width: 85.10%;
+  }
+}
+
+@media (max-width: 414px){
+  .external-width-1{
+      width: 86.6%;
+  }
+
+  .external-width-2{
+      width: 87.1%;
+  }
+
+  /* Overflow */
+  .overflow-auto-mobile{
+    overflow: auto !important;
+  }
+
+  /* Flex */
+  .d-flex-mobile{
+    display: flex !important;
+  }
+
+  .direction-column-mobile{
+    flex-direction: column !important;
+  }
+
+  /* List NAV */
+  .li-width-50{
+      width: 50% !important;
+      text-align: center !important;
+  }
+
+  .li-width-100{
+      width: 100% !important;
+      text-align: center !important;
+      padding-top: 4% !important;
+  }
+
+  /* Buttons Cancel and Update */
+  .width-button-cancel-mobile{
+    width: 46%;
+  }
+  
+  .width-button-update-mobile{
+    width: 50%;
+  }
+
+  /* Width Full Default */
+  .width-full-mobile{
+    float: none !important;
+    width: 100%;
+  }
+
+  /* Margin Mobile */
+  .mg-right-0-mobile{
+    margin-right: 0 !important;
+  }
+
+  .mb-5-mobile{
+    margin-bottom: 5% !important;
+  }
+
+  .mg-left-0{
+      margin-left: 0 !important;
+  }
+
+  .mg-top-5{
+    margin-top: 5% !important;
+  }
+
+  /* Filter */
+  .card-box-input-search{
+      display: flex;
+      flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 411px){
+  .external-width-2{
+      width: 86.1%;
+  }
+}
+
+@media (max-width: 375px){
+  .external-width-1{
+      width: 84.6%;
+  }
+
+  .external-width-2{
+      width: 85.1%;
+  }
+}
+
+@media (max-width: 360px){
+  .external-width-1{
+      width: 83.6%;
+  }
+
+  .external-width-2{
+      width: 84.1%;
+  }
+}
+
+@media (max-width: 375px){
+  /* Buttons Form */
+  .width-button-update-mobile{
+    width: 49%;
+  }
+}
+
+@media (max-width: 320px){
+  .external-width-1{
+      width: 81.6%;
+  }
+
+  .external-width-2{
+      width: 81.1%;
+  }
+
+  /* Buttons Form */
+  .width-button-update-mobile,
+  .width-button-cancel-mobile {
+      width: 45%;
+  }
+}
+
+/* Filter Date Field */
+.input-search-list .form-control[readonly]{
+  background-color: transparent;
+  position: relative;
+  top: -8px;
+  left: -14px;
+  width: 117%;
+}
+
+.input-search-dashboardcrm .form-control[readonly]{
+  width: 110%;
+  position: relative;
+  right: 11%;
+}
+
+.team-member-click {
+  border: 2px solid #11ca6d;
+  border-radius: 50px;
+}
+
+.border-disables {
+  border: 2px solid #f1556c
+}
+
+
+.la-ball-circus div {
+  transform: scale(1.3);
+}
+
+.la-ball-circus div:nth-of-type(even) {
+  border: 11px solid blue !important;
+  border-style: inset;
+  background: transparent !important;
+}
+
+.la-ball-circus div:nth-child(5) {
+  display: none !important;
+  position: absolute;
+}
+
+.la-ball-circus div:nth-child(1) {
+  animation-delay: -0s, -0.625s !important;
+}
+
+.la-ball-circus div:nth-child(2) {
+  animation-delay: -0.625s, -1.25s !important;
+}
+
+.la-ball-circus div:nth-child(3) {
+  animation-delay: -1.25s, -1.875s !important;
+}
+
+.la-ball-circus div:nth-child(4) {
+  animation-delay: -1.875s, -2.5s !important;
+}
