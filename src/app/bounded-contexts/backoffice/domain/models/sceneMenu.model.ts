@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export class sceneMenu extends Phaser.Scene {
+export class SceneMenu extends Phaser.Scene {
   FromInGame: any;
   preloadStatus: any;
 
@@ -20,7 +20,7 @@ export class sceneMenu extends Phaser.Scene {
 
   create (){
 
-    menu = this.add.sprite(0, 0, 'menu').setOrigin(0, 0);
+    var menu = this.add.sprite(0, 0, 'menu').setOrigin(0, 0);
 
     this.anims.create({
       key: 'turn',

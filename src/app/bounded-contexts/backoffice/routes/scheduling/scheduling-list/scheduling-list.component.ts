@@ -10,6 +10,7 @@ import {Element} from "@angular/compiler";
 import Phaser from 'phaser';
 import {Game} from "phaser";
 import { MyScene } from "../../../domain/models/myScene.model"
+import { SceneMenu } from "../../../domain/models/sceneMenu.model"
 
 @Component({
   selector: 'app-scheduling-list',
@@ -40,7 +41,7 @@ export class SchedulingListComponent implements OnInit {
 
   constructor(private schedulingService: SchedulingService, private schedulingTypeService: SchedulingTypeService, private spinner: NgxSpinnerService, private modalService: BsModalService) {
 
-    this.config.scene = new sceneMenu(this.config, null, null);
+    this.config.scene = new SceneMenu(this.config, null, null);
     this.game = new Phaser.Game(this.config);
   }
 
