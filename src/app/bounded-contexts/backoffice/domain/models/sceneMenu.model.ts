@@ -46,8 +46,4 @@ export class SceneMenu extends Phaser.Scene {
 
   }
 
-  render() {
-    console.log('a')
-  }
-
 }
