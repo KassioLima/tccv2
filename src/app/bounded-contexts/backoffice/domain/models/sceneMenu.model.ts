@@ -14,7 +14,7 @@ export class SceneMenu extends Phaser.Scene {
     { frameWidth: 1310, frameHeight: 667});
 
     this.load.audio('theme', [
-    'https://s19.aconvert.com/convert/p3r68-cdx67/bb1dq-6qrvv.wav',
+    'https://s19.aconvert.com/convert/p3r68-cdx67/bb1dq-6qrvv.wav', 'https://s23.aconvert.com/convert/p3r68-cdx67/m6i15-x9pag.ogg'
     ]);
   }
 
