@@ -14,7 +14,7 @@ export class SceneMenu extends Phaser.Scene {
     { frameWidth: 1310, frameHeight: 667});
 
     this.load.audio('theme', [
-    'file:///C:/Users/diana/Desktop/CEFET/8º%20período/Elaboração%20e%20Construção%20de%20Projeto%20Final/tccv2/src/sonoplastia/awesomeness-menu.wav',
+    'https://s19.aconvert.com/convert/p3r68-cdx67/bb1dq-6qrvv.wav',
     ]);
   }
 

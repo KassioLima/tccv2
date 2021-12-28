@@ -21,8 +21,8 @@ import { SceneMenu } from "../../../domain/models/sceneMenu.model"
 export class SchedulingListComponent implements OnInit {
 
   config: Phaser.Types.Core.GameConfig = {
-      width: 800,
-      height: 600,
+      width: 1310,
+      height: 667,
       type: Phaser.AUTO,
       parent: 'game',
       physics: {
