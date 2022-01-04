@@ -14,13 +14,16 @@ export class SceneMenu extends Phaser.Scene {
     { frameWidth: 1310, frameHeight: 667});
 
     this.load.audio('theme', [
-    'https://s19.aconvert.com/convert/p3r68-cdx67/bb1dq-6qrvv.wav', 'https://s23.aconvert.com/convert/p3r68-cdx67/m6i15-x9pag.ogg'
+      'https://s31.aconvert.com/convert/p3r68-cdx67/01u3g-udp38.wav',
+      'https://s19.aconvert.com/convert/p3r68-cdx67/bb1dq-6qrvv.wav',
+      'https://s23.aconvert.com/convert/p3r68-cdx67/m6i15-x9pag.ogg'
     ]);
   }
 
   create (){
 
-    var menu = this.add.sprite(0, 0, 'menu').setOrigin(0, 0);
+    var menu = this.add.sprite(0, (window.innerHeight - ((window.innerWidth * 667) / 1310)) / 2, 'menu').setOrigin(0, 0);
+    menu.setDisplaySize(window.innerWidth, (window.innerWidth * 667) / 1310)
 
     this.anims.create({
       key: 'turn',

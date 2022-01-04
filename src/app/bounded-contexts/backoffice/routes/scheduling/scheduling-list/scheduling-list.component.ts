@@ -21,8 +21,8 @@ import { SceneMenu } from "../../../domain/models/sceneMenu.model"
 export class SchedulingListComponent implements OnInit {
 
   config: Phaser.Types.Core.GameConfig = {
-      width: 1310,
-      height: 667,
+      width: window.innerWidth,
+      height: window.innerHeight,
       type: Phaser.AUTO,
       parent: 'game',
       physics: {
@@ -34,7 +34,8 @@ export class SchedulingListComponent implements OnInit {
       },
       audio: {
         disableWebAudio: true
-      }
+      },
+      transparent: true
     };
 
   game: Phaser.Game;
@@ -47,5 +48,9 @@ export class SchedulingListComponent implements OnInit {
 
   ngOnInit(): void {
     moment.locale('pt-br');
+  }
+
+  startGame() {
+    alert('começando jogo')
   }
 }
