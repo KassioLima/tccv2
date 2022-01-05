@@ -4,17 +4,17 @@ import {NgxSpinnerService} from "ngx-spinner";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import * as moment from "moment";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {SceneMenu} from "../../model/sceneMenu.model";
+import {ScenePhase1} from "../../model/scenePhase1.model";
 import {Router} from "@angular/router";
 
 declare var $: any;
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  templateUrl: './game.component.html',
+  styleUrls: ['./game.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class GameComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalRank', { static: false }) modalRank!: TemplateRef<any>
   modalRankRef!: BsModalRef;
@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
     if(this.formRank.valid) {
       this.closeModalRank();
-      this.router.navigate(['game']);
+      this.router.navigate(['backoffice']);
     }
   }
 
@@ -84,8 +84,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       transparent: true
     };
-    this.config.scene = new SceneMenu(this.config, null, null);
-    this.game = new Phaser.Game(this.config);
+    // this.config.scene = new ScenePhase1(this.config, null, null);
+    // this.game = new Phaser.Game(this.config);
   }
 
 }

@@ -17,21 +17,21 @@
       <form [formGroup]="formRank" class="needs-validation" [ngClass]="{'was-validated': formRankSubmitted}" novalidate>
         <div class="row mb-2">
           <div class="col-12 col-md-12">
-            <label class="label requerido" for="name">Nome</label>
+            <label class="label" for="name">Nome</label>
             <input type="text" class="form-control" id="name" placeholder="Digite o seu nome" required formControlName="name">
           </div>
         </div>
 
         <div class="row mb-2">
           <div class="col-12 col-md-12">
-            <label class="label requerido" for="email">Email</label>
+            <label class="label" for="email">Email</label>
             <input type="email" class="form-control" id="email" placeholder="fulano@email.com" required formControlName="email">
           </div>
         </div>
 
         <div class="row">
           <div class="col-12 col-md-12">
-            <label class="label requerido" for="age">Idade</label>
+            <label class="label" for="age">Idade</label>
             <input type="number" class="form-control" id="age" placeholder="Digite a sua idade" required min="6" formControlName="age">
           </div>
         </div>

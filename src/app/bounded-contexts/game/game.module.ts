@@ -1,17 +1,17 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './routes/home/home.component';
-import {MenuRoutingModule} from "./menu-routing.module";
+import { GameComponent } from './routes/game/game.component';
+import {GameRoutingModule} from "./game-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ModalModule} from "ngx-bootstrap/modal";
 
 @NgModule({
   declarations: [
-    HomeComponent
+    GameComponent
   ],
   imports: [
-    MenuRoutingModule,
+    GameRoutingModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
@@ -19,10 +19,10 @@ import {ModalModule} from "ngx-bootstrap/modal";
     ModalModule.forRoot(),
   ],
   exports: [
-    MenuRoutingModule
+    GameRoutingModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class MenuModule { }
+export class GameModule { }

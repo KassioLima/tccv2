@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import {HomeComponent} from "./routes/home/home.component";
+import {GameComponent} from "./routes/game/game.component";
 import {ForbiddenComponent} from "../../core/http-codes/forbidden/forbidden.component";
 import {UnavailableComponent} from "../../core/http-codes/unavailable/unavailable.component";
 import {NotFoundComponent} from "../../core/http-codes/not-found/not-found.component";
@@ -8,7 +8,7 @@ import {NotFoundComponent} from "../../core/http-codes/not-found/not-found.compo
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent,
+    component: GameComponent,
   },
   {
     path: 'forbidden',
@@ -28,4 +28,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MenuRoutingModule { }
+export class GameRoutingModule { }

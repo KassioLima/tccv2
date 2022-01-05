@@ -11,12 +11,12 @@ const routes: Routes = [
     redirectTo: 'menu'
   },
   {
-    path: 'backoffice',
-    loadChildren: () => import('./backoffice/backoffice.module').then(m => m.BackofficeModule),
-  },
-  {
     path: 'menu',
     loadChildren: () => import('./menu/menu.module').then(m => m.MenuModule),
+  },
+  {
+    path: 'game',
+    loadChildren: () => import('./game/game.module').then(m => m.GameModule),
   },
   {
     path: 'forbidden',

@@ -11,13 +11,13 @@
   top: 0;
   left: 0;
   background-size: cover;
-  background-image: url("src/assets/images/menu/menuDesfocado.png");
+  background-image: url("../../../../../../src/assets/images/menu/menuDesfocado.png");
 }
 
 .play-button {
   position: absolute;
   z-index: 2;
-  background-image: url("src/assets/images/menu/play.png");
+  background-image: url("../../../../../../src/assets/images/menu/play.png");
   background-size: cover;
   width: calc((509px / 2) / 1.5);
   height: calc((480px / 2) / 1.5);

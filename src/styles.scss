@@ -1,5 +1,2 @@
-body {
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-}
+@import "~bootstrap/dist/css/bootstrap.css";
+@import "./app/app.component.css";

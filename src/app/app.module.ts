@@ -20,7 +20,7 @@ registerLocaleData(ptBr);
     LayoutModule,
     RoutingModule,
     HttpClientModule,
-    CoreModule,
+    CoreModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },

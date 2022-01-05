@@ -4,6 +4,12 @@ export class SceneMenu extends Phaser.Scene {
   FromInGame: any;
   preloadStatus: any;
 
+  musicConfig = {
+    mute: false,
+    loop: true,
+    volume: 0.2
+  }
+
   constructor (config: any, FromInGame: any, preloadStatus: any){
     super(config);
   }
@@ -14,9 +20,8 @@ export class SceneMenu extends Phaser.Scene {
     { frameWidth: 1310, frameHeight: 667});
 
     this.load.audio('theme', [
-      'https://s31.aconvert.com/convert/p3r68-cdx67/01u3g-udp38.wav',
-      'https://s19.aconvert.com/convert/p3r68-cdx67/bb1dq-6qrvv.wav',
-      'https://s23.aconvert.com/convert/p3r68-cdx67/m6i15-x9pag.ogg'
+      'assets/sonoplastia/awesomeness-menu.wav',
+      'assets/sonoplastia/awesomeness-menu.ogg'
     ]);
   }
 
@@ -36,17 +41,10 @@ export class SceneMenu extends Phaser.Scene {
 
     var music = this.sound.add('theme');
 
-    var musicConfig = {
-      mute:false,
-      loop: true
-    }
-
-    music.play(musicConfig);
-
+    music.play(this.musicConfig);
   }
 
   update(){
-
   }
 
 }

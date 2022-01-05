@@ -1,5 +1,8 @@
-
-
+body {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
 
 .pointer{
     cursor: pointer;
@@ -164,7 +167,7 @@
   .width-button-cancel-mobile{
     width: 46%;
   }
-  
+
   .width-button-update-mobile{
     width: 50%;
   }
