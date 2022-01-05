@@ -1,0 +1,53 @@
+<div class="fundo-menu"></div>
+<div class="play-button" (click)="startGame()"></div>
+
+<div class="gameArea" #gameArea></div>
+
+<ng-template #modalRank>
+  <div class="modal-content">
+    <div class="modal-header bg-success">
+      <h4 class="modal-title text-white">
+        Preencha seus dados
+      </h4>
+
+      <button type="button" class="btn-close" title="Fechar" style="filter: invert(1) brightness(5)" data-bs-dismiss="modal" aria-label="Close" (click)="closeModalRank()"></button>
+    </div>
+    <div class="modal-body p-4">
+
+      <form [formGroup]="formRank" class="needs-validation" [ngClass]="{'was-validated': formRankSubmitted}" novalidate>
+        <div class="row mb-2">
+          <div class="col-12 col-md-12">
+            <label class="label requerido" for="name">Nome</label>
+            <input type="text" class="form-control" id="name" placeholder="Digite o seu nome" required formControlName="name">
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-12 col-md-12">
+            <label class="label requerido" for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="fulano@email.com" required formControlName="email">
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <label class="label requerido" for="age">Idade</label>
+            <input type="number" class="form-control" id="age" placeholder="Digite a sua idade" required min="6" formControlName="age">
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="row mt-3 mb-3 me-3">
+    <div class="col-12 col-md-12" style="text-align: right">
+      <button class="btn btn-success me-2" (click)="enter()">
+        Entrar
+      </button>
+
+      <button class="btn btn-secondary" (click)="closeModalRank()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</ng-template>
