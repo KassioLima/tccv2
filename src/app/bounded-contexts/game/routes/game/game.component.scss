@@ -1,4 +1,4 @@
-.requerido:after {
+/*.requerido:after {
   content:"*";
   color: red;
 }
@@ -36,4 +36,76 @@
   40%  {transform: rotate(20deg);}
   80%  {transform: rotate(-20deg);}
   100% {transform: rotate(0deg);}
+}*/
+
+body {
+  overflow: hidden;
 }
+* {
+  --altura_text_area_code: 70vh;
+}
+.counted {
+  height: 100vh;
+}
+.counted div {
+  padding: 0 !important;
+}
+.counted div.areaCode {
+  position: absolute;
+  right: 0;
+  width: calc(100% - 952px);
+}
+.lines, .code {
+  height: var(--altura_text_area_code);
+  padding: 0;
+  border: none;
+  box-shadow: none !important;
+  outline: none !important;
+  margin: 0 !important;
+  font-size: 16pt;
+}
+.lines {
+  width: 100%;
+  text-align: center;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+.lines::-webkit-scrollbar {
+  width: 0;
+}
+.code {
+  width: 100%;
+  background-color: beige;
+  padding-left: 10px;
+  padding-right: 10px;
+  resize: none;
+  overflow-wrap: normal;
+}
+.lines span {
+  display: block;
+  width: auto;
+  color: silver;
+}
+.areaCode table {
+  width: 100%;
+}
+.areaCode table tr td {
+  min-width: 0 !important;
+}
+.botao {
+  cursor: pointer;
+  border-radius: 100%;
+  width: 60px;
+  height: auto;
+}
+.botao:hover {
+  animation-name: example;
+  animation-duration: .3s;
+}
+@keyframes example {
+  25% {transform: rotateZ(20deg)}
+  50% {transform: rotateZ(-30deg)}
+  75% {transform: rotateZ(30deg)}
+  100% {transform: rotateZ(-20deg)}
+}
+

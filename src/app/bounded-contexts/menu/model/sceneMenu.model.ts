@@ -23,6 +23,9 @@ export class SceneMenu extends Phaser.Scene {
       'assets/sonoplastia/awesomeness-menu.wav',
       'assets/sonoplastia/awesomeness-menu.ogg'
     ]);
+
+    this.load.audio('clique', ['assets/sonoplastia/Menu Selection Click.wav']);
+
   }
 
   create (){
@@ -45,6 +48,16 @@ export class SceneMenu extends Phaser.Scene {
   }
 
   update(){
+
+    //quando clica em qualquer lugar ele faz o som, porém quando clica no start não
+    var clique = this.sound.add('clique');
+
+    this.input.on('pointerdown', function () {
+
+      clique.play({volume: 1});
+
+    });
+
   }
 
 }

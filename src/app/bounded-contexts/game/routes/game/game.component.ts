@@ -62,7 +62,7 @@ export class GameComponent implements OnInit, AfterViewInit {
 
     if(this.formRank.valid) {
       this.closeModalRank();
-      this.router.navigate(['backoffice']);
+      this.router.navigate(['game']);
     }
   }
 
@@ -76,7 +76,7 @@ export class GameComponent implements OnInit, AfterViewInit {
         default: 'arcade',
         arcade: {
           gravity: { y: 0 },
-          debug: true
+          debug: false
         }
       },
       audio: {
@@ -84,8 +84,10 @@ export class GameComponent implements OnInit, AfterViewInit {
       },
       transparent: true
     };
-    // this.config.scene = new ScenePhase1(this.config, null, null);
-    // this.game = new Phaser.Game(this.config);
+
+    this.config.scene = new ScenePhase1(this.config, null, null);
+    this.game = new Phaser.Game(this.config);
+
   }
 
 }
