@@ -1,20 +1,20 @@
 import {AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import Phaser, {Scene} from "phaser";
+import Phaser from "phaser";
 import {NgxSpinnerService} from "ngx-spinner";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import * as moment from "moment";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SceneMenu} from "../../model/sceneMenu.model";
 import {Router} from "@angular/router";
-
-declare var $: any;
+import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+
+export class HomeComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalRank', { static: false }) modalRank!: TemplateRef<any>
   modalRankRef!: BsModalRef;
@@ -24,11 +24,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   formRankSubmitted: boolean = false;
 
   formRank = new FormGroup({});
-  scene!: SceneMenu;
+
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
 
-  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService) {}
+  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService) {
+    super();
+  }
 
   ngOnInit(): void {
     moment.locale('pt-br');
@@ -82,12 +84,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
         }
       },
       audio: {
-        disableWebAudio: true
+        disableWebAudio: true,
       },
       transparent: true
     };
     this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);
   }
-
 }

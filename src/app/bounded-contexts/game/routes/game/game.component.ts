@@ -6,6 +6,7 @@ import * as moment from "moment";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ScenePhase1} from "../../model/scenePhase1.model";
 import {Router} from "@angular/router";
+import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 
 declare var $: any;
 
@@ -14,7 +15,7 @@ declare var $: any;
   templateUrl: './game.component.html',
   styleUrls: ['./game.component.scss']
 })
-export class GameComponent implements OnInit, AfterViewInit {
+export class GameComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('modalRank', { static: false }) modalRank!: TemplateRef<any>
   modalRankRef!: BsModalRef;
@@ -28,9 +29,12 @@ export class GameComponent implements OnInit, AfterViewInit {
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
 
-  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService) {}
+  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService) {
+    super();
+  }
 
   ngOnInit(): void {
+    this.scene = new ScenePhase1(this.config, null, null);
     moment.locale('pt-br');
   }
 
@@ -85,9 +89,8 @@ export class GameComponent implements OnInit, AfterViewInit {
       transparent: true
     };
 
-    this.config.scene = new ScenePhase1(this.config, null, null);
+    this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);
-
   }
 
 }

@@ -23,6 +23,6 @@ import {ModalModule} from "ngx-bootstrap/modal";
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
 })
 export class MenuModule { }

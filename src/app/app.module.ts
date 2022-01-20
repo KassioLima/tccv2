@@ -8,6 +8,7 @@ import { RoutingModule } from './bounded-contexts/bounded-contexts.module';
 import { LayoutModule } from './shared/layout/layout.module';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
+import {CanDeactivateGuard} from "./core/interfaces/guard";
 
 registerLocaleData(ptBr);
 @NgModule({
@@ -24,6 +25,7 @@ registerLocaleData(ptBr);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },
+    CanDeactivateGuard,
   ],
   bootstrap: [AppComponent]
 })
