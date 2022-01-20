@@ -55,7 +55,6 @@ export class SceneMenu extends Phaser.Scene {
   }
 
   emitSoundClick() {
-    //TODO: quando clica em qualquer lugar ele faz o som, porém quando clica no start não
     const clique = this.sound.add('clique');
     clique.play({volume: 1});
   }
