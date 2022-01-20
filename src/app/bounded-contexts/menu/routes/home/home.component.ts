@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
-import Phaser from "phaser";
+import Phaser, {Scene} from "phaser";
 import {NgxSpinnerService} from "ngx-spinner";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import * as moment from "moment";
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   formRankSubmitted: boolean = false;
 
   formRank = new FormGroup({});
-
+  scene!: SceneMenu;
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
 
@@ -32,10 +32,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     moment.locale('pt-br');
+    this.scene = new SceneMenu(this.config, null, null);
   }
 
   startGame() {
-    this.openModalRank()
+    this.openModalRank();
+    this.scene.emitSoundClick();
   }
 
   openModalRank() {
@@ -84,7 +86,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
       },
       transparent: true
     };
-    this.config.scene = new SceneMenu(this.config, null, null);
+    this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);
   }
 
