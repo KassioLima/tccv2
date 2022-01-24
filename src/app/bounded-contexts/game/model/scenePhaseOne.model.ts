@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-export class ScenePhase1 extends Phaser.Scene {
+export class ScenePhaseOne extends Phaser.Scene {
   FromInGame: any;
   preloadStatus: any;
 
@@ -16,7 +16,7 @@ export class ScenePhase1 extends Phaser.Scene {
 
   preload (){
 
-    this.load.image('cenario', 'https://media.discordapp.net/attachments/847914147944857631/928718557905305600/cenario_do_jogo.png');
+    this.load.image('cenario', 'https://media.discordapp.net/attachments/480173501379248131/934921906136690828/cenario_do_jogo.png');
 
     this.load.image('mesa', 'https://media.discordapp.net/attachments/847914147944857631/929153185640222760/mesa.png');
 
@@ -47,38 +47,60 @@ export class ScenePhase1 extends Phaser.Scene {
 
     this.add.image(0, 0, 'cenario').setOrigin(0, 0);
 
-    var objetos;
+    let objetos;
 
     objetos = this.physics.add.staticGroup();
 
-    objetos.create(247, 575, 'mesa').setOrigin(0, 0);
-    objetos.create(0, 0, 'parede').setOrigin(0, 0);
+    let imagemParede = this.add.image(0,0, 'parede')
+      .setOrigin(0, 0)
+      .setDisplaySize(this.game.scale.width, (108 * this.game.scale.width) / 952);
+    objetos.add(imagemParede, true);
 
-    objetos.create(175, 26, 'armario1').setOrigin(0, 0);
-    objetos.create(404, 10, 'armario2').setOrigin(0, 0);
-    objetos.create(579, 19, 'armario3').setOrigin(0, 0);
-    objetos.create(767, 44, 'armario4').setOrigin(0, 0);
+    let mesaScaleX = 0.4;
+    let mesaScaleY = 0.4;
+    let imagemMesa = this.add.image(this.game.scale.width / 2, this.game.scale.height - ((mesaScaleY * 193) / 2), 'mesa').setScale(mesaScaleX, mesaScaleY);
+    objetos.add(imagemMesa, true);
 
-    var tocha = this.add.sprite(686, 0, 'tocha').setOrigin(0, 0);
-    //tocha.setDisplaySize(50, 100);
+    let imagemArmario1 = this.add.image(130, 20, 'armario1').setOrigin(0, 0)
+      .setScale(0.7, 0.7);
+    objetos.add(imagemArmario1, true);
+
+    let imagemArmario2 = this.add.image(300, 20, 'armario2').setOrigin(0, 0)
+      .setScale(0.7, 0.7);
+    objetos.add(imagemArmario2, true);
+
+    let imagemArmario3 = this.add.image(420, 36, 'armario3').setOrigin(0, 0)
+      .setScale(0.7, 0.7);
+    objetos.add(imagemArmario3, true);
+
+    let imagemArmario4 = this.add.image(580, 34, 'armario4').setOrigin(0, 0)
+      .setScale(0.7, 0.7);
+    objetos.add(imagemArmario4, true);
+
+
+    let tocha = this.add.sprite(this.game.scale.width * (72.6 / 100),0, 'tocha')
+      .setOrigin(0, 0)
+      .setScale(0.7, 0.7);
+    objetos.add(tocha, true);
 
     this.anims.create({
-    key: 'turn',
-    frames: this.anims.generateFrameNumbers('tocha', { start: 0, end: 6 }),
-    frameRate: 10,
-    repeat: -1
+      key: 'turn',
+      frames: this.anims.generateFrameNumbers('tocha', { start: 0, end: 6 }),
+      frameRate: 10,
+      repeat: -1
     });
 
     tocha.anims.play('turn');
 
-    var music = this.sound.add('soundtrack');
+    let music = this.sound.add('soundtrack');
 
     music.play(this.musicConfig);
 
-    var sapoAlquimista = this.physics.add.sprite(365, 420, 'sapoAlquimista').setOrigin(0, 0);
+    let sapoAlquimista = this.physics.add.sprite(this.game.scale.width / 2 - (0.1 * 670) / 2, this.game.scale.height / 1.35, 'sapoAlquimista')
+      .setOrigin(0, 0);
 
-    sapoAlquimista.scaleX = 0.3;
-    sapoAlquimista.scaleY = 0.3;
+    sapoAlquimista.scaleX = 0.1;
+    sapoAlquimista.scaleY = 0.1;
 
     sapoAlquimista.flipY = true;
 
@@ -93,12 +115,10 @@ export class ScenePhase1 extends Phaser.Scene {
 
     sapoAlquimista.anims.play('left');
 
-    //sapoAlquimista.setCollideWorldBounds(true);
-    //this.physics.add.collider(sapoAlquimista, objetos);
-
+    sapoAlquimista.setCollideWorldBounds(true);
+    this.physics.add.collider(sapoAlquimista, objetos);
   }
 
-  update(){
+  update() {
   }
-
 }

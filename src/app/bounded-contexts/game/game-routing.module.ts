@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import {GameComponent} from "./routes/game/game.component";
+import {PhaseOneComponent} from "./routes/phaseOne/phase-one.component";
 import {ForbiddenComponent} from "../../core/http-codes/forbidden/forbidden.component";
 import {UnavailableComponent} from "../../core/http-codes/unavailable/unavailable.component";
 import {NotFoundComponent} from "../../core/http-codes/not-found/not-found.component";
@@ -9,7 +9,12 @@ import {CanDeactivateGuard} from "../../core/interfaces/guard";
 const routes: Routes = [
   {
     path: '',
-    component: GameComponent,
+    pathMatch: 'full',
+    redirectTo: 'phaseOne'
+  },
+  {
+    path: 'phaseOne',
+    component: PhaseOneComponent,
     canDeactivate: [CanDeactivateGuard]
   },
   {

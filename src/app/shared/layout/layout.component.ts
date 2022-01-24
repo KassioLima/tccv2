@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-declare var $: any;
+declare let $: any;
 
 @Component({
   selector: 'app-layout',

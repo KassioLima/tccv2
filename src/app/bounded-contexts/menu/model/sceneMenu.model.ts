@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import ScaleManager = Phaser.Scale.ScaleManager;
 
 export class SceneMenu extends Phaser.Scene {
   FromInGame: any;
@@ -29,8 +30,19 @@ export class SceneMenu extends Phaser.Scene {
   }
 
   create (){
+    this.showMenu();
+  }
 
-    var menu = this.add.sprite(0, (window.innerHeight - ((window.innerWidth * 667) / 1310)) / 2, 'menu').setOrigin(0, 0);
+  update() {
+    const clique = this.sound.add('clique');
+    this.input.on('pointerdown', function () {
+      clique.play({volume: 0.1});
+    });
+  }
+
+  showMenu() {
+
+    let menu = this.add.sprite(0, (window.innerHeight - ((window.innerWidth * 667) / 1310)) / 2, 'menu').setOrigin(0, 0);
     menu.setDisplaySize(window.innerWidth, (window.innerWidth * 667) / 1310)
 
     this.anims.create({
@@ -42,16 +54,11 @@ export class SceneMenu extends Phaser.Scene {
 
     menu.anims.play('turn');
 
-    var music = this.sound.add('theme');
-
-    music.play(this.musicConfig);
+    this.playBgMusic();
   }
 
-  update() {
-    const clique = this.sound.add('clique');
-    this.input.on('pointerdown', function () {
-      clique.play({volume: 0.1});
-    });
+  playBgMusic() {
+
   }
 
   emitSoundClick() {
