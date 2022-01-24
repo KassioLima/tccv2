@@ -1,14 +1,7 @@
-import {AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import Phaser from "phaser";
-import {NgxSpinnerService} from "ngx-spinner";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import * as moment from "moment";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
-import {Router} from "@angular/router";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
-
-declare let $: any;
 
 @Component({
   selector: 'app-phase-one-component',
@@ -17,60 +10,28 @@ declare let $: any;
 })
 export class PhaseOneComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('modalRank', { static: false }) modalRank!: TemplateRef<any>
-  modalRankRef!: BsModalRef;
-
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
-
-  formRankSubmitted: boolean = false;
-
-  formRank = new FormGroup({});
+  @ViewChild('code', { static: false }) code!: ElementRef;
 
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
-
-  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService) {
+  comandos = new Map();
+  constructor() {
     super();
   }
 
-  ngOnInit(): void {
-    this.scene = new ScenePhaseOne(this.config, null, null);
-    moment.locale('pt-br');
+  ngOnInit() {
+    this.comandos.set('left', 'left');
+    this.comandos.set('right', 'right');
+    this.comandos.set('up', 'up');
+    this.comandos.set('down', 'down');
+    this.comandos.set('step', new RegExp('step [- +]?[0-9]+', 'g'));
+    this.comandos.set('angle', new RegExp('angle [- +]?[0-9]+', 'g'));
+
+    this.scene = new ScenePhaseOne(this.config);
   }
 
-  startGame() {
-    this.openModalRank()
-  }
-
-  openModalRank() {
-    this.initRankForm();
-    this.modalRankRef = this.modalService.show(this.modalRank);
-    this.modalRankRef.setClass('modal-dialog-centered modal-dialog-scrollable');
-  }
-
-  closeModalRank() {
-    this.modalRankRef.hide();
-  }
-
-  initRankForm() {
-    this.formRankSubmitted = false;
-    this.formRank = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      age: new FormControl(null, [Validators.required, Validators.min(6)]),
-      email: new FormControl(null, Validators.required),
-    });
-  }
-
-  enter() {
-    this.formRankSubmitted = true;
-
-    if(this.formRank.valid) {
-      this.closeModalRank();
-      this.router.navigate(['game']);
-    }
-  }
-
-  ngAfterViewInit(): void {
+  ngAfterViewInit() {
     this.config = {
       width: 700,
       height: 600,
@@ -93,4 +54,65 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     this.game = new Phaser.Game(this.config);
   }
 
+  readConsoleText() {
+    if(this.code.nativeElement.value) {
+      let lines = this.getLines(this.code.nativeElement.value);
+      let comandosDigitados = this.getComands(lines);
+
+      if(!comandosDigitados.invalidComands.length && comandosDigitados.validComands.length) {
+        this.scene.executeCommands(comandosDigitados.validComands);
+      }
+    }
+  }
+
+  getLines(text: string): string[] {
+    let lines = text.split('\n').filter(c => c.length > 0);
+
+    lines = lines.map(line => {
+      line = line.trim();
+      while (line.includes("  ")) {
+        line = line.replace("  ", " ");
+      }
+      return line;
+    });
+
+    return lines;
+  }
+
+  getComands(lines: string[]) {
+
+    let validComands = [];
+    let invalidComands = [];
+
+    for(let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+      let line = lines[lineIndex];
+
+      if(line.includes(' ')) {
+        let tipoComando = line.split(' ')[0];
+
+        if(line.match(this.comandos.get(tipoComando))) {
+          validComands.push(line);
+        }
+        else {
+          invalidComands.push(line);
+          break;
+        }
+      }
+
+      else {
+        if(this.comandos.get(line)) {
+          validComands.push(this.comandos.get(line));
+        }
+        else {
+          invalidComands.push(line);
+          break;
+        }
+      }
+    }
+
+    return {
+      invalidComands: invalidComands,
+      validComands: validComands
+    };
+  }
 }

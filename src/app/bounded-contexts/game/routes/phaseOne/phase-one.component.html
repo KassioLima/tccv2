@@ -1,4 +1,4 @@
-<div style="display: inline-block; border: 1px solid red">
+<div style="display: inline-block; height: 100vh; background-color: #787f85">
   <div class="gameArea" #gameArea></div>
 </div>
 <div class="areaCode" style="display: inline-block">
@@ -8,7 +8,7 @@
                 <div class="lines" id="linhas"><span>1</span></div>
             </td>
             <td>
-                <textarea class="code" id="code"></textarea>
+                <textarea class="code" id="code" #code></textarea>
             </td>
         </tr>
         <tr>
@@ -19,7 +19,7 @@
                     <tr>
                         <td>
                             <div class="align-middle" style="width: 100%;">
-                                <img src="https://img.icons8.com/dusk/64/000000/circled-play.png" title="Play" class="botao" id="play"/>
+                                <img src="https://img.icons8.com/dusk/64/000000/circled-play.png" title="Play" class="botao" id="play" alt="playButton" (click)="readConsoleText()"/>
                                 <label><h4>Play</h4></label>
                             </div>
                         </td>
