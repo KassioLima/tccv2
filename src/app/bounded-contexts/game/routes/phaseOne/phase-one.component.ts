@@ -3,15 +3,18 @@ import Phaser from "phaser";
 import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 
+declare var $: any;
+
 @Component({
   selector: 'app-phase-one-component',
   templateUrl: './phase-one.component.html',
   styleUrls: ['./phase-one.component.scss']
 })
+
 export class PhaseOneComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
-  @ViewChild('code', { static: false }) code!: ElementRef;
+  code!: string;
 
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
@@ -52,11 +55,22 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
     this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);
+
+    let code = $("#code");
+    let linhas = $("#linhas");
+
+    linhas.scroll(function () {
+      code.scrollTop(linhas.scrollTop());
+    });
+
+    code.scroll(function () {
+      linhas.scrollTop(code.scrollTop());
+    });
   }
 
   readConsoleText() {
-    if(this.code.nativeElement.value) {
-      let lines = this.getLines(this.code.nativeElement.value);
+    if(this.code) {
+      let lines = this.getLinesValid(this.code);
       let comandosDigitados = this.getComands(lines);
 
       if(!comandosDigitados.invalidComands.length && comandosDigitados.validComands.length) {
@@ -65,7 +79,19 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     }
   }
 
-  getLines(text: string): string[] {
+  countLines(): number[] {
+    let linesArray = [];
+    if (this.code?.split("\n").length) {
+      let lines = this.code.split("\n");
+      for(let line = 1; line <= lines.length; line++) {
+        linesArray.push(line);
+      }
+      return linesArray;
+    }
+    return [1];
+  }
+
+  getLinesValid(text: string): string[] {
     let lines = text.split('\n').filter(c => c.length > 0);
 
     lines = lines.map(line => {
