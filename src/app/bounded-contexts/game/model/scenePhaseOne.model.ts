@@ -4,6 +4,9 @@ export class ScenePhaseOne extends Phaser.Scene {
   FromInGame: any;
   preloadStatus: any;
 
+  cursors: any;
+  sapoAlquimista: any;
+
   musicConfig = {
     mute: false,
     loop: true,
@@ -44,12 +47,56 @@ export class ScenePhaseOne extends Phaser.Scene {
   create (){
 
     //Montando o cenário
+    this.cursors = this.input.keyboard.createCursorKeys();
 
     this.add.image(0, 0, 'cenario').setOrigin(0, 0);
 
-    let objetos;
+    let objetos = this.physics.add.staticGroup();
+    this.loadObjects(objetos);
 
-    objetos = this.physics.add.staticGroup();
+    let music = this.sound.add('soundtrack');
+    music.play(this.musicConfig);
+
+    this.sapoAlquimista = this.physics.add.sprite(this.game.scale.width / 2 - (0.1 * 670) / 2, this.game.scale.height / 1.35, 'sapoAlquimista')
+      .setOrigin(0, 0);
+    this.sapoAlquimista.scaleX = 0.1;
+    this.sapoAlquimista.scaleY = 0.1;
+    // this.sapoAlquimista.flipY = true;
+
+    //this.sapoAlquimista.setAngle(270);
+
+
+    // this.sapoAlquimista.anims.play('left');
+
+    this.sapoAlquimista.setCollideWorldBounds(true);
+    let sapoObjetos = this.physics.add.collider(this.sapoAlquimista, objetos);
+  }
+
+  update() {
+    this.sapoAlquimista.setVelocity(0);
+    this.sapoAlquimista.setDisplayOrigin(this.sapoAlquimista.width / 2, this.sapoAlquimista.height / 2);
+
+    if (this.cursors.left.isDown) {
+      this.sapoAlquimista.setVelocityX(-300);
+      this.sapoAlquimista.setAngle(90);
+    }
+    else if (this.cursors.right.isDown) {
+      this.sapoAlquimista.setVelocityX(300);
+      this.sapoAlquimista.setAngle(-90);
+    }
+
+    if (this.cursors.up.isDown) {
+      this.sapoAlquimista.setVelocityY(-300);
+      this.sapoAlquimista.setAngle(180);
+    }
+    else if (this.cursors.down.isDown) {
+      this.sapoAlquimista.setVelocityY(300);
+      this.sapoAlquimista.setAngle(0);
+    }
+  }
+
+  loadObjects(objetos: any) {
+
 
     let imagemParede = this.add.image(0,0, 'parede')
       .setOrigin(0, 0)
@@ -91,34 +138,5 @@ export class ScenePhaseOne extends Phaser.Scene {
     });
 
     tocha.anims.play('turn');
-
-    let music = this.sound.add('soundtrack');
-
-    music.play(this.musicConfig);
-
-    let sapoAlquimista = this.physics.add.sprite(this.game.scale.width / 2 - (0.1 * 670) / 2, this.game.scale.height / 1.35, 'sapoAlquimista')
-      .setOrigin(0, 0);
-
-    sapoAlquimista.scaleX = 0.1;
-    sapoAlquimista.scaleY = 0.1;
-
-    sapoAlquimista.flipY = true;
-
-    //sapoAlquimista.setAngle(270);
-
-    this.input.on('pointerdown', function () {
-
-      //  Flipped via a call to toggleFlipX
-      sapoAlquimista.toggleFlipY();
-
-    });
-
-    sapoAlquimista.anims.play('left');
-
-    sapoAlquimista.setCollideWorldBounds(true);
-    this.physics.add.collider(sapoAlquimista, objetos);
-  }
-
-  update() {
   }
 }
