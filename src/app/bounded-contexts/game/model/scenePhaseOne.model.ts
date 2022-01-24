@@ -113,7 +113,7 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   loadSapoAlquimista(objetos: any) {
     this.sapoAlquimista = this.physics.add
-      .sprite(this.game.scale.width / 2 - (0.1 * 670) / 2, this.game.scale.height / 1.35, 'sapoAlquimista')
+      .sprite(this.game.scale.width / 2, this.game.scale.height / 1.35, 'sapoAlquimista')
       .setOrigin(0, 0);
 
     this.sapoAlquimista.scaleX = .15;
