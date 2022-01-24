@@ -79,7 +79,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     }
   }
 
-  countLines(): number[] {
+  getLinesNumber(): number[] {
     let linesArray = [];
     if (this.code?.split("\n").length) {
       let lines = this.code.split("\n");

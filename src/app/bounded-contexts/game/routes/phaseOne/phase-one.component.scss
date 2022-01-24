@@ -41,20 +41,28 @@
 body {
   overflow: hidden;
 }
+
 * {
   --altura_text_area_code: 70vh;
 }
-.counted {
+
+
+.gameArea {
+  background-color: #787f85;
+  top: 0;
+}
+
+.gameArea, .areaCode {
+  position: absolute;
+  display: inline-block;
   height: 100vh;
 }
-.counted div {
-  padding: 0 !important;
-}
-.counted div.areaCode {
-  position: absolute;
+
+.areaCode {
   right: 0;
-  width: calc(100% - 952px);
+  width: calc(100% - 700px);
 }
+
 .lines, .code {
   height: var(--altura_text_area_code);
   padding: 0;
