@@ -71,6 +71,7 @@ export class ScenePhaseOne extends Phaser.Scene {
   }
 
   loadArmarios(objetos: any) {
+
     let imagemArmario1 = this.add.image(130, 20, 'armario1').setOrigin(0, 0)
       .setScale(0.7, 0.7);
     objetos.add(imagemArmario1, true);
@@ -105,8 +106,8 @@ export class ScenePhaseOne extends Phaser.Scene {
   }
 
   loadMesa(objetos: any) {
-    let mesaScaleX = 0.4;
-    let mesaScaleY = 0.4;
+    let mesaScaleX = 0.5;
+    let mesaScaleY = 0.5;
     let imagemMesa = this.add.image(this.game.scale.width / 2, this.game.scale.height - ((mesaScaleY * 220) / 2), 'mesa').setScale(mesaScaleX, mesaScaleY);
     objetos.add(imagemMesa, true);
   }
@@ -145,6 +146,7 @@ export class ScenePhaseOne extends Phaser.Scene {
       if (!comando.includes(' ')) {
         this.sapoAlquimista.setAngle(this.angulos.get(comando));
       }
+
       else {
         let tipoComando = comando.split(' ')[0];
         if (tipoComando == 'step') {
