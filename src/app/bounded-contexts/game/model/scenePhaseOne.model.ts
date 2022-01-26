@@ -160,26 +160,27 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   async andarSapo(passos: number) {
     let velocidade = 150;
+    let sentido = passos < 0 ? -1 : 1;
 
     if (this.sapoAlquimista.angle == this.angulos.get('left')) {
-      this.sapoAlquimista.setVelocityX(-velocidade);
+      this.sapoAlquimista.setVelocityX(-velocidade * sentido);
     }
 
     else if (this.sapoAlquimista.angle == this.angulos.get('right')) {
-      this.sapoAlquimista.setVelocityX(velocidade);
+      this.sapoAlquimista.setVelocityX(velocidade * sentido);
     }
 
     else if (this.sapoAlquimista.angle == this.angulos.get('down')) {
-      this.sapoAlquimista.setVelocityY(velocidade);
+      this.sapoAlquimista.setVelocityY(velocidade * sentido);
     }
 
     else {
-      this.sapoAlquimista.setVelocityY(-velocidade);
+      this.sapoAlquimista.setVelocityY(-velocidade * sentido);
     }
 
     this.sapoAlquimista.anims.play('andar');
 
-    await this.delay(passos * 80);
+    await this.delay(Math.abs(passos) * 80);
     this.sapoAlquimista.setVelocity(0, 0);
     this.sapoAlquimista.anims.stop();
   }
