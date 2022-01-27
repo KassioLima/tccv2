@@ -33,9 +33,8 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.load.spritesheet('tocha', 'https://media.discordapp.net/attachments/847914147944857631/928718585734512670/spriteTocha.png',
     { frameWidth: 50, frameHeight: 100});
 
-    this.load.spritesheet('sapoAlquimista', 'http://media.discordapp.net/attachments/847914147944857631/928782411230220318/spriteSapo.png',
-    {frameWidth: 670, frameHeight: 670});
-
+    this.load.spritesheet('sapoAlquimista', 'http://media.discordapp.net/attachments/593811885787447297/936132479281168434/spriteSapo.png',
+    {frameWidth: 527, frameHeight: 331});
 
     this.load.audio('soundtrack', [
       'assets/sonoplastia/happy-menu.mp3',
@@ -144,7 +143,7 @@ export class ScenePhaseOne extends Phaser.Scene {
       let comando = comandos[0];
 
       if (!comando.includes(' ')) {
-        this.sapoAlquimista.setAngle(this.angulos.get(comando));
+        await this.virarPersonagemParaLado(comando);
       }
 
       else {
@@ -153,30 +152,50 @@ export class ScenePhaseOne extends Phaser.Scene {
           let passos = Number(comando.split(' ')[1]);
           await this.andarSapo(passos);
         }
+        else if (tipoComando == 'angle') {
+          let angulo = Number(comando.split(' ')[1]);
+          await this.virarPersonagemComAngulo(angulo);
+        }
       }
       comandos.splice(0, 1);
     }
   }
 
+  async virarPersonagemParaLado(comando: string) {
+    let angulo = this.angulos.get(comando);
+    let caminho = Phaser.Math.Angle.ShortestBetween(this.sapoAlquimista.angle, angulo);
+    await this.virarPersonagemComAngulo(caminho);
+  }
+
+  async virarPersonagemComAngulo(angulo: number) {
+    if(!angulo) return;
+
+    let countAngle = 0;
+    this.sapoAlquimista.anims.play('andar');
+    if (countAngle > angulo) {
+      while (countAngle > angulo) {
+        countAngle--;
+        this.sapoAlquimista.angle--;
+        await this.delay(10);
+      }
+    }
+    else {
+      while (countAngle < angulo) {
+        countAngle++;
+        this.sapoAlquimista.angle++;
+        await this.delay(10);
+      }
+    }
+    this.sapoAlquimista.anims.stop();
+  }
+
   async andarSapo(passos: number) {
     let velocidade = 150;
     let sentido = passos < 0 ? -1 : 1;
-
-    if (this.sapoAlquimista.angle == this.angulos.get('left')) {
-      this.sapoAlquimista.setVelocityX(-velocidade * sentido);
-    }
-
-    else if (this.sapoAlquimista.angle == this.angulos.get('right')) {
-      this.sapoAlquimista.setVelocityX(velocidade * sentido);
-    }
-
-    else if (this.sapoAlquimista.angle == this.angulos.get('down')) {
-      this.sapoAlquimista.setVelocityY(velocidade * sentido);
-    }
-
-    else {
-      this.sapoAlquimista.setVelocityY(-velocidade * sentido);
-    }
+    // Nosso personagem já vem com o sprite virado para 90º, então compensamos isso na conversão do angulo para rad
+    const compensacaoDeAngulo = 90;
+    let angulo = Phaser.Math.DegToRad(this.sapoAlquimista.angle + compensacaoDeAngulo);
+    this.physics.velocityFromRotation(angulo, velocidade * sentido, this.sapoAlquimista.body.velocity);
 
     this.sapoAlquimista.anims.play('andar');
 

@@ -116,7 +116,8 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
       if(line.includes(' ')) {
         let tipoComando = line.split(' ')[0];
 
-        if(line.match(this.comandos.get(tipoComando))) {
+        // @ts-ignore
+        if(line.match(this.comandos.get(tipoComando))[0] == line) {
           validComands.push(line);
         }
         else {
