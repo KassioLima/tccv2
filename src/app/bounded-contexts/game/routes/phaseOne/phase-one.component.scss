@@ -1,43 +1,3 @@
-/*.requerido:after {
-  content:"*";
-  color: red;
-}
-
-.fundo-menu {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  background-size: cover;
-  background-image: url("../../../../../../src/assets/images/menu/menuDesfocado.png");
-}
-
-.play-button {
-  position: absolute;
-  z-index: 2;
-  background-image: url("../../../../../../src/assets/images/menu/play.png");
-  background-size: cover;
-  width: calc((509px / 2) / 1.5);
-  height: calc((480px / 2) / 1.5);
-  right: 10px;
-  bottom: 10px;
-  cursor: pointer;
-}
-
-.play-button:hover {
-  animation: balancar 5s infinite;
-}
-
-@keyframes balancar {
-  0%   {transform: rotate(0deg);}
-  20%  {transform: rotate(-20deg);}
-  40%  {transform: rotate(20deg);}
-  80%  {transform: rotate(-20deg);}
-  100% {transform: rotate(0deg);}
-}*/
-
 body {
   overflow: hidden;
 }
@@ -48,8 +8,8 @@ body {
 
 
 .gameArea {
-  background-color: #787f85;
-  top: 0;
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/000/533/848/small_2x/Brickwall004.jpg");
+  background-position-y: bottom;
 }
 
 .gameArea, .areaCode {

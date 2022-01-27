@@ -44,7 +44,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
         default: 'arcade',
         arcade: {
           gravity: { y: 0 },
-          debug: true
+          debug: false
         }
       },
       audio: {
