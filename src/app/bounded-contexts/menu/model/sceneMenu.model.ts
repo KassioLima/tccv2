@@ -54,12 +54,12 @@ export class SceneMenu extends Phaser.Scene {
 
     menu.anims.play('turn');
 
-    this.playBgMusic();
+    this.playBgMusic(this.musicConfig);
   }
 
-  playBgMusic() {
+  playBgMusic(congig: any) {
     let music = this.sound.add('theme');
-    music.play(this.musicConfig);
+    music.play(congig);
   }
 
   emitSoundClick() {
