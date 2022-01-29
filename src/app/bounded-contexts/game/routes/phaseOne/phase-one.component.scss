@@ -21,48 +21,85 @@ body {
 .areaCode {
   right: 0;
   width: calc(100% - 700px);
+  border: 0px solid black;
 }
 
 .areaCode table {
   width: 100%;
 }
-.areaCode table tr td {
-  min-width: 0 !important;
-}
-.botao {
-  cursor: pointer;
+
+.play-button {
+  border: none;
+  color: white;
   border-radius: 100%;
-  width: 60px;
-  height: auto;
-}
-.botao:hover {
-  animation-name: example;
-  animation-duration: .3s;
-}
-@keyframes example {
-  25% {transform: rotateZ(20deg)}
-  50% {transform: rotateZ(-30deg)}
-  75% {transform: rotateZ(30deg)}
-  100% {transform: rotateZ(-20deg)}
+  width: calc(0.6 * 25vh);
+  height: calc(0.6 * 25vh);
+  background-color: #68931e;
+  outline: #68931e solid 0;
+  transition: .5s;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 5px 2px 0 3px rgba(0,0,0,0.25);
 }
 
-#style-1::-webkit-scrollbar-track
-{
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
-  border-radius: 10px !important;
-  background-color: #F5F5F5 !important;
+.play-button:hover {
+  outline: transparent solid 1px;
+  outline-offset: calc(0.2 * 25vh);
 }
 
-#style-1::-webkit-scrollbar
-{
-  width: 12px !important;
-  background-color: #F5F5F5 !important;
+.play-button .img-button-play {
+  transition: .5s;
+  width: 45%;
+  margin-left: calc(45% / 4);
+  filter: invert(0) opacity(0.6);
 }
 
-#style-1::-webkit-scrollbar-thumb
-{
-  border-radius: 10px !important;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3) !important;
-  background-color: #555 !important;
+.ace-editor {
+  border-radius: 15px;
+  border: 15px solid rgba(0, 0, 0, 0.5);
 }
 
+.direction-control {
+  color: white;
+  border-radius: 100%;
+  width: calc(0.3 * 25vh);
+  height: calc(0.3 * 25vh);
+  background-color: #68931e;
+  outline: #68931e solid 0;
+  cursor: pointer;
+  transition: .5s;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 5px 2px 0 3px rgba(0,0,0,0.25);
+}
+
+.direction-control:hover {
+  outline: transparent solid 1px;
+  outline-offset: calc(0.2 * 25vh);
+}
+
+.direction-control img {
+  width: 75%;
+  filter: opacity(0.5);
+}
+
+.direction-control .up {
+  transform: rotateZ(-90deg);
+}
+
+.direction-control .left {
+  transform: rotateZ(-180deg);
+}
+
+.direction-control .down {
+  transform: rotateZ(90deg);
+}

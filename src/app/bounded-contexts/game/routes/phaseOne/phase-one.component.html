@@ -1,30 +1,68 @@
 <div class="gameArea" #gameArea></div>
 
-<div class="areaCode" style="background-color: #343432">
-  <table cellpadding="0" cellspacing="0">
-    <tr>
-      <td>
-        <ace-editor id="style-1"
-          #editor
-          (textChange)="mudouTexto($event)"
-          style="height: 600px; width:100%;"></ace-editor>
-      </td>
-    </tr>
-  </table>
-
-  <table>
-    <tr>
-      <td>
-        <div class="row p-3 align-middle">
-          <div class="col-md-6 align-middle">
-            <img src="https://img.icons8.com/dusk/64/000000/circled-play.png" title="Play" class="botao" id="play" alt="playButton" (click)="readConsoleText()"/>
+<div class="areaCode" style="background-color: #3d6227">
+  <div align="center">
+    <table cellpadding="0" cellspacing="0" style="width: calc(100vw - 800px); height: calc(60vh + 50px);">
+      <tr>
+        <td style="vertical-align: bottom">
+          <ace-editor class="ace-editor"
+            #editor
+            (textChange)="mudouTexto($event)"
+            style="height: 60vh; width:100%;"></ace-editor>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div align="center">
+    <table style="width: calc(100vw - 800px); height: calc(100vh - calc(60vh + 50px))">
+      <tr>
+        <td style="width: 25%; text-align: center">
+          <table>
+            <tr>
+              <td></td>
+              <td>
+                <div class="direction-control">
+                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="UP" title="UP" class="up">
+                </div>
+              </td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>
+                <div class="direction-control">
+                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="LEFT" title="LEFT" class="left">
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="direction-control float-start">
+                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="RIGHT" title="RIGHT" class="right">
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <div class="direction-control">
+                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="DOWN" title="DOWN" class="down">
+                </div>
+              </td>
+              <td></td>
+            </tr>
+          </table>
+        </td>
+        <td style="width: 37.5%;">
+          <div class="play-button float-end" (click)="readConsoleText()">
+            <img src="https://www.pngkit.com/png/full/9-93027_store-app-store-google-google-play-logo-play.png" alt="play" title="Executar código" class="img-button-play">
           </div>
-          <div class="col-md-6">
-            <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-Reset-miscellany-texts-and-badges-bearicons-outline-color-bearicons.png" title="Play" class="botao" id="reset"/>
+        </td>
+        <td style="width: 37.5%;">
+          <div class="play-button float-end" (click)="readConsoleText()">
+            <img src="https://www.pngkit.com/png/full/9-93027_store-app-store-google-google-play-logo-play.png" alt="play" title="Executar código" class="img-button-play">
           </div>
-        </div>
-      </td>
-    </tr>
-  </table>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 

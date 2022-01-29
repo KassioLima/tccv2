@@ -62,7 +62,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     this.editor.setMode("javascript");
     this.editor.setText(this.code);
     this.editor.getEditor().setOptions({
-      fontSize: 26,
+      fontSize: 20,
       enableMultiselect: true,
       wrap: true,
       useWorker: false
@@ -113,6 +113,10 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
     for(let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
       let line = lines[lineIndex];
+
+      if(line.startsWith("//")) {
+        continue;
+      }
 
       if(line.includes(' ')) {
         let tipoComando = line.split(' ')[0];
