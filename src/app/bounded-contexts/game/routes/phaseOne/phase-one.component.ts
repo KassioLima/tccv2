@@ -4,8 +4,6 @@ import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
 
-declare var $: any;
-
 @Component({
   selector: 'app-phase-one-component',
   templateUrl: './phase-one.component.html',
@@ -61,6 +59,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
     this.editor.setMode("javascript");
     this.editor.setText(this.code);
+
     this.editor.getEditor().setOptions({
       fontSize: 20,
       enableMultiselect: true,
@@ -150,5 +149,9 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   mudouTexto(event: any) {
     this.code = event;
+  }
+
+  resetCode() {
+    this.scene.restart()
   }
 }

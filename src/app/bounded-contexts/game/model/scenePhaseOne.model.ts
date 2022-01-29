@@ -207,4 +207,8 @@ export class ScenePhaseOne extends Phaser.Scene {
   delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
+
+  restart() {
+    this.scene.restart();
+  }
 }
