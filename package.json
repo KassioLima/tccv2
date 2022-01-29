@@ -35,6 +35,7 @@
     "phaser": "^3.55.2",
     "rxjs": "~6.6.0",
     "simplebar": "^5.3.6",
+    "simplebar-angular": "^2.3.6",
     "sweetalert2": "^11.1.9",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

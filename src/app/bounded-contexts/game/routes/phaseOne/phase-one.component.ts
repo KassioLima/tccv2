@@ -15,8 +15,9 @@ declare var $: any;
 export class PhaseOneComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
-  code: string = "//Código inicial\n\n";
   @ViewChild('editor') editor!: AceEditorComponent;
+
+  code: string = "//Código inicial\n\n";
 
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
@@ -57,17 +58,6 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
     this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);
-
-    let code = $("#code");
-    let linhas = $("#linhas");
-
-    linhas.scroll(function () {
-      code.scrollTop(linhas.scrollTop());
-    });
-
-    code.scroll(function () {
-      linhas.scrollTop(code.scrollTop());
-    });
 
     this.editor.setMode("javascript");
     this.editor.setText(this.code);

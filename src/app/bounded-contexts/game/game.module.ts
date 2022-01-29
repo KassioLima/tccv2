@@ -6,12 +6,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {AceEditorModule} from "ng2-ace-editor";
+import {SimplebarAngularModule} from "simplebar-angular";
 
 @NgModule({
   declarations: [
     PhaseOneComponent
   ],
   imports: [
+    SimplebarAngularModule,
     GameRoutingModule,
     CommonModule,
     FormsModule,
