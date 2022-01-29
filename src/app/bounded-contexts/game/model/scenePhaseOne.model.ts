@@ -6,7 +6,7 @@ export class ScenePhaseOne extends Phaser.Scene {
   musicConfig = {
     mute: false,
     loop: true,
-    volume: 0.2
+    volume: 0.01
   }
 
   angulos = new Map();
@@ -39,6 +39,11 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.load.audio('soundtrack', [
       'assets/sonoplastia/happy-menu.mp3',
       'assets/sonoplastia/happy-menu.ogg'
+    ]);
+
+    this.load.audio('teclas', [
+      'assets/sonoplastia/teclas/som teclas.wav',
+      'assets/sonoplastia/teclas/som teclas.mp3',
     ]);
   }
 
@@ -210,5 +215,10 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   restart() {
     this.scene.restart();
+  }
+
+  emitSoundKeyPress() {
+    const clique = this.sound?.add('teclas');
+    clique?.play({volume: 1});
   }
 }

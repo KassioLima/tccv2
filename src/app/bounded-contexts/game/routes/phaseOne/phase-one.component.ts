@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
+import {esLocale} from "ngx-bootstrap/chronos";
 
 @Component({
   selector: 'app-phase-one-component',
@@ -15,7 +16,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  code: string = "//Código inicial\n\n";
+  code: string = "//Código inicial\n\nstep 15";
 
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
@@ -149,9 +150,60 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   mudouTexto(event: any) {
     this.code = event;
+    this.scene.emitSoundKeyPress();
   }
 
   resetCode() {
     this.scene.restart()
+  }
+
+  async inserirComando(comando: string) {
+
+    if (comando.length > 0) {
+
+      let cursorPosition = this.editor.getEditor().getCursorPosition();
+
+      let linhas = this.code.split("\n");
+
+      let linhaDoCursor = linhas[cursorPosition.row];
+
+      let parteEsquerdaDaLinha = linhaDoCursor.substring(0, cursorPosition.column);
+      let parteDireitaDaLinha = linhaDoCursor.substring(cursorPosition.column, linhaDoCursor.length);
+
+      linhas[cursorPosition.row] = parteEsquerdaDaLinha + comando.charAt(0) + parteDireitaDaLinha;
+
+      this.code = linhas.join("\n");
+      this.editor.setText(this.code);
+
+      if(comando.charAt(0) == "\n") {
+        this.editor.getEditor().moveCursorTo(cursorPosition.row + 1, 0);
+      }
+      else {
+        this.editor.getEditor().moveCursorTo(cursorPosition.row, cursorPosition.column + 1);
+      }
+
+      comando = comando.substring(1, comando.length);
+
+      this.scene.emitSoundKeyPress();
+
+      await this.delay(100);
+      await this.inserirComando(comando);
+    }
+
+    this.editor.getEditor().focus();
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  normalizarComando(comando: string): string {
+    if(!comando.startsWith("\n"))
+      comando = "\n" + comando;
+
+    if(!comando.endsWith(" "))
+      comando += " ";
+
+    return comando
   }
 }
