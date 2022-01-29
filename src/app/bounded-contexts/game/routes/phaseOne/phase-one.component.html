@@ -1,17 +1,13 @@
 <div class="gameArea" #gameArea></div>
 
-<div class="areaCode">
-  <table>
+<div class="areaCode" style="background-color: #343432">
+  <table cellpadding="0" cellspacing="0">
     <tr>
-      <td style="max-width: 20px !important;">
-        <div class="lines" id="linhas">
-          <span *ngFor="let line of getLinesNumber()">
-            {{line}}
-          </span>
-        </div>
-      </td>
       <td>
-        <textarea class="lined code" id="code" [(ngModel)]="code"></textarea>
+        <ace-editor
+          #editor
+          (textChange)="mudouTexto($event)"
+          style="height: 600px; width:100%;"></ace-editor>
       </td>
     </tr>
   </table>
@@ -19,15 +15,13 @@
   <table>
     <tr>
       <td>
-        <div class="align-middle" style="width: 100%;">
-          <img src="https://img.icons8.com/dusk/64/000000/circled-play.png" title="Play" class="botao" id="play" alt="playButton" (click)="readConsoleText()"/>
-          <label><h4>Play</h4></label>
-        </div>
-      </td>
-      <td class="text-right">
-        <div class="align-middle m-3" style="width: calc(100% - 30px);">
-          <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-Reset-miscellany-texts-and-badges-bearicons-outline-color-bearicons.png" title="Play" class="botao" id="reset"/>
-          <label><h4>Reset</h4></label>
+        <div class="row p-3 align-middle">
+          <div class="col-md-6 align-middle">
+            <img src="https://img.icons8.com/dusk/64/000000/circled-play.png" title="Play" class="botao" id="play" alt="playButton" (click)="readConsoleText()"/>
+          </div>
+          <div class="col-md-6">
+            <img src="https://img.icons8.com/external-bearicons-outline-color-bearicons/64/000000/external-Reset-miscellany-texts-and-badges-bearicons-outline-color-bearicons.png" title="Play" class="botao" id="reset"/>
+          </div>
         </div>
       </td>
     </tr>

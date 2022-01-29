@@ -2,6 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import Phaser from "phaser";
 import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
+import {AceEditorComponent} from "ng2-ace-editor";
 
 declare var $: any;
 
@@ -14,7 +15,8 @@ declare var $: any;
 export class PhaseOneComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
-  code!: string;
+  code: string = "//Código inicial\n\n";
+  @ViewChild('editor') editor!: AceEditorComponent;
 
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
@@ -65,6 +67,15 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
     code.scroll(function () {
       linhas.scrollTop(code.scrollTop());
+    });
+
+    this.editor.setMode("javascript");
+    this.editor.setText(this.code);
+    this.editor.getEditor().setOptions({
+      fontSize: 26,
+      enableMultiselect: true,
+      wrap: true,
+      useWorker: false
     });
   }
 
@@ -141,5 +152,9 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
       invalidComands: invalidComands,
       validComands: validComands
     };
+  }
+
+  mudouTexto(event: any) {
+    this.code = event;
   }
 }

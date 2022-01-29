@@ -5,6 +5,7 @@ import {GameRoutingModule} from "./game-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ModalModule} from "ngx-bootstrap/modal";
+import {AceEditorModule} from "ng2-ace-editor";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import {ModalModule} from "ngx-bootstrap/modal";
     ReactiveFormsModule,
     NgxSpinnerModule,
     ModalModule.forRoot(),
+    AceEditorModule,
   ],
   exports: [
     GameRoutingModule

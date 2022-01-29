@@ -23,37 +23,6 @@ body {
   width: calc(100% - 700px);
 }
 
-.lines, .code {
-  height: var(--altura_text_area_code);
-  padding: 0;
-  border: none;
-  box-shadow: none !important;
-  outline: none !important;
-  margin: 0 !important;
-  font-size: 16pt;
-}
-.lines {
-  width: 100%;
-  text-align: center;
-  overflow-y: auto;
-  overflow-x: auto;
-}
-.lines::-webkit-scrollbar {
-  width: 0;
-}
-.code {
-  width: 100%;
-  background-color: beige;
-  padding-left: 10px;
-  padding-right: 10px;
-  resize: none;
-  overflow-wrap: normal;
-}
-.lines span {
-  display: block;
-  width: auto;
-  color: silver;
-}
 .areaCode table {
   width: 100%;
 }
