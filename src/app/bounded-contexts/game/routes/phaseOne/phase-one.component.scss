@@ -12,7 +12,7 @@
 .areaCode {
   right: 0;
   width: calc(100% - 700px);
-  border: 0px solid black;
+  border: 0 solid black;
 }
 
 .areaCode table {
@@ -21,12 +21,11 @@
 
 .play-button, .reset-button {
   border: none;
-  color: white;
   border-radius: 100%;
   width: calc(0.6 * 25vh);
   height: calc(0.6 * 25vh);
   background-color: #68931e;
-  outline: #68931e solid 0;
+  outline: #68931e solid 2px;
   transition: .5s;
   cursor: pointer;
 
@@ -40,11 +39,17 @@
 
 .reset-button {
   background-color: #c95151;
+  outline-color: #c95151;
 }
 
-.play-button:hover, .reset-button:hover {
-  outline: transparent solid 1px;
+.play-button:hover {
+  outline-color: transparent;
   outline-offset: calc(0.2 * 25vh);
+}
+
+.reset-button:hover {
+  outline-color: transparent;
+  outline-width: calc(0.2 * 25vh);
 }
 
 .play-button .img-button-play {
@@ -71,7 +76,7 @@
   width: calc(0.3 * 25vh);
   height: calc(0.3 * 25vh);
   background-color: #68931e;
-  outline: #68931e solid 0;
+  outline: #68931e solid 2px;
   cursor: pointer;
   transition: .5s;
 
@@ -84,7 +89,7 @@
 }
 
 .direction-control:hover {
-  outline: transparent solid 1px;
+  outline-color: transparent;
   outline-offset: calc(0.2 * 25vh);
 }
 

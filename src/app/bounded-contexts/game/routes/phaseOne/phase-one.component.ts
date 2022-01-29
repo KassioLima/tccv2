@@ -3,7 +3,6 @@ import Phaser from "phaser";
 import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
-import {esLocale} from "ngx-bootstrap/chronos";
 
 @Component({
   selector: 'app-phase-one-component',
