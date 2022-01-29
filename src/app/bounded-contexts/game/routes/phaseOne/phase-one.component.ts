@@ -3,6 +3,7 @@ import Phaser from "phaser";
 import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-phase-one-component',
@@ -15,11 +16,17 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  code: string = "//Código inicial\n\nstep 15";
+  initialCode: string = "//Código inicial\n\nstep 15";
+  code: string = this.initialCode;
+
+  isRunning: boolean = false;
 
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
   comandos = new Map();
+
+  digitando: boolean = false;
+
   constructor() {
     super();
   }
@@ -68,13 +75,15 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     });
   }
 
-  readConsoleText() {
-    if(this.code) {
+  async readConsoleText() {
+    if (this.code && !this.isRunning) {
       let lines = this.getLinesValid(this.code);
       let comandosDigitados = this.getComands(lines);
 
-      if(!comandosDigitados.invalidComands.length && comandosDigitados.validComands.length) {
-        this.scene.executeCommands(comandosDigitados.validComands);
+      if (!comandosDigitados.invalidComands.length && comandosDigitados.validComands.length) {
+        this.isRunning = true;
+        this.isRunning = await this.scene.executeCommands(comandosDigitados.validComands);
+        this.verificaEstadoDoJogo();
       }
     }
   }
@@ -153,43 +162,61 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   resetCode() {
-    this.scene.restart()
+    Swal.fire({
+      title: 'Você tem certeza?',
+      text: `Isso irá apagar todo o código que foi digitado`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.scene.restart();
+        this.code = this.initialCode;
+        this.editor.setText(this.code);
+        this.isRunning = false;
+      }
+    });
   }
 
   async inserirComando(comando: string) {
 
-    if (comando.length > 0) {
+    if (!this.digitando) {
+      this.digitando = true;
 
-      let cursorPosition = this.editor.getEditor().getCursorPosition();
+      while (comando.length > 0) {
+        let cursorPosition = this.editor.getEditor().getCursorPosition();
 
-      let linhas = this.code.split("\n");
+        let linhas = this.code.split("\n");
 
-      let linhaDoCursor = linhas[cursorPosition.row];
+        let linhaDoCursor = linhas[cursorPosition.row];
 
-      let parteEsquerdaDaLinha = linhaDoCursor.substring(0, cursorPosition.column);
-      let parteDireitaDaLinha = linhaDoCursor.substring(cursorPosition.column, linhaDoCursor.length);
+        let parteEsquerdaDaLinha = linhaDoCursor.substring(0, cursorPosition.column);
+        let parteDireitaDaLinha = linhaDoCursor.substring(cursorPosition.column, linhaDoCursor.length);
 
-      linhas[cursorPosition.row] = parteEsquerdaDaLinha + comando.charAt(0) + parteDireitaDaLinha;
+        linhas[cursorPosition.row] = parteEsquerdaDaLinha + comando.charAt(0) + parteDireitaDaLinha;
 
-      this.code = linhas.join("\n");
-      this.editor.setText(this.code);
+        this.code = linhas.join("\n");
+        this.editor.setText(this.code);
 
-      if(comando.charAt(0) == "\n") {
-        this.editor.getEditor().moveCursorTo(cursorPosition.row + 1, 0);
+        if (comando.charAt(0) == "\n") {
+          this.editor.getEditor().moveCursorTo(cursorPosition.row + 1, 0);
+        } else {
+          this.editor.getEditor().moveCursorTo(cursorPosition.row, cursorPosition.column + 1);
+        }
+
+        comando = comando.substring(1, comando.length);
+
+        this.scene.emitSoundKeyPress();
+
+        await this.delay(100);
       }
-      else {
-        this.editor.getEditor().moveCursorTo(cursorPosition.row, cursorPosition.column + 1);
-      }
 
-      comando = comando.substring(1, comando.length);
-
-      this.scene.emitSoundKeyPress();
-
-      await this.delay(100);
-      await this.inserirComando(comando);
+      this.editor.getEditor().focus();
+      this.digitando = false;
     }
-
-    this.editor.getEditor().focus();
   }
 
   delay(ms: number) {
@@ -204,5 +231,14 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
       comando += " ";
 
     return comando
+  }
+
+  stopExecution() {
+    this.scene.restart();
+    this.isRunning = false;
+  }
+
+  verificaEstadoDoJogo() {
+    console.log("acabou");
   }
 }

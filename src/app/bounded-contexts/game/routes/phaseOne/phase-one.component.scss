@@ -59,6 +59,13 @@
   filter: invert(0) opacity(0.5);
 }
 
+.play-button.pause .img-button-play.pause {
+  transition: .5s;
+  width: 70%;
+  margin-left: 0;
+  filter: invert(0) opacity(0.5);
+}
+
 .reset-button .img-button-reset {
   transition: .5s;
   width: 75%;

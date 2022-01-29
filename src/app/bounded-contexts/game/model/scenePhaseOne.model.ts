@@ -9,6 +9,8 @@ export class ScenePhaseOne extends Phaser.Scene {
     volume: 0.01
   }
 
+  comandos: string[] = [];
+
   angulos = new Map();
 
   constructor (config: Phaser.Types.Core.GameConfig) {
@@ -143,9 +145,11 @@ export class ScenePhaseOne extends Phaser.Scene {
   }
 
   async executeCommands(comandos: string[]) {
-    while (comandos.length > 0) {
+    this.comandos = comandos;
 
-      let comando = comandos[0];
+    while (this.comandos.length > 0) {
+
+      let comando = this.comandos[0];
 
       if (!comando.includes(' ')) {
         await this.virarPersonagemParaLado(comando);
@@ -162,8 +166,10 @@ export class ScenePhaseOne extends Phaser.Scene {
           await this.virarPersonagemComAngulo(angulo);
         }
       }
-      comandos.splice(0, 1);
+      this.comandos.splice(0, 1);
     }
+
+    return false;
   }
 
   async virarPersonagemParaLado(comando: string) {
@@ -178,14 +184,17 @@ export class ScenePhaseOne extends Phaser.Scene {
     let countAngle = 0;
     this.sapoAlquimista.anims.play('andar');
     if (countAngle > angulo) {
-      while (countAngle > angulo) {
+
+      //&& this.comandos.length foi adicionado pois o personagem precisa parar assim que o array de comandos for zerado
+      //isso acontece quando o usuário pressiona o botão de restart
+      while (countAngle > angulo && this.comandos.length) {
         countAngle--;
         this.sapoAlquimista.angle--;
         await this.delay(10);
       }
     }
     else {
-      while (countAngle < angulo) {
+      while (countAngle < angulo && this.comandos.length) {
         countAngle++;
         this.sapoAlquimista.angle++;
         await this.delay(10);
@@ -214,6 +223,7 @@ export class ScenePhaseOne extends Phaser.Scene {
   }
 
   restart() {
+    this.comandos = [];
     this.scene.restart();
   }
 

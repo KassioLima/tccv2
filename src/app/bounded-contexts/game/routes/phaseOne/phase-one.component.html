@@ -52,8 +52,12 @@
           </table>
         </td>
         <td style="width: 37.5%;">
-          <div class="play-button float-end" (click)="readConsoleText()">
+          <div class="play-button float-end" (click)="readConsoleText()" *ngIf="!isRunning">
             <img src="https://images.vexels.com/media/users/3/136986/isolated/preview/1267b92546dd4569214069b4ed32f70e-ponta-de-seta-de-triangulo-espesso.png" alt="play" title="Executar código" class="img-button-play">
+          </div>
+
+          <div class="play-button pause float-end" (click)="stopExecution()" *ngIf="isRunning">
+            <img src="https://iconsplace.com/wp-content/uploads/_icons/ff0000/256/png/stop-icon-14-256.png" alt="stop" title="Parar execução do código" class="img-button-play pause">
           </div>
         </td>
         <td style="width: 37.5%;">
