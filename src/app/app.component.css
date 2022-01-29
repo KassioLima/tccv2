@@ -4,13 +4,21 @@ body {
   overflow: hidden;
 }
 
+.marcadorDeLinhaEmExecucao {
+  position: absolute;
+  background: rgba(0, 122, 0, 0.5);
+  z-index: 20000;
+}
+
 .pointer{
     cursor: pointer;
 }
+
 .table-responsive-overflow {
     overflow-y: auto;
     max-height: 355px;
 }
+
 .ng2-flatpickr-input{
     border: 0;
     outline: 0;

@@ -4,6 +4,9 @@ import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
 import Swal from "sweetalert2";
+import {LineCodeModel} from "../../model/line-code.model";
+
+declare const ace: any;
 
 @Component({
   selector: 'app-phase-one-component',
@@ -73,6 +76,9 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
       wrap: true,
       useWorker: false
     });
+
+    this.editor.getEditor().selection.moveCursorFileEnd();
+    this.editor.getEditor().focus();
   }
 
   async readConsoleText() {
@@ -82,7 +88,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
       if (!comandosDigitados.invalidComands.length && comandosDigitados.validComands.length) {
         this.isRunning = true;
-        this.isRunning = await this.scene.executeCommands(comandosDigitados.validComands);
+        this.isRunning = await this.scene.executeCommands(comandosDigitados.validComands, this.editor.getEditor());
         this.verificaEstadoDoJogo();
       }
     }
@@ -101,7 +107,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   getLinesValid(text: string): string[] {
-    let lines = text.split('\n').filter(c => c.length > 0);
+    let lines = text.split('\n')/*.filter(c => c.length > 0)*/;
 
     lines = lines.map(line => {
       line = line.trim();
@@ -116,13 +122,13 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   getComands(lines: string[]) {
 
-    let validComands = [];
+    let validComands: LineCodeModel[] = [];
     let invalidComands = [];
 
     for(let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
       let line = lines[lineIndex];
 
-      if(line.startsWith("//")) {
+      if(line.startsWith("//") || line.length == 0) {
         continue;
       }
 
@@ -131,10 +137,17 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
         // @ts-ignore
         if(line.match(this.comandos.get(tipoComando))[0] == line) {
-          validComands.push(line);
+          validComands.push({line: lineIndex, value: line} as LineCodeModel);
         }
         else {
           invalidComands.push(line);
+          Swal.fire({
+            title: 'Você precisa corrigir a linha ' + (lineIndex + 1),
+            text: `O que significa "` + line + '"?',
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          });
           break;
         }
       }
@@ -145,6 +158,13 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
         }
         else {
           invalidComands.push(line);
+          Swal.fire({
+            title: 'Você precisa corrigir a linha ' + (lineIndex + 1),
+            text: `O que significa "` + line + '"?',
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          });
           break;
         }
       }
@@ -164,13 +184,13 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   resetCode() {
     Swal.fire({
       title: 'Você tem certeza?',
-      text: `Isso irá apagar todo o código que foi digitado`,
+      text: `Isso irá apagar todo o código que foi digitado.`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sim',
-      cancelButtonText: 'Não'
+      cancelButtonColor: '#888888',
+      confirmButtonText: '&nbsp;&nbsp;&nbsp;Sim&nbsp;&nbsp;&nbsp;',
+      cancelButtonText: '&nbsp;&nbsp;&nbsp;Não&nbsp;&nbsp;&nbsp;'
     }).then((result) => {
       if (result.isConfirmed) {
         this.scene.restart();

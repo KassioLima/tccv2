@@ -1,4 +1,7 @@
 import Phaser from "phaser";
+import {LineCodeModel} from "./line-code.model";
+
+declare const ace: any;
 
 export class ScenePhaseOne extends Phaser.Scene {
   sapoAlquimista!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
@@ -9,7 +12,7 @@ export class ScenePhaseOne extends Phaser.Scene {
     volume: 0.01
   }
 
-  comandos: string[] = [];
+  comandos: LineCodeModel[] = [];
 
   angulos = new Map();
 
@@ -144,29 +147,43 @@ export class ScenePhaseOne extends Phaser.Scene {
     music.play(this.musicConfig);
   }
 
-  async executeCommands(comandos: string[]) {
+  async executeCommands(comandos: LineCodeModel[], editor: any) {
+
+    const Range = ace.require('ace/range').Range;
+
     this.comandos = comandos;
 
     while (this.comandos.length > 0) {
 
       let comando = this.comandos[0];
 
-      if (!comando.includes(' ')) {
-        await this.virarPersonagemParaLado(comando);
+      editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
+
+      if (!comando.value.includes(' ')) {
+        await this.virarPersonagemParaLado(comando.value);
       }
 
       else {
-        let tipoComando = comando.split(' ')[0];
+        let tipoComando = comando.value.split(' ')[0];
         if (tipoComando == 'step') {
-          let passos = Number(comando.split(' ')[1]);
+          let passos = Number(comando.value.split(' ')[1]);
           await this.andarSapo(passos);
         }
         else if (tipoComando == 'angle') {
-          let angulo = Number(comando.split(' ')[1]);
+          let angulo = Number(comando.value.split(' ')[1]);
           await this.virarPersonagemComAngulo(angulo);
         }
       }
+
       this.comandos.splice(0, 1);
+
+      const prevMarkers = editor.session.getMarkers();
+      if (prevMarkers) {
+        const prevMarkersArr = Object.keys(prevMarkers);
+        for (let item of prevMarkersArr) {
+          editor.session.removeMarker(prevMarkers[item].id);
+        }
+      }
     }
 
     return false;
