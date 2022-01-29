@@ -54,9 +54,9 @@ body {
 
 .play-button .img-button-play {
   transition: .5s;
-  width: 45%;
-  margin-left: calc(45% / 4);
-  filter: invert(0) opacity(0.6);
+  width: 60%;
+  margin-left: calc(60% / 16);
+  filter: invert(0) opacity(0.5);
 }
 
 .reset-button .img-button-reset {
