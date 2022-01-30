@@ -159,6 +159,10 @@ export class ScenePhaseOne extends Phaser.Scene {
 
       editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
 
+
+      editor.resize(true);
+      editor.scrollToLine(comando.line, true, true, function () {});
+
       if (!comando.value.includes(' ')) {
         await this.virarPersonagemParaLado(comando.value);
       }
@@ -177,7 +181,7 @@ export class ScenePhaseOne extends Phaser.Scene {
 
       this.comandos.splice(0, 1);
 
-      const prevMarkers = editor.session.getMarkers();
+      const prevMarkers = editor.session.getMarkers(false);
       if (prevMarkers) {
         const prevMarkersArr = Object.keys(prevMarkers);
         for (let item of prevMarkersArr) {
