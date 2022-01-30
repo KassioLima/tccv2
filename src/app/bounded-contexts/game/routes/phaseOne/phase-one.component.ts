@@ -154,7 +154,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
       else {
         if(this.comandos.get(line)) {
-          validComands.push(this.comandos.get(line));
+          validComands.push({line: lineIndex, value: line} as LineCodeModel);
         }
         else {
           invalidComands.push(line);
