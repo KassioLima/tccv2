@@ -19,7 +19,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  initialCode: string = "//Código inicial\n\nstep 15";
+  initialCode: string = "//Código inicial\n\nup\nstep 15";
   code: string = this.initialCode;
 
   isRunning: boolean = false;
