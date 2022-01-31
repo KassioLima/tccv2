@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import {PhaseOneComponent} from "./routes/phaseOne/phase-one.component";
+import {PhaseOneComponent} from "./routes/capitulo1/phaseOne/phase-one.component";
 import {ForbiddenComponent} from "../../core/http-codes/forbidden/forbidden.component";
 import {UnavailableComponent} from "../../core/http-codes/unavailable/unavailable.component";
 import {NotFoundComponent} from "../../core/http-codes/not-found/not-found.component";
