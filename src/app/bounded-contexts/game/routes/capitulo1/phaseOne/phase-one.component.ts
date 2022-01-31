@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import Phaser from "phaser";
-import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
-import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
+import {ScenePhaseOne} from "../../../model/scenePhaseOne.model";
+import {CanDeactivateComponent} from "../../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
 import Swal from "sweetalert2";
-import {LineCodeModel} from "../../model/line-code.model";
+import {LineCodeModel} from "../../../model/line-code.model";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {EndGameInformations} from "../../model/end-game.informations";
+import {EndGameInformations} from "../../../model/end-game.informations";
 
 declare const ace: any;
 
@@ -21,7 +21,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   @ViewChild('gameArea', {static: false}) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  initialCode: string = "//Código inicial\n\nup\nstep 15";
+  initialCode: string = "up\nstep 5";
   code: string = this.initialCode;
 
   isRunning: boolean = false;
@@ -295,7 +295,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
-    this.stopExecution();
+    // this.stopExecution();
     this.endGameInformations = endGameInformations;
     this.openModalFimDeFase();
   }
