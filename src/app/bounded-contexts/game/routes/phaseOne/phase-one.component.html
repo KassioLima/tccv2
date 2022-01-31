@@ -69,3 +69,48 @@
     </table>
   </div>
 </div>
+
+<ng-template #modalFimDeFase>
+  <div class="modal-content">
+    <div class="modal-header bg-success">
+      <h4 class="modal-title text-white">
+        Preencha seus dados
+      </h4>
+    </div>
+    <div class="modal-body p-4">
+
+      <div class="row">
+        <div class="col-md-12">
+          <strong>Quantidade de passos: </strong>
+          {{endGameInformations?.steps}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <strong>Quantidade de comandos: </strong>
+          {{endGameInformations?.commandsAmount}}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <strong>Tempo: </strong>
+          {{endGameInformations?.timeInSeconds}} segundos
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row mt-3 mb-3 me-3">
+    <div class="col-12 col-md-12" style="text-align: right">
+      <button class="btn btn-success me-2">
+        Próxima
+      </button>
+
+      <button class="btn btn-secondary" (click)="closeModalFimDeFase()">
+        Reiniciar
+      </button>
+    </div>
+  </div>
+</ng-template>

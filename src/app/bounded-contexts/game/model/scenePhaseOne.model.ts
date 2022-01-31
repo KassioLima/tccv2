@@ -1,5 +1,7 @@
 import Phaser from "phaser";
 import {LineCodeModel} from "./line-code.model";
+import {EndGameInformations} from "./end-game.informations";
+import moment from "moment";
 
 declare const ace: any;
 
@@ -23,6 +25,8 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.angulos.set('right', -90);
     this.angulos.set('up', 180);
     this.angulos.set('down', 0);
+
+    moment.locale('pt-br');
   }
 
   preload() {
@@ -149,10 +153,23 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   async executeCommands(comandos: LineCodeModel[], editor: any) {
 
+    let endGameInformations = new EndGameInformations();
+    endGameInformations.commandsAmount = comandos.length;
+    endGameInformations.steps = 0;
+
+    let steps = comandos
+      .filter(comando => comando.value.startsWith("step"))
+      .map(comando => Math.abs(Number(comando.value.split(" ")[1])));
+
+    if (steps.length) {
+      endGameInformations.steps += steps.reduce((a, b) => a + b);
+    }
+
     const Range = ace.require('ace/range').Range;
 
     this.comandos = comandos;
 
+    let startTime = moment();
     while (this.comandos.length > 0) {
 
       let comando = this.comandos[0];
@@ -189,8 +206,11 @@ export class ScenePhaseOne extends Phaser.Scene {
         }
       }
     }
+    let endTime = moment();
 
-    return false;
+    endGameInformations.timeInSeconds = endTime.diff(startTime, 'seconds');
+
+    return endGameInformations;
   }
 
   async virarPersonagemParaLado(comando: string) {

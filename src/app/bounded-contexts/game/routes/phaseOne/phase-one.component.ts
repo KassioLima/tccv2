@@ -1,10 +1,12 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import Phaser from "phaser";
 import {ScenePhaseOne} from "../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
 import Swal from "sweetalert2";
 import {LineCodeModel} from "../../model/line-code.model";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {EndGameInformations} from "../../model/end-game.informations";
 
 declare const ace: any;
 
@@ -16,7 +18,7 @@ declare const ace: any;
 
 export class PhaseOneComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
+  @ViewChild('gameArea', {static: false}) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
   initialCode: string = "//Código inicial\n\nup\nstep 15";
@@ -34,7 +36,12 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   timeoutToCallFunction: any = null;
 
-  constructor() {
+  @ViewChild('modalFimDeFase', {static: false}) modalFimDeFase!: TemplateRef<any>
+  modalFimDeFaseRef!: BsModalRef;
+
+  endGameInformations!: EndGameInformations;
+
+  constructor(private modalService: BsModalService) {
     super();
   }
 
@@ -58,7 +65,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
       physics: {
         default: 'arcade',
         arcade: {
-          gravity: { y: 0 },
+          gravity: {y: 0},
           debug: true
         }
       },
@@ -93,8 +100,9 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
       if (!comandosDigitados.invalidComands.length && comandosDigitados.validComands.length) {
         this.isRunning = true;
-        this.isRunning = await this.scene.executeCommands(comandosDigitados.validComands, this.editor.getEditor());
-        this.verificaEstadoDoJogo();
+        let endGameInformations = await this.scene.executeCommands(comandosDigitados.validComands, this.editor.getEditor());
+        this.isRunning = false;
+        this.verificaEstadoDoJogo(endGameInformations);
       }
     }
   }
@@ -103,7 +111,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     let linesArray = [];
     if (this.code?.split("\n").length) {
       let lines = this.code.split("\n");
-      for(let line = 1; line <= lines.length; line++) {
+      for (let line = 1; line <= lines.length; line++) {
         linesArray.push(line);
       }
       return linesArray;
@@ -130,34 +138,30 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     let validComands: LineCodeModel[] = [];
     let invalidComands: LineCodeModel[] = [];
 
-    for(let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
       let line = lines[lineIndex];
 
-      if(line.startsWith("//") || line.length == 0) {
+      if (line.startsWith("//") || line.length == 0) {
         continue;
       }
 
-      if(line.includes(' ')) {
+      if (line.includes(' ')) {
         let tipoComando = line.split(' ')[0];
 
         // @ts-ignore
-        if(line.match(this.comandos.get(tipoComando)) && line.match(this.comandos.get(tipoComando))[0] == line) {
+        if (line.match(this.comandos.get(tipoComando)) && line.match(this.comandos.get(tipoComando))[0] == line) {
           validComands.push({line: lineIndex, value: line} as LineCodeModel);
-        }
-        else {
+        } else {
           invalidComands.push({line: lineIndex, value: line} as LineCodeModel);
           if (showError) {
             this.alertCodeError(line, lineIndex);
             break;
           }
         }
-      }
-
-      else {
-        if(typeof this.comandos.get(line) === "string") {
+      } else {
+        if (typeof this.comandos.get(line) === "string") {
           validComands.push({line: lineIndex, value: line} as LineCodeModel);
-        }
-        else {
+        } else {
           invalidComands.push({line: lineIndex, value: line} as LineCodeModel);
           if (showError) {
             this.alertCodeError(line, lineIndex);
@@ -272,14 +276,14 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 
   normalizarComando(comando: string): string {
-    if(!comando.startsWith("\n"))
+    if (!comando.startsWith("\n"))
       comando = "\n" + comando;
 
-    if(!comando.endsWith(" "))
+    if (!comando.endsWith(" "))
       comando += " ";
 
     return comando
@@ -290,7 +294,24 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     this.isRunning = false;
   }
 
-  verificaEstadoDoJogo() {
-    console.log("acabou");
+  verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
+    this.stopExecution();
+    this.endGameInformations = endGameInformations;
+    this.openModalFimDeFase();
+  }
+
+  openModalFimDeFase() {
+
+    let config = {
+      keyboard: false,
+      class: 'modal-dialog-centered modal-dialog-scrollable',
+      ignoreBackdropClick: true
+    };
+
+    this.modalFimDeFaseRef = this.modalService.show(this.modalFimDeFase, config);
+  }
+
+  closeModalFimDeFase() {
+    this.modalFimDeFaseRef.hide();
   }
 }
