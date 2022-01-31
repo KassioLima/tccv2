@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import {LineCodeModel} from "./line-code.model";
 import {EndGameInformations} from "./end-game.informations";
 import moment from "moment";
-import {elementAt} from "rxjs/operators";
 
 declare const ace: any;
 
@@ -45,9 +44,6 @@ export class ScenePhaseOne extends Phaser.Scene {
 
     this.load.spritesheet('sapoAlquimista', 'http://media.discordapp.net/attachments/593811885787447297/936132479281168434/spriteSapo.png',
     {frameWidth: 527, frameHeight: 331});
-
-    this.load.spritesheet('elementos', 'http://media.discordapp.net/attachments/593811885787447297/937570661583437874/elementosQuimicos.png',
-      {frameWidth: 680, frameHeight: 133});
 
     this.load.audio('soundtrack', [
       'assets/sonoplastia/happy-menu.mp3',
@@ -148,19 +144,6 @@ export class ScenePhaseOne extends Phaser.Scene {
       frameRate: 10,
       repeat: -1
     });
-
-    let elemento = 0;
-
-    let objetos2 = this.physics.add.staticGroup();
-
-    let nitrogenio = this.add
-      .image(0, this.game.scale.height / 2, 'elementos', 3)
-      .setOrigin(0, 0)
-      .setCrop((680 / 5) * elemento, 0, 680 / 5, 133);
-
-    objetos2.add(nitrogenio, true);
-
-    this.physics.add.collider(this.sapoAlquimista, objetos2);
   }
 
   loadSomFundo() {
