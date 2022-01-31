@@ -10,6 +10,12 @@ body {
   z-index: 20000;
 }
 
+.marcadorDeLinhaErrada {
+  position: absolute;
+  background: rgba(182, 29, 29, 0.5);
+  z-index: 20000;
+}
+
 .pointer{
     cursor: pointer;
 }

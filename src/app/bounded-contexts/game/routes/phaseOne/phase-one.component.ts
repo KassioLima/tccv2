@@ -30,6 +30,10 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   digitando: boolean = false;
 
+  Range = ace.require('ace/range').Range;
+
+  timeoutToCallFunction: any = null;
+
   constructor() {
     super();
   }
@@ -74,7 +78,8 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
       fontSize: 20,
       enableMultiselect: true,
       wrap: true,
-      useWorker: false
+      useWorker: false,
+      animatedScroll: true,
     });
 
     this.editor.getEditor().selection.moveCursorFileEnd();
@@ -120,10 +125,10 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     return lines;
   }
 
-  getComands(lines: string[]) {
+  getComands(lines: string[], showError: boolean = true) {
 
     let validComands: LineCodeModel[] = [];
-    let invalidComands = [];
+    let invalidComands: LineCodeModel[] = [];
 
     for(let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
       let line = lines[lineIndex];
@@ -136,36 +141,28 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
         let tipoComando = line.split(' ')[0];
 
         // @ts-ignore
-        if(line.match(this.comandos.get(tipoComando))[0] == line) {
+        if(line.match(this.comandos.get(tipoComando)) && line.match(this.comandos.get(tipoComando))[0] == line) {
           validComands.push({line: lineIndex, value: line} as LineCodeModel);
         }
         else {
-          invalidComands.push(line);
-          Swal.fire({
-            title: 'Você precisa corrigir a linha ' + (lineIndex + 1),
-            text: `O que significa "` + line + '"?',
-            icon: 'error',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK',
-          });
-          break;
+          invalidComands.push({line: lineIndex, value: line} as LineCodeModel);
+          if (showError) {
+            this.alertCodeError(line, lineIndex);
+            break;
+          }
         }
       }
 
       else {
-        if(this.comandos.get(line)) {
+        if(typeof this.comandos.get(line) === "string") {
           validComands.push({line: lineIndex, value: line} as LineCodeModel);
         }
         else {
-          invalidComands.push(line);
-          Swal.fire({
-            title: 'Você precisa corrigir a linha ' + (lineIndex + 1),
-            text: `O que significa "` + line + '"?',
-            icon: 'error',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK',
-          });
-          break;
+          invalidComands.push({line: lineIndex, value: line} as LineCodeModel);
+          if (showError) {
+            this.alertCodeError(line, lineIndex);
+            break;
+          }
         }
       }
     }
@@ -176,9 +173,44 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     };
   }
 
+  alertCodeError(line: string, lineIndex: number) {
+    Swal.fire({
+      title: 'Você precisa corrigir a linha ' + (lineIndex + 1),
+      text: `O que significa "` + line + '"?',
+      icon: 'error',
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'OK',
+    });
+  }
+
   mudouTexto(event: any) {
     this.code = event;
     this.scene.emitSoundKeyPress();
+
+    if (this.code) {
+      clearTimeout(this.timeoutToCallFunction);
+      this.timeoutToCallFunction = setTimeout(() => {
+
+        let lines = this.getLinesValid(this.code);
+        let comandosDigitados = this.getComands(lines, false);
+
+        const prevMarkers = this.editor.getEditor().session.getMarkers(false);
+        if (prevMarkers) {
+          const prevMarkersArr = Object.keys(prevMarkers);
+          for (let item of prevMarkersArr) {
+            this.editor.getEditor().session.removeMarker(prevMarkers[item].id);
+          }
+        }
+
+        if (comandosDigitados.invalidComands.length) {
+          const Range = ace.require('ace/range').Range;
+
+          comandosDigitados.invalidComands.forEach(comandoErrado => {
+            this.editor.getEditor().session.addMarker(new Range(comandoErrado.line, 0, comandoErrado.line, 1), "marcadorDeLinhaErrada", "fullLine");
+          })
+        }
+      }, 500);
+    }
   }
 
   resetCode() {
