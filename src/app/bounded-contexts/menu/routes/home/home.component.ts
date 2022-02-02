@@ -76,6 +76,11 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
       height: window.innerHeight,
       type: Phaser.AUTO,
       parent: this.gameArea.nativeElement,
+      scale: {
+        mode: Phaser.Scale.RESIZE,
+        width: '100%',
+        height: '100%'
+    },
       physics: {
         default: 'arcade',
         arcade: {

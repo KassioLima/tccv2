@@ -43,7 +43,14 @@ export class SceneMenu extends Phaser.Scene {
   showMenu() {
 
     let menu = this.add.sprite(0, (window.innerHeight - ((window.innerWidth * 667) / 1310)) / 2, 'menu').setOrigin(0, 0);
-    menu.setDisplaySize(window.innerWidth, (window.innerWidth * 667) / 1310)
+    menu.setDisplaySize(window.innerWidth, (window.innerWidth * 667) / 1310);
+
+   /* let menu = this.add.sprite(0, (this.scale.height - ((this.scale.width * 667) / 1310)) / 2, 'menu').setOrigin(0, 0);
+    menu.setDisplaySize(this.scale.width, (this.scale.width * 667) / 1310);
+
+    this.scale.on('resize', this.resize, this);*/
+
+
 
     this.anims.create({
       key: 'turn',
@@ -57,9 +64,20 @@ export class SceneMenu extends Phaser.Scene {
     this.playBgMusic(this.musicConfig);
   }
 
-  playBgMusic(congig: any) {
+
+  /*resize (gameSize, baseSize, displaySize, resolution){
+    var width = gameSize.width;
+    var height = gameSize.height;
+
+    this.cameras.resize(width, height);
+
+    //menu.setSize(width, height);
+
+  }*/
+
+  playBgMusic(config: any) {
     let music = this.sound.add('theme');
-    music.play(congig);
+    music.play(config);
   }
 
   emitSoundClick() {
