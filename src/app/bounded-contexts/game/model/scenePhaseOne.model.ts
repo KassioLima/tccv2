@@ -8,6 +8,7 @@ declare const ace: any;
 
 export class ScenePhaseOne extends Phaser.Scene {
   sapoAlquimista!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+  elementos!: Phaser.Physics.Arcade.StaticGroup;
 
   musicConfig = {
     mute: false,
@@ -67,12 +68,12 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.add.image(0, 0, 'cenario').setOrigin(0, 0);
 
     let objetos = this.physics.add.staticGroup();
-    let objetos2 = this.physics.add.group();
+    this.elementos = this.physics.add.staticGroup( {key: ['nitrogenio', 'hidrogenio', 'oxigenio', 'prata', 'mercurio']});
 
     this.loadObjects(objetos);
-    this.loadObjects2(objetos2);
+    this.loadElementos();
 
-    this.loadSapoAlquimista(objetos, objetos2);
+    this.loadSapoAlquimista(objetos);
 
     this.loadSomFundo();
   }
@@ -84,10 +85,6 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.loadMesa(objetos);
     this.loadArmarios(objetos);
     this.loadTocha(objetos);
-  }
-
-  loadObjects2(objetos2: any) {
-    this.loadElementos(objetos2);
   }
 
   loadParede(objetos: any) {
@@ -139,25 +136,25 @@ export class ScenePhaseOne extends Phaser.Scene {
     objetos.add(imagemMesa, true);
   }
 
-  loadElementos(objetos2: any) {
+  loadElementos() {
 
     let nitrogenio = this.add.image(this.game.scale.width / 2, this.game.scale.height / 3, 'nitrogenio').setScale(0.5, 0.5);
-    objetos2.add(nitrogenio, true);
+    this.elementos.add(nitrogenio, true);
 
-    //objetos2.disableBody(true, true); //fica invisivel os elementos
+    //this.elementos.disableBody(true, true); //fica invisivel os elementos
 
     let hidrogenio = this.add.image(0, this.game.scale.height / 2, 'hidrogenio').setScale(0.5, 0.5).setOrigin(0, 0);
-    objetos2.add(hidrogenio, true);
+    this.elementos.add(hidrogenio, true);
     let oxigenio = this.add.image((this.game.scale.width / 3) + 20, 50, 'oxigenio').setScale(0.5, 0.5);
-    objetos2.add(oxigenio, true);
+    this.elementos.add(oxigenio, true);
     let prata = this.add.image(this.game.scale.width - 50, this.game.scale.height - 50, 'prata').setScale(0.5, 0.5);
-    objetos2.add(prata, true);
+    this.elementos.add(prata, true);
     let mercurio = this.add.image(this.game.scale.width - 100, this.game.scale.height / 5, 'mercurio').setScale(0.5, 0.5).setOrigin(0, 0);
-    objetos2.add(mercurio, true);
+    this.elementos.add(mercurio, true);
 
   }
 
-  loadSapoAlquimista(objetos: any, objetos2: any) {
+  loadSapoAlquimista(objetos: any) {
     this.sapoAlquimista = this.physics.add
       .sprite(this.game.scale.width / 2, this.game.scale.height / 1.3, 'sapoAlquimista')
       .setOrigin(0, 0);
@@ -167,8 +164,8 @@ export class ScenePhaseOne extends Phaser.Scene {
 
     this.sapoAlquimista.setCollideWorldBounds(true);
     this.physics.add.collider(this.sapoAlquimista, objetos);
-    this.physics.add.collider(this.sapoAlquimista, objetos2);
-    //this.physics.add.overlap(this.sapoAlquimista, objetos2, collectElement, null, this);
+
+    this.physics.add.overlap(this.sapoAlquimista, this.elementos, this.collectElement, () => {}, this);
 
     this.sapoAlquimista.setDisplayOrigin(this.sapoAlquimista.width / 2, this.sapoAlquimista.height / 2);
 
@@ -186,9 +183,10 @@ export class ScenePhaseOne extends Phaser.Scene {
     music.play(this.musicConfig);
   }
 
-  // collectElement(this.sapoAlquimista: any, objetos2: any){
-  //     objetos2.disableBody(true, true);
-  // }
+  collectElement(){
+    console.log(this.elementos)
+    this.elementos.setVisible(false);
+  }
 
   async executeCommands(comandos: LineCodeModel[], editor: any) {
 
