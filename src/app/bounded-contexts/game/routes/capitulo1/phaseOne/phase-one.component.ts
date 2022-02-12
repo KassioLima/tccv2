@@ -290,12 +290,12 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   stopExecution() {
+    this.closeModalFimDeFase();
     this.scene.restart();
     this.isRunning = false;
   }
 
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
-    // this.stopExecution();
     this.endGameInformations = endGameInformations;
     this.openModalFimDeFase();
   }
@@ -313,5 +313,11 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   closeModalFimDeFase() {
     this.modalFimDeFaseRef.hide();
+  }
+
+  nextPhase() {
+    if (this.endGameInformations.collectedElements.length == 1) {
+
+    }
   }
 }
