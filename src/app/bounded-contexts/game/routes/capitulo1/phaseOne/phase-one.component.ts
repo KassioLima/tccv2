@@ -21,8 +21,16 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   @ViewChild('gameArea', {static: false}) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  initialCode: string = "up\nstep 5";
+  initialCode: string = "// Vira o Sapo Alquimista para cima\nup\n\n// Anda 15 passos. Modifique este valor para alcançar o elemento\nstep 15";
   code: string = this.initialCode;
+
+  indexText: number = 0;
+  modalTexts: string[] = [
+    "Olá, sou Sapo Alquimista e preciso de sua ajuda para realizar alguns experimentos científicos.",
+    "Eu quero produzir a Pedra Filosofal.",
+    "Para isso, é necessário que você me ajude pegando os elementos certos.",
+    "Vamos começar pegando o elemento Ag (prata).",
+  ];
 
   isRunning: boolean = false;
 
@@ -38,6 +46,9 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   @ViewChild('modalFimDeFase', {static: false}) modalFimDeFase!: TemplateRef<any>
   modalFimDeFaseRef!: BsModalRef;
+
+  @ViewChild('modalTutorial', {static: false}) modalTutorial!: TemplateRef<any>
+  modalTutorialRef!: BsModalRef;
 
   endGameInformations!: EndGameInformations;
 
@@ -91,6 +102,8 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
     this.editor.getEditor().selection.moveCursorFileEnd();
     this.editor.getEditor().focus();
+
+    this.openModalTutorial();
   }
 
   async readConsoleText() {
@@ -312,12 +325,35 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   closeModalFimDeFase() {
-    this.modalFimDeFaseRef.hide();
+    this.modalFimDeFaseRef?.hide();
   }
 
   nextPhase() {
     if (this.endGameInformations.collectedElements.length == 1) {
 
+    }
+  }
+
+  openModalTutorial() {
+    let config = {
+      keyboard: false,
+      class: 'modal-fullscreen modal-tutorial',
+      ignoreBackdropClick: true
+    };
+
+    this.modalTutorialRef = this.modalService.show(this.modalTutorial, config);
+  }
+
+  closeModalTutorial() {
+    this.modalTutorialRef?.hide();
+  }
+
+  changeText() {
+    if (this.indexText < this.modalTexts.length - 1) {
+      this.indexText++;
+    }
+    else {
+      this.closeModalTutorial();
     }
   }
 }

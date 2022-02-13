@@ -116,3 +116,16 @@
 .direction-control .down {
   transform: rotateZ(90deg);
 }
+
+.pular-tudo {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.pular-tudo:hover {
+  text-decoration: underline;
+}
+
+.pular-tudo:before {
+  content: "Pular tudo";
+}

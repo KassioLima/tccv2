@@ -10,10 +10,13 @@ export class ScenePhaseOne extends Phaser.Scene {
   sapoAlquimista!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   elementos!: Phaser.Physics.Arcade.StaticGroup;
 
+  musicVolume: number = 0.01;
+  sfxVolume: number = 1;
+
   musicConfig = {
     mute: false,
     loop: true,
-    volume: 0.01
+    volume: this.musicVolume
   }
 
   comandos: LineCodeModel[] = [];
@@ -63,6 +66,11 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.load.audio('teclas', [
       'assets/sonoplastia/teclas/som teclas.wav',
       'assets/sonoplastia/teclas/som teclas.mp3',
+    ]);
+
+    this.load.audio('passos', [
+      'assets/sonoplastia/personagem/som passos.wav',
+      'assets/sonoplastia/personagem/som passos.mp3',
     ]);
   }
 
@@ -204,6 +212,13 @@ export class ScenePhaseOne extends Phaser.Scene {
 
     this.comandos = comandos;
 
+    let passos = this.sound.add('passos');
+    passos.play({
+      mute: false,
+      loop: true,
+      volume: this.sfxVolume,
+    });
+
     let startTime = moment();
     while (this.comandos.length > 0) {
 
@@ -242,6 +257,8 @@ export class ScenePhaseOne extends Phaser.Scene {
       }
     }
     let endTime = moment();
+
+    passos.stop();
 
     endGameInformations.timeInSeconds = endTime.diff(startTime, 'seconds');
 

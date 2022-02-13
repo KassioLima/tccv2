@@ -4,6 +4,10 @@ body {
   overflow: hidden;
 }
 
+.modal-tutorial .modal-content {
+  background-color: transparent !important;
+}
+
 .marcadorDeLinhaEmExecucao {
   position: absolute;
   background: rgba(0, 122, 0, 0.5);
