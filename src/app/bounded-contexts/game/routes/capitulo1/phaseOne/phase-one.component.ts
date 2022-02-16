@@ -376,6 +376,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   changeVolumePrincipal() {
     localStorage.setItem("volumePrincipal", "" + this.volumePrincipal);
+    this.scene.musicVolume = this.volumePrincipal / 100;
     this.scene?.music?.setVolume(this.volumePrincipal / 100);
   }
 

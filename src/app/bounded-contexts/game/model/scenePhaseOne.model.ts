@@ -15,12 +15,6 @@ export class ScenePhaseOne extends Phaser.Scene {
   musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.2;
   sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
 
-  musicConfig = {
-    mute: false,
-    loop: true,
-    volume: this.musicVolume
-  }
-
   comandos: LineCodeModel[] = [];
 
   angulos = new Map();
@@ -187,7 +181,11 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   loadSomFundo() {
     this.music = this.sound.add('soundtrack');
-    this.music.play(this.musicConfig);
+    this.music.play({
+      mute: false,
+      loop: true,
+      volume: this.musicVolume
+    });
   }
 
   collectElement(sapo: any, elemento: any) {
