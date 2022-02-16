@@ -5,9 +5,11 @@
     <table cellpadding="0" cellspacing="0" style="width: calc(100vw - 800px); height: calc(60vh + 50px);">
       <tr>
         <td style="vertical-align: bottom">
+
           <div class="text-end pb-1">
             <img (click)="abrirMenuLateral()" alt="menu" title="Abrir Menu" class="open-menu" src="assets/images/icones/hamburguer.png"/>
           </div>
+
           <ace-editor class="ace-editor"
             #editor
             (textChange)="mudouTexto($event)"
@@ -157,29 +159,4 @@
   </div>
 </ng-template>
 
-<div class="content-right-side-bar" id="content-right-side-bar">
-  <div class="fundo" (click)="fecharMenuLateral()"></div>
-  <div class="menu">
-    <div class="row">
-      <div class="col-md-10">
-        <label for="volume-principal" class="form-label">Volume Principal:</label>
-        <input type="range" [(ngModel)]="volumePrincipal" (input)="changeVolumePrincipal()" class="form-range" id="volume-principal">
-      </div>
-      <div class="col-md-1">
-        <label for="volume-principal" class="form-label">&nbsp;</label>
-        {{volumePrincipal}}%
-      </div>
-    </div>
-
-    <div class="row mt-3">
-      <div class="col-md-10">
-        <label for="efeitos-sonoros" class="form-label">Efeitos sonoros:</label>
-        <input type="range" [(ngModel)]="efeitosSonoros" (input)="changeEfeitosSonoros()" class="form-range" id="efeitos-sonoros">
-      </div>
-      <div class="col-md-1">
-        <label for="volume-principal" class="form-label">&nbsp;</label>
-        {{efeitosSonoros}}%
-      </div>
-    </div>
-  </div>
-</div>
+<right-side-bar-component [scene]="scene"></right-side-bar-component>

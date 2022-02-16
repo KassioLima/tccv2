@@ -6,20 +6,22 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {AceEditorModule} from "ng2-ace-editor";
+import {LayoutModule} from "../../shared/layout/layout.module";
 
 @NgModule({
   declarations: [
     PhaseOneComponent
   ],
-  imports: [
-    GameRoutingModule,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxSpinnerModule,
-    ModalModule.forRoot(),
-    AceEditorModule,
-  ],
+    imports: [
+        GameRoutingModule,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxSpinnerModule,
+        ModalModule.forRoot(),
+        AceEditorModule,
+        LayoutModule,
+    ],
   exports: [
     GameRoutingModule
   ],

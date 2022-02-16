@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import {LineCodeModel} from "../../../model/line-code.model";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {EndGameInformations} from "../../../model/end-game.informations";
-declare let $: any
 declare const ace: any;
 
 @Component({
@@ -51,9 +50,6 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   modalTutorialRef!: BsModalRef;
 
   endGameInformations!: EndGameInformations;
-
-  volumePrincipal = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) : 20;
-  efeitosSonoros = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) : 100;
 
   constructor(private modalService: BsModalService) {
     super();
@@ -358,31 +354,5 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     else {
       this.closeModalTutorial();
     }
-  }
-
-  abrirMenuLateral() {
-    $("#content-right-side-bar").addClass("show");
-    $("#content-right-side-bar .fundo").addClass("show");
-    $("#content-right-side-bar .menu").addClass("show");
-  }
-
-  fecharMenuLateral() {
-    $("#content-right-side-bar .fundo").removeClass("show");
-    $("#content-right-side-bar .menu").removeClass("show");
-    setTimeout(() => {
-      $("#content-right-side-bar").removeClass("show");
-    }, 500);
-  }
-
-  changeVolumePrincipal() {
-    localStorage.setItem("volumePrincipal", "" + this.volumePrincipal);
-    this.scene.musicVolume = this.volumePrincipal / 100;
-    this.scene?.music?.setVolume(this.volumePrincipal / 100);
-  }
-
-  changeEfeitosSonoros() {
-    localStorage.setItem("efeitosSonoros", "" + this.efeitosSonoros);
-    this.scene.sfxVolume = this.efeitosSonoros / 100;
-    this.scene?.passos?.setVolume(this.efeitosSonoros / 100);
   }
 }

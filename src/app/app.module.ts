@@ -9,6 +9,8 @@ import { LayoutModule } from './shared/layout/layout.module';
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import {CanDeactivateGuard} from "./core/interfaces/guard";
+import {CanDeactivateComponent} from "./core/components/can-deactivate.component";
+import {FormsModule} from "@angular/forms";
 
 registerLocaleData(ptBr);
 @NgModule({
@@ -21,7 +23,8 @@ registerLocaleData(ptBr);
     LayoutModule,
     RoutingModule,
     HttpClientModule,
-    CoreModule
+    CoreModule,
+    FormsModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },
