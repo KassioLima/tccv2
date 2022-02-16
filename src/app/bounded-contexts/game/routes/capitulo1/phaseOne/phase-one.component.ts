@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import {LineCodeModel} from "../../../model/line-code.model";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {EndGameInformations} from "../../../model/end-game.informations";
-
+declare let $: any
 declare const ace: any;
 
 @Component({
@@ -51,6 +51,8 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   modalTutorialRef!: BsModalRef;
 
   endGameInformations!: EndGameInformations;
+
+  volumePrincipal = 20;
 
   constructor(private modalService: BsModalService) {
     super();
@@ -355,5 +357,23 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     else {
       this.closeModalTutorial();
     }
+  }
+
+  abrirMenuLateral() {
+    $("#content-right-side-bar").addClass("show");
+    $("#content-right-side-bar .fundo").addClass("show");
+    $("#content-right-side-bar .menu").addClass("show");
+  }
+
+  fecharMenuLateral() {
+    $("#content-right-side-bar .fundo").removeClass("show");
+    $("#content-right-side-bar .menu").removeClass("show");
+    setTimeout(() => {
+      $("#content-right-side-bar").removeClass("show");
+    }, 500);
+  }
+
+  changeVolumePrincipal() {
+    this.scene?.music?.setVolume(this.volumePrincipal / 100);
   }
 }

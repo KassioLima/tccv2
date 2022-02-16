@@ -323,7 +323,6 @@ body {
 
 .la-ball-circus div:nth-of-type(even) {
   border: 11px solid blue !important;
-  border-style: inset;
   background: transparent !important;
 }
 
@@ -346,4 +345,86 @@ body {
 
 .la-ball-circus div:nth-child(4) {
   animation-delay: -1.875s, -2.5s !important;
+}
+
+.content-right-side-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 999999;
+  display: none;
+}
+
+.content-right-side-bar.show {
+  display: block;
+}
+
+.content-right-side-bar .fundo {
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  animation-name: fadeFundo;
+  animation-duration: .4s;
+  animation-fill-mode: forwards;
+  opacity: 1;
+}
+
+@keyframes fadeFundo {
+  from {opacity: 1;}
+  to {opacity: 0;}
+}
+
+.content-right-side-bar .fundo.show {
+  opacity: 0;
+  display: block;
+  animation-name: fadeFundoShow;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeFundoShow {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.content-right-side-bar .menu {
+  padding: 20px;
+  color: white;
+  position: absolute;
+  top: 0;
+  right: -350px;
+  width: 350px;
+  height: 100vh;
+  display: inline-block;
+  animation-name: slideMenu;
+  animation-duration: .4s;
+  animation-fill-mode: forwards;
+  background-color: #521eb4;
+  border-radius: 30px 0 0 30px;
+}
+
+@keyframes slideMenu {
+  from {right: 0;}
+  to {right: -350px;}
+}
+
+.content-right-side-bar .menu.show {
+  animation-name: slideMenuShow;
+  animation-duration: .4s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideMenuShow {
+  from {right: -350px;}
+  to {right: 0;}
+}
+
+.open-menu {
+  width: 40px;
+  cursor: pointer;
+  filter: invert(1);
+  opacity: 0.7;
 }

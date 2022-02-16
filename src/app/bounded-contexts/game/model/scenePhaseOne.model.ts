@@ -9,8 +9,9 @@ declare const ace: any;
 export class ScenePhaseOne extends Phaser.Scene {
   sapoAlquimista!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   elementos!: Phaser.Physics.Arcade.StaticGroup;
+  music!: Phaser.Sound.BaseSound;
 
-  musicVolume: number = 0.01;
+  musicVolume: number = 0.2;
   sfxVolume: number = 1;
 
   musicConfig = {
@@ -184,8 +185,8 @@ export class ScenePhaseOne extends Phaser.Scene {
   }
 
   loadSomFundo() {
-    let music = this.sound.add('soundtrack');
-    music.play(this.musicConfig);
+    this.music = this.sound.add('soundtrack');
+    this.music.play(this.musicConfig);
   }
 
   collectElement(sapo: any, elemento: any) {
