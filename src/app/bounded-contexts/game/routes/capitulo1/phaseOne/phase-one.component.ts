@@ -52,7 +52,8 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   endGameInformations!: EndGameInformations;
 
-  volumePrincipal = 20;
+  volumePrincipal = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) : 20;
+  efeitosSonoros = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) : 100;
 
   constructor(private modalService: BsModalService) {
     super();
@@ -374,6 +375,13 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   changeVolumePrincipal() {
+    localStorage.setItem("volumePrincipal", "" + this.volumePrincipal);
     this.scene?.music?.setVolume(this.volumePrincipal / 100);
+  }
+
+  changeEfeitosSonoros() {
+    localStorage.setItem("efeitosSonoros", "" + this.efeitosSonoros);
+    this.scene.sfxVolume = this.efeitosSonoros / 100;
+    this.scene?.passos?.setVolume(this.efeitosSonoros / 100);
   }
 }

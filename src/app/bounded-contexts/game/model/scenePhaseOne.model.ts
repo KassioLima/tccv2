@@ -10,9 +10,10 @@ export class ScenePhaseOne extends Phaser.Scene {
   sapoAlquimista!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   elementos!: Phaser.Physics.Arcade.StaticGroup;
   music!: Phaser.Sound.BaseSound;
+  passos!: Phaser.Sound.BaseSound;
 
-  musicVolume: number = 0.2;
-  sfxVolume: number = 1;
+  musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.2;
+  sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
 
   musicConfig = {
     mute: false,
@@ -213,8 +214,8 @@ export class ScenePhaseOne extends Phaser.Scene {
 
     this.comandos = comandos;
 
-    let passos = this.sound.add('passos');
-    passos.play({
+    this.passos = this.sound.add('passos');
+    this.passos.play({
       mute: false,
       loop: true,
       volume: this.sfxVolume,
@@ -226,7 +227,6 @@ export class ScenePhaseOne extends Phaser.Scene {
       let comando = this.comandos[0];
 
       editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
-
 
       editor.resize(true);
       editor.scrollToLine(comando.line, true, true, function () {});
@@ -259,7 +259,7 @@ export class ScenePhaseOne extends Phaser.Scene {
     }
     let endTime = moment();
 
-    passos.stop();
+    this.passos.stop();
 
     endGameInformations.timeInSeconds = endTime.diff(startTime, 'seconds');
 
@@ -320,11 +320,12 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   restart() {
     this.comandos = [];
+    this.passos.stop();
     this.scene.restart();
   }
 
   emitSoundKeyPress() {
     const clique = this.sound?.add('teclas');
-    clique?.play({volume: 1});
+    clique?.play({volume: this.sfxVolume});
   }
 }
