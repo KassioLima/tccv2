@@ -11,6 +11,8 @@ export class ScenePhaseOne extends Phaser.Scene {
   elementos!: Phaser.Physics.Arcade.StaticGroup;
   music!: Phaser.Sound.BaseSound;
   passos!: Phaser.Sound.BaseSound;
+  coleta!: Phaser.Sound.BaseSound;
+  sucesso!: Phaser.Sound.BaseSound;
 
   musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.2;
   sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
@@ -54,6 +56,9 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.load.image('prata', 'https://media.discordapp.net/attachments/593811885787447297/938532710081790014/ag.png');
     this.load.image('mercurio', 'https://media.discordapp.net/attachments/593811885787447297/938532718344552478/hg.png');
 
+    // this.load.image('reguaVertical', 'assets/images/reguaVertical.png');
+    // this.load.image('reguaHorizontal', 'assets/images/reguaHorizontal.png');
+
     this.load.audio('soundtrack', [
       'assets/sonoplastia/happy-menu.mp3',
       'assets/sonoplastia/happy-menu.ogg'
@@ -68,10 +73,23 @@ export class ScenePhaseOne extends Phaser.Scene {
       'assets/sonoplastia/personagem/som passos.wav',
       'assets/sonoplastia/personagem/som passos.mp3',
     ]);
+
+    this.load.audio('sucesso', [
+      'assets/sonoplastia/levelUp.wav',
+      'assets/sonoplastia/levelUp.mp3',
+    ]);
+
+    this.load.audio('coletou', [
+      'assets/sonoplastia/coletouElemento.wav',
+      'assets/sonoplastia/coletouElemento.mp3',
+    ]);
+
   }
 
   create() {
     this.add.image(0, 0, 'cenario').setOrigin(0, 0);
+    // this.add.image(0, 0, 'reguaVertical').setOrigin(0, 0);
+    // this.add.image(0, 600-40, 'reguaHorizontal').setOrigin(0, 0);
 
     let objetos = this.physics.add.staticGroup();
     this.elementos = this.physics.add.staticGroup();
@@ -82,6 +100,10 @@ export class ScenePhaseOne extends Phaser.Scene {
     this.loadSapoAlquimista(objetos);
 
     this.loadSomFundo();
+
+    this.coleta = this.sound.add('coletou');
+    this.sucesso = this.sound.add('sucesso');
+
   }
 
   update() {}
@@ -190,7 +212,15 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   collectElement(sapo: any, elemento: any) {
     this.collectedElements.push(elemento.texture.key);
-    elemento.setVisible(false);
+
+    elemento.destroy();
+
+    this.coleta.play({
+      mute: false,
+      loop: false,
+      volume: this.sfxVolume,
+    });
+
   }
 
   async executeCommands(comandos: LineCodeModel[], editor: any) {
@@ -264,6 +294,7 @@ export class ScenePhaseOne extends Phaser.Scene {
     endGameInformations.collectedElements = this.collectedElements;
 
     return endGameInformations;
+
   }
 
   async virarPersonagemParaLado(comando: string) {
@@ -323,7 +354,18 @@ export class ScenePhaseOne extends Phaser.Scene {
   }
 
   emitSoundKeyPress() {
-    const clique = this.sound?.add('teclas');
-    clique?.play({volume: this.sfxVolume});
+    const teclas = this.sound?.add('teclas');
+    teclas?.play({volume: this.sfxVolume*2});
   }
+
+  musicSuccess(){
+
+    this.sucesso.play({
+      mute: false,
+      loop: false,
+      volume: this.sfxVolume,
+    });
+
+  }
+
 }

@@ -307,9 +307,22 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     this.isRunning = false;
   }
 
+  objetivoConcluido(){
+    if (this.endGameInformations.collectedElements.length == 1) {
+      return true;
+    }
+    return false;
+  }
+
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
     this.endGameInformations = endGameInformations;
+
+    if(this.objetivoConcluido()){
+      this.scene.musicSuccess();
+    }
+
     this.openModalFimDeFase();
+
   }
 
   openModalFimDeFase() {
@@ -328,9 +341,11 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   nextPhase() {
-    if (this.endGameInformations.collectedElements.length == 1) {
+
+    if(this.objetivoConcluido()){
 
     }
+
   }
 
   openModalTutorial() {
