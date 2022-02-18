@@ -51,6 +51,8 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
 
   endGameInformations!: EndGameInformations;
 
+  stars: string[] = [];
+
   constructor(private modalService: BsModalService) {
     super();
   }
@@ -315,21 +317,44 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
+    this.stars = ["vazia", "vazia", "vazia"];
     this.endGameInformations = endGameInformations;
 
     if(this.objetivoConcluido()){
       this.scene.musicSuccess();
     }
 
+    this.calculaEstrelas();
+
     this.openModalFimDeFase();
 
+  }
+
+  calculaEstrelas() {
+    if (!this.objetivoConcluido()) {
+      return;
+    } else {
+      this.stars[this.stars.indexOf("vazia")] = "cheia";
+    }
+    if (this.endGameInformations.usedsCommands.length == 2) {
+      this.stars[this.stars.indexOf("vazia")] = "cheia";
+    }
+    else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 3) {
+      this.stars[this.stars.indexOf("vazia")] = "meia";
+    }
+    if (this.endGameInformations.steps >= 18 && this.endGameInformations.steps <= 20) {
+      this.stars[this.stars.indexOf("vazia")] = "cheia";
+    }
+    else if (this.endGameInformations.steps >= 20 && this.endGameInformations.steps <= 23) {
+      this.stars[this.stars.indexOf("vazia")] = "meia";
+    }
   }
 
   openModalFimDeFase() {
 
     let config = {
       keyboard: false,
-      class: 'modal-dialog-centered modal-dialog-scrollable',
+      class: 'modal-fullscreen',
       ignoreBackdropClick: true
     };
 
@@ -351,7 +376,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   openModalTutorial() {
     let config = {
       keyboard: false,
-      class: 'modal-fullscreen modal-tutorial',
+      class: 'modal-fullscreen',
       ignoreBackdropClick: true
     };
 
@@ -369,5 +394,58 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     else {
       this.closeModalTutorial();
     }
+  }
+
+  filtraEstrelas(filtro: string) {
+    return this.stars.filter(star => star == filtro);
+  }
+
+  getCorPassos() {
+    let cor = "da3636";
+
+    if (this.endGameInformations.steps >= 18 && this.endGameInformations.steps <= 20) {
+      cor = "00eb27";
+    }
+    else if (this.endGameInformations.steps >= 20 && this.endGameInformations.steps <= 23) {
+      cor = "fdc90f";
+    }
+
+    return cor;
+  }
+
+  getCorComandos() {
+    let cor = "da3636";
+
+    if (this.endGameInformations.usedsCommands.length == 2) {
+      cor = "00eb27";
+    }
+    else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 3) {
+      cor = "fdc90f";
+    }
+
+    return cor;
+  }
+
+  getCorTempo() {
+    let cor = "da3636";
+
+    if (this.endGameInformations.timeInSeconds <= 3) {
+      cor = "00eb27";
+    }
+    else if (this.endGameInformations.timeInSeconds > 3 && this.endGameInformations.timeInSeconds <= 5) {
+      cor = "fdc90f";
+    }
+
+    return cor;
+  }
+
+  getCorElementos() {
+    let cor = "da3636";
+
+    if (this.endGameInformations.collectedElements.length == 1) {
+      cor = "00eb27";
+    }
+
+    return cor;
   }
 }

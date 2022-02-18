@@ -4,7 +4,34 @@ body {
   overflow: hidden;
 }
 
-.modal-tutorial .modal-content {
+.star-end-phase {
+  display: inline-block;
+  width: 25%;
+}
+
+.star-end-phase:first-child {
+  margin-right: 25px;
+  transform: rotateZ(8deg);
+}
+
+.star-end-phase:last-child {
+  margin-left: 25px;
+  transform: rotateZ(-8deg);
+}
+
+.star-end-phase:first-child, .star-end-phase:last-child {
+  margin-top: -20px;
+}
+
+.content-fim-fase {
+  display: inline-block;
+  background-color: rgb(49, 12, 124);
+  width: 600px;
+  height: 600px;
+  border-radius: 100%;
+}
+
+.modal-fullscreen .modal-content {
   background-color: transparent !important;
 }
 
