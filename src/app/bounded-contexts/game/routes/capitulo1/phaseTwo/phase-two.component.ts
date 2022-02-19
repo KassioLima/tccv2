@@ -323,6 +323,8 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
 
     if(this.objetivoConcluido()){
       this.scene.musicSuccess();
+    } else {
+      this.scene.musicFail();
     }
 
     this.calculaEstrelas();

@@ -12,6 +12,7 @@ export class ScenePhaseTwo extends Phaser.Scene {
   passos!: Phaser.Sound.BaseSound;
   coleta!: Phaser.Sound.BaseSound;
   sucesso!: Phaser.Sound.BaseSound;
+  falha!: Phaser.Sound.BaseSound;
 
   musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.2;
   sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
@@ -44,10 +45,10 @@ export class ScenePhaseTwo extends Phaser.Scene {
     this.load.image('armario4', 'https://media.discordapp.net/attachments/847914147944857631/929153258377855066/armario767X44.png');
 
     this.load.spritesheet('tocha', 'https://media.discordapp.net/attachments/847914147944857631/928718585734512670/spriteTocha.png',
-    { frameWidth: 50, frameHeight: 100});
+      { frameWidth: 50, frameHeight: 100});
 
     this.load.spritesheet('sapoAlquimista', 'http://media.discordapp.net/attachments/593811885787447297/936132479281168434/spriteSapo.png',
-    {frameWidth: 527, frameHeight: 331});
+      {frameWidth: 527, frameHeight: 331});
 
     this.load.image('nitrogenio', 'https://media.discordapp.net/attachments/593811885787447297/938532685805150228/n.png');
     this.load.image('hidrogenio', 'https://media.discordapp.net/attachments/593811885787447297/938532695049392218/h.png');
@@ -83,6 +84,11 @@ export class ScenePhaseTwo extends Phaser.Scene {
       'assets/sonoplastia/coletouElemento.mp3',
     ]);
 
+    this.load.audio('falhou', [
+      'assets/sonoplastia/Game_Lost.wav',
+      'assets/sonoplastia/Game_Lost.mp3',
+    ]);
+
   }
 
   create() {
@@ -102,6 +108,7 @@ export class ScenePhaseTwo extends Phaser.Scene {
 
     this.coleta = this.sound.add('coletou');
     this.sucesso = this.sound.add('sucesso');
+    this.falha = this.sound.add('falhou');
 
   }
 
@@ -286,7 +293,7 @@ export class ScenePhaseTwo extends Phaser.Scene {
     }
     let endTime = moment();
 
-    this.passos.stop();
+    this.passos?.stop();
 
     endGameInformations.timeInSeconds = endTime.diff(startTime, 'seconds');
 
@@ -348,7 +355,7 @@ export class ScenePhaseTwo extends Phaser.Scene {
 
   restart() {
     this.comandos = [];
-    this.passos.stop();
+    this.passos?.stop();
     this.scene.restart();
   }
 
@@ -367,4 +374,13 @@ export class ScenePhaseTwo extends Phaser.Scene {
 
   }
 
+  musicFail(){
+
+    this.falha.play({
+      mute: false,
+      loop: false,
+      volume: this.sfxVolume,
+    });
+
+  }
 }

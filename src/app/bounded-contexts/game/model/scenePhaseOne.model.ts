@@ -13,6 +13,7 @@ export class ScenePhaseOne extends Phaser.Scene {
   passos!: Phaser.Sound.BaseSound;
   coleta!: Phaser.Sound.BaseSound;
   sucesso!: Phaser.Sound.BaseSound;
+  falha!: Phaser.Sound.BaseSound;
 
   musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.2;
   sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
@@ -84,6 +85,11 @@ export class ScenePhaseOne extends Phaser.Scene {
       'assets/sonoplastia/coletouElemento.mp3',
     ]);
 
+    this.load.audio('falhou', [
+      'assets/sonoplastia/Game_Lost.wav',
+      'assets/sonoplastia/Game_Lost.mp3',
+    ]);
+
   }
 
   create() {
@@ -103,6 +109,7 @@ export class ScenePhaseOne extends Phaser.Scene {
 
     this.coleta = this.sound.add('coletou');
     this.sucesso = this.sound.add('sucesso');
+    this.falha = this.sound.add('falhou');
 
   }
 
@@ -287,7 +294,7 @@ export class ScenePhaseOne extends Phaser.Scene {
     }
     let endTime = moment();
 
-    this.passos.stop();
+    this.passos?.stop();
 
     endGameInformations.timeInSeconds = endTime.diff(startTime, 'seconds');
 
@@ -349,7 +356,7 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   restart() {
     this.comandos = [];
-    this.passos.stop();
+    this.passos?.stop();
     this.scene.restart();
   }
 
@@ -368,4 +375,13 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   }
 
+  musicFail(){
+
+    this.falha.play({
+      mute: false,
+      loop: false,
+      volume: this.sfxVolume,
+    });
+
+  }
 }
