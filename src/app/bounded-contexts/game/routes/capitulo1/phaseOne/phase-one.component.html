@@ -165,15 +165,10 @@
               </table>
               </div>
 
-              <div class="row mt-3 mb-3">
+              <div class="row mt-0 mb-3">
                 <div class="col-12 col-md-12" style="text-align: center">
-                  <button class="btn btn-success me-2" [disabled]="!objetivoConcluido()" (click)="nextPhase()">
-                    Próxima
-                  </button>
-
-                  <button class="btn btn-secondary" (click)="stopExecution()">
-                    Reiniciar
-                  </button>
+                  <img src="assets/images/game/repeat.png" alt="Reiniciar" title="Tentar Novamente" (click)="stopExecution()" class="pointer me-5 button-modal-fim-de-fase">
+                  <img src="assets/images/game/next.png" alt="Próxima fase" title="Próxima fase" [ngClass]="{'opacity-50': !objetivoConcluido()}" (click)="nextPhase()" class="pointer button-modal-fim-de-fase">
                 </div>
               </div>
             </div>
