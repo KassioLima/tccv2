@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import Phaser from "phaser";
-import {ScenePhaseOne} from "../../../model/scenePhaseOne.model";
 import {CanDeactivateComponent} from "../../../../../core/components/can-deactivate.component";
 import {AceEditorComponent} from "ng2-ace-editor";
 import Swal from "sweetalert2";
@@ -21,15 +20,24 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   @ViewChild('gameArea', {static: false}) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  initialCode: string = "// Vira o Sapo Alquimista para cima\nup\n\n// Anda 15 passos. Modifique este valor para alcançar o elemento\nstep 15";
+  initialCode: string = "// Você pode usar nas setas como atalhos para os comandos up ↑, down ↓, left ← e right →\n" +
+    "\n" +
+    "right\n" +
+    "step 35\n" +
+    "\n" +
+    "// Talvez você precise mudar isso...\n" +
+    "up\n" +
+    "\n" +
+    "step 20";
   code: string = this.initialCode;
 
   indexText: number = 0;
   modalTexts: string[] = [
-    "Olá, sou Sapo Alquimista e preciso de sua ajuda para realizar alguns experimentos científicos.",
-    "Eu quero produzir a Pedra Filosofal.",
-    "Para isso, é necessário que você me ajude pegando os elementos certos.",
-    "Vamos começar pegando o elemento Ag (prata).",
+    "Agora iremos criar a Árvore dos Filósofos",
+    "Para isso preciso que você pegue: Hg (Mercúrio) e o H (Hidrogênio)",
+    "Existem uns botões que servem como atalho para escrever os seguintes comandos",
+    // "Comandos: Para cima, Para Baixo, Para Esquerda, Para Direira",
+    "Comandos:",
   ];
 
   isRunning: boolean = false;
@@ -311,10 +319,7 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   }
 
   objetivoConcluido(){
-    if (this.endGameInformations.collectedElements.length == 1) {
-      return true;
-    }
-    return false;
+    return this.endGameInformations.collectedElements.length == 2;
   }
 
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
@@ -334,22 +339,32 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   }
 
   calculaEstrelas() {
-    if (!this.objetivoConcluido()) {
-      return;
-    } else {
+
+    if (this.endGameInformations.collectedElements.length == 2) {
       this.stars[this.stars.indexOf("vazia")] = "cheia";
     }
-    if (this.endGameInformations.usedsCommands.length == 2) {
-      this.stars[this.stars.indexOf("vazia")] = "cheia";
-    }
-    else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 3) {
+    else if (this.endGameInformations.collectedElements.length == 1) {
       this.stars[this.stars.indexOf("vazia")] = "meia";
     }
-    if (this.endGameInformations.steps >= 18 && this.endGameInformations.steps <= 20) {
+
+    if (this.endGameInformations.usedsCommands.length == 6) {
       this.stars[this.stars.indexOf("vazia")] = "cheia";
     }
-    else if (this.endGameInformations.steps >= 20 && this.endGameInformations.steps <= 23) {
+    else if (this.endGameInformations.usedsCommands.length > 6 && this.endGameInformations.usedsCommands.length <= 8) {
       this.stars[this.stars.indexOf("vazia")] = "meia";
+    }
+
+    if (this.endGameInformations.steps <= 65) {
+      this.stars[this.stars.indexOf("vazia")] = "cheia";
+    }
+    else if (this.endGameInformations.steps >= 66 && this.endGameInformations.steps <= 75) {
+      this.stars[this.stars.indexOf("vazia")] = "meia";
+    }
+
+    const meias = this.stars.filter(star => star == "meia").length;
+
+    if (meias >= 2) {
+      this.stars = ["cheia", "vazia", meias == 2 ? "vazia" : "meia"];
     }
   }
 
@@ -406,10 +421,10 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   getCorPassos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.steps >= 18 && this.endGameInformations.steps <= 20) {
+    if (this.endGameInformations.steps <= 65) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.steps >= 20 && this.endGameInformations.steps <= 23) {
+    else if (this.endGameInformations.steps >= 66 && this.endGameInformations.steps <= 75) {
       cor = "fdc90f";
     }
 
@@ -419,10 +434,10 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   getCorComandos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.usedsCommands.length == 2) {
+    if (this.endGameInformations.usedsCommands.length == 6) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 3) {
+    else if (this.endGameInformations.usedsCommands.length > 6 && this.endGameInformations.usedsCommands.length <= 8) {
       cor = "fdc90f";
     }
 
@@ -432,10 +447,10 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   getCorTempo() {
     let cor = "da3636";
 
-    if (this.endGameInformations.timeInSeconds <= 3) {
+    if (this.endGameInformations.timeInSeconds <= 9) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.timeInSeconds > 3 && this.endGameInformations.timeInSeconds <= 5) {
+    else if (this.endGameInformations.timeInSeconds > 9 && this.endGameInformations.timeInSeconds <= 13) {
       cor = "fdc90f";
     }
 
@@ -445,8 +460,10 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   getCorElementos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.collectedElements.length == 1) {
+    if (this.endGameInformations.collectedElements.length == 2) {
       cor = "00eb27";
+    } else if (this.endGameInformations.collectedElements.length == 1) {
+      cor = "fdc90f";
     }
 
     return cor;
