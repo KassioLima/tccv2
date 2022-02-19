@@ -7,16 +7,16 @@ import Swal from "sweetalert2";
 import {LineCodeModel} from "../../../model/line-code.model";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {EndGameInformations} from "../../../model/end-game.informations";
-import {Router} from "@angular/router";
+import {ScenePhaseTwo} from "../../../model/scenePhaseTwo.model";
 declare const ace: any;
 
 @Component({
-  selector: 'app-phase-one-component',
-  templateUrl: './phase-one.component.html',
-  styleUrls: ['./phase-one.component.scss']
+  selector: 'app-phase-two-component',
+  templateUrl: './phase-two.component.html',
+  styleUrls: ['./phase-two.component.scss']
 })
 
-export class PhaseOneComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
+export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gameArea', {static: false}) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
@@ -66,7 +66,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     this.comandos.set('step', new RegExp('step [- +]?[0-9]+', 'g'));
     this.comandos.set('angle', new RegExp('angle [- +]?[0-9]+', 'g'));
 
-    this.scene = new ScenePhaseOne(this.config);
+    this.scene = new ScenePhaseTwo(this.config);
   }
 
   ngAfterViewInit() {
@@ -367,9 +367,11 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
   }
 
   nextPhase() {
+
     if(this.objetivoConcluido()){
-      window.location.href = "/game/phaseTwo";
+
     }
+
   }
 
   openModalTutorial() {

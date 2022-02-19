@@ -5,6 +5,7 @@ import {ForbiddenComponent} from "../../core/http-codes/forbidden/forbidden.comp
 import {UnavailableComponent} from "../../core/http-codes/unavailable/unavailable.component";
 import {NotFoundComponent} from "../../core/http-codes/not-found/not-found.component";
 import {CanDeactivateGuard} from "../../core/interfaces/guard";
+import {PhaseTwoComponent} from "./routes/capitulo1/phaseTwo/phase-two.component";
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
   {
     path: 'phaseOne',
     component: PhaseOneComponent,
+    canDeactivate: [CanDeactivateGuard]
+  },
+  {
+    path: 'phaseTwo',
+    component: PhaseTwoComponent,
     canDeactivate: [CanDeactivateGuard]
   },
   {

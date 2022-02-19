@@ -7,10 +7,12 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {AceEditorModule} from "ng2-ace-editor";
 import {LayoutModule} from "../../shared/layout/layout.module";
+import {PhaseTwoComponent} from "./routes/capitulo1/phaseTwo/phase-two.component";
 
 @NgModule({
   declarations: [
-    PhaseOneComponent
+    PhaseOneComponent,
+    PhaseTwoComponent
   ],
     imports: [
         GameRoutingModule,
