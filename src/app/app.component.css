@@ -424,7 +424,7 @@ body {
   top: 0;
   right: -350px;
   width: 350px;
-  /*height: 25vh;*/
+  height: 100vh;
   display: inline-block;
   animation-name: slideMenu;
   animation-duration: .4s;
@@ -459,4 +459,9 @@ body {
 .button-modal-fim-de-fase {
   width: 80px;
   border-radius: 100%;
+}
+
+.img-controle-som {
+  width: 40px;
+  margin-top: -13px;
 }

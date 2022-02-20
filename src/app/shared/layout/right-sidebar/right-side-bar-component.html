@@ -6,26 +6,43 @@
         <button class="btn btn-close" (click)="fecharMenuLateral()" style="filter: invert(1)"></button>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-10">
-        <label for="volume-principal" class="form-label">Volume Principal:</label>
-        <input type="range" [(ngModel)]="volumePrincipal" (input)="changeVolumePrincipal()" class="form-range" id="volume-principal">
-      </div>
-      <div class="col-md-1">
-        <label for="volume-principal" class="form-label">&nbsp;</label>
-        {{volumePrincipal}}%
-      </div>
+    <div class="row pb-3">
+      <label for="volume-principal" class="form-label">Volume Principal:</label>
+      <table>
+        <tr>
+          <td></td>
+          <td class="text-center">{{volumePrincipal}}%</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text-end">
+            <img src="assets/images/game/sons/som-.png" class="img-controle-som menos">
+          </td>
+
+          <td style="padding-right: 15px"><input type="range" [(ngModel)]="volumePrincipal" (input)="changeVolumePrincipal()" class="form-range" id="volume-principal"></td>
+
+          <td><img src="assets/images/game/sons/som+.png" class="img-controle-som menos"></td>
+        </tr>
+      </table>
     </div>
 
-    <div class="row mt-3">
-      <div class="col-md-10">
-        <label for="efeitos-sonoros" class="form-label">Efeitos Sonoros:</label>
-        <input type="range" [(ngModel)]="efeitosSonoros" (input)="changeEfeitosSonoros()" class="form-range" id="efeitos-sonoros">
-      </div>
-      <div class="col-md-1">
-        <label for="volume-principal" class="form-label">&nbsp;</label>
-        {{efeitosSonoros}}%
-      </div>
+    <hr>
+
+    <div class="row pb-3 pt-3">
+
+      <label for="volume-principal" class="form-label">Efeitos Sonoros:</label>
+      <table>
+        <tr>
+          <td></td>
+          <td class="text-center">{{efeitosSonoros}}%</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text-end"><img src="assets/images/game/sons/som-.png" class="img-controle-som menos"></td>
+          <td style="padding-right: 15px"><input type="range" [(ngModel)]="efeitosSonoros" (input)="changeEfeitosSonoros()" class="form-range" id="efeitos-sonoros"></td>
+          <td><img src="assets/images/game/sons/som+.png" class="img-controle-som menos"></td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
