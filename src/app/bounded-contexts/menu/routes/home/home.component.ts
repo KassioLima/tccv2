@@ -85,13 +85,13 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
         default: 'arcade',
         arcade: {
           gravity: { y: 0 },
-          debug: true
+          debug: false
         }
       },
       audio: {
         disableWebAudio: true,
       },
-      transparent: true
+      transparent: false
     };
     this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);

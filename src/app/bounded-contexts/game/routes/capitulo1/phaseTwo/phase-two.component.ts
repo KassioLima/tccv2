@@ -93,7 +93,7 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
       audio: {
         disableWebAudio: true
       },
-      transparent: true
+      transparent: false
     };
 
     this.config.scene = this.scene;
@@ -384,11 +384,9 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   }
 
   nextPhase() {
-
     if(this.objetivoConcluido()){
-
+      window.location.href = "/game/phaseThree";
     }
-
   }
 
   openModalTutorial() {

@@ -2,7 +2,6 @@ import Phaser from "phaser";
 import {LineCodeModel} from "./line-code.model";
 import {EndGameInformations} from "./end-game.informations";
 import moment from "moment";
-import {elementAt} from "rxjs/operators";
 
 declare const ace: any;
 
@@ -37,7 +36,7 @@ export class ScenePhaseOne extends Phaser.Scene {
 
   preload() {
 
-    this.load.image('cenario', 'https://media.discordapp.net/attachments/593811885787447297/945044397337227324/chao.png'); //https://media.discordapp.net/attachments/480173501379248131/934921906136690828/cenario_do_jogo.png
+    this.load.image('cenario', 'assets/images/game/chao/chao.png');
     this.load.image('mesa', 'https://media.discordapp.net/attachments/847914147944857631/929153185640222760/mesa.png');
     this.load.image('parede', 'https://media.discordapp.net/attachments/847914147944857631/929153210093010954/parede.png');
     this.load.image('armario1', 'https://media.discordapp.net/attachments/847914147944857631/929153224840196156/armario175X26.png');
