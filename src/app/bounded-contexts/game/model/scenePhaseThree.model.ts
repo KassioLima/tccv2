@@ -14,6 +14,9 @@ export class ScenePhaseThree extends Phaser.Scene {
   sucesso!: Phaser.Sound.BaseSound;
   falha!: Phaser.Sound.BaseSound;
 
+  timeout!: any;
+  editor!: any;
+
   musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.2;
   sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
 
@@ -22,6 +25,15 @@ export class ScenePhaseThree extends Phaser.Scene {
   angulos = new Map();
 
   collectedElements: string[] = [];
+
+  showAngle = false;
+
+  graphics: any;
+
+  line: any;
+
+  textAngle: any;
+  textSteps: any;
 
   constructor (config: Phaser.Types.Core.GameConfig) {
     super(config);
@@ -87,18 +99,21 @@ export class ScenePhaseThree extends Phaser.Scene {
 
   }
 
-  create() {
+  create ()
+  {
     this.add.image(0, 0, 'cenario').setOrigin(0, 0);
-    // this.add.image(0, 0, 'reguaVertical').setOrigin(0, 0);
-    // this.add.image(0, 600-40, 'reguaHorizontal').setOrigin(0, 0);
 
     let objetos = this.physics.add.staticGroup();
     this.elementos = this.physics.add.staticGroup();
 
     this.loadObjects(objetos);
     this.loadElementos();
-
     this.loadSapoAlquimista(objetos);
+
+    this.graphics = this.add.graphics({ lineStyle: { width: 4, color: 0x47006E } });
+
+    this.textAngle = this.add.text(this.sapoAlquimista.x - 40, this.sapoAlquimista.y + 30, '', { fontFamily: 'Segoe UI, Arial' });
+    this.textSteps = this.add.text(-200, -200, '', { fontFamily: 'Segoe UI, Arial' });
 
     this.loadSomFundo();
 
@@ -108,7 +123,47 @@ export class ScenePhaseThree extends Phaser.Scene {
 
   }
 
-  update() {}
+  update() {
+    this.graphics.clear();
+    this.textAngle.setText("");
+    this.textSteps.setText("");
+
+    if (!this.showAngle || this.input.activePointer.x > 700) return;
+
+    this.line = new Phaser.Geom.Line(this.sapoAlquimista.x, this.sapoAlquimista.y, this.input.activePointer.x, this.input.activePointer.y);
+
+    this.graphics.strokeLineShape(this.line);
+
+    let normalAngle = Phaser.Geom.Line.NormalAngle(this.line);
+
+    this.textAngle.setText("angle " + Phaser.Math.RadToDeg(normalAngle).toFixed(0));
+
+    this.textSteps.setX(this.input.activePointer.x);
+    if (this.input.activePointer.x >= 635) {
+      this.textSteps.setX(635);
+    }
+    if (this.input.activePointer.x < 15) {
+      this.textSteps.setX(15);
+    }
+
+
+    this.textSteps.setY(this.input.activePointer.y - 30);
+    if (this.input.activePointer.y < 40) {
+      this.textSteps.setY(40 - 30);
+    }
+
+    this.textSteps.setText("step " + this.calculaPassos({x: this.sapoAlquimista.x, y: this.sapoAlquimista.y}, {x: this.input.activePointer.x, y: this.input.activePointer.y}));
+  }
+
+  calculaPassos(xyInicial: { x: number, y: number }, xyFinal: { x: number, y: number }) {
+    const xa = xyInicial.x;
+    const ya = xyInicial.y;
+
+    const xb = xyFinal.x;
+    const yb = xyFinal.y;
+
+    return Number((((((xb - xa) ** 2) + ((yb - ya) ** 2)) ** (1/2)) / 12.5).toFixed(0));
+  }
 
   loadObjects(objetos: any) {
     this.loadParede(objetos);
@@ -218,6 +273,9 @@ export class ScenePhaseThree extends Phaser.Scene {
   }
 
   async executeCommands(comandos: LineCodeModel[], editor: any) {
+
+    this.editor = editor;
+    this.showAngle = false;
     this.collectedElements = [];
 
     let endGameInformations = new EndGameInformations();
@@ -248,10 +306,10 @@ export class ScenePhaseThree extends Phaser.Scene {
 
       let comando = this.comandos[0];
 
-      editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
+      this.editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
 
-      editor.resize(true);
-      editor.scrollToLine(comando.line, true, true, function () {});
+      this.editor.resize(true);
+      this.editor.scrollToLine(comando.line, true, true, function () {});
 
       if (!comando.value.includes(' ')) {
         await this.virarPersonagemParaLado(comando.value);
@@ -271,13 +329,7 @@ export class ScenePhaseThree extends Phaser.Scene {
 
       this.comandos.splice(0, 1);
 
-      const prevMarkers = editor.session.getMarkers(false);
-      if (prevMarkers) {
-        const prevMarkersArr = Object.keys(prevMarkers);
-        for (let item of prevMarkersArr) {
-          editor.session.removeMarker(prevMarkers[item].id);
-        }
-      }
+      this.removeAllMarkers();
     }
     let endTime = moment();
 
@@ -338,10 +390,23 @@ export class ScenePhaseThree extends Phaser.Scene {
   }
 
   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    return new Promise( resolve => this.timeout = setTimeout(resolve, ms) );
+  }
+
+  removeAllMarkers() {
+    const prevMarkers = this.editor.session.getMarkers(false);
+    if (prevMarkers) {
+      const prevMarkersArr = Object.keys(prevMarkers);
+      for (let item of prevMarkersArr) {
+        this.editor.session.removeMarker(prevMarkers[item].id);
+      }
+    }
   }
 
   restart() {
+    clearTimeout(this.timeout);
+    this.removeAllMarkers()
+
     this.comandos = [];
     this.passos?.stop();
     this.scene.restart();

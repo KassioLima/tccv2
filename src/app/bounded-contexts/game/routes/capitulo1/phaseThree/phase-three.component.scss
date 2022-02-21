@@ -95,14 +95,34 @@
   box-shadow: 5px 2px 0 3px rgba(0,0,0,0.25);
 }
 
+.direction-control.angle {
+  margin-left: 15px;
+  background-color: #47006E;
+  outline: #47006E solid 4px;
+}
+
 .direction-control:hover {
   outline-color: transparent;
   outline-offset: calc(0.2 * 25vh);
 }
 
+.direction-control.angle {
+  outline-color: #47006E;
+  outline-offset: 0;
+}
+
+.direction-control.angle:hover {
+  outline-color: rgba(71, 0, 110, 0.37);
+  outline-offset: 10px;
+}
+
 .direction-control img {
   width: 75%;
   filter: opacity(0.5);
+}
+
+.angle img {
+  filter: opacity(1);
 }
 
 .direction-control.small {

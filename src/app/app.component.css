@@ -465,3 +465,8 @@ body {
   width: 40px;
   margin-top: -13px;
 }
+
+.angle.active {
+  outline-color: #47006e !important;
+  outline-offset: 10px !important;
+}

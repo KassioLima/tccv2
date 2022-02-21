@@ -29,11 +29,10 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
 
   indexText: number = 0;
   modalTexts: string[] = [
-    "Agora iremos criar a Árvore dos Filósofos",
-    "Para isso preciso que você pegue: Hg (Mercúrio) e o H (Hidrogênio)",
-    "Existem uns botões que servem como atalho para escrever os seguintes comandos",
-    // "Comandos: Para cima, Para Baixo, Para Esquerda, Para Direira",
-    "Comandos:",
+    "Precisamos pegar o N (Nitrogênio)",
+    "O elemento está na diagonal do Sapo Alquimista. Nessas situações podemos usar o comando \"angle\" para girar em direção ao elemento.",
+    "Assim como o comando \"step\", o \"angle\" acompanha um número, que é a rotação desejada em graus.",
+    "Se precisar, você pode clicar no botão abaixo para ver quantos graus tem entre o Sapo Alquimista e o nitrogênio.",
   ];
 
   isRunning: boolean = false;
@@ -314,15 +313,15 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
     this.isRunning = false;
   }
 
-  objetivoConcluido(){
-    return this.endGameInformations.collectedElements.length == 2;
+  objetivoConcluido() {
+    return this.endGameInformations.collectedElements.length == 1;
   }
 
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
     this.stars = ["vazia", "vazia", "vazia"];
     this.endGameInformations = endGameInformations;
 
-    if(this.objetivoConcluido()){
+    if(this.objetivoConcluido()) {
       this.scene.musicSuccess();
     } else {
       this.scene.musicFail();
@@ -336,24 +335,23 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
 
   calculaEstrelas() {
 
-    if (this.endGameInformations.collectedElements.length == 2) {
+    if (this.endGameInformations.collectedElements.length == 1) {
       this.stars[this.stars.indexOf("vazia")] = "cheia";
-    }
-    else if (this.endGameInformations.collectedElements.length == 1) {
-      this.stars[this.stars.indexOf("vazia")] = "meia";
     }
 
-    if (this.endGameInformations.usedsCommands.length == 6) {
-      this.stars[this.stars.indexOf("vazia")] = "cheia";
-    }
-    else if (this.endGameInformations.usedsCommands.length > 6 && this.endGameInformations.usedsCommands.length <= 8) {
-      this.stars[this.stars.indexOf("vazia")] = "meia";
+    if (this.endGameInformations.usedsCommands.find(command => command.includes("angle"))) {
+      if (this.endGameInformations.usedsCommands.length == 2) {
+        this.stars[this.stars.indexOf("vazia")] = "cheia";
+      }
+      else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 4) {
+        this.stars[this.stars.indexOf("vazia")] = "meia";
+      }
     }
 
-    if (this.endGameInformations.steps <= 65) {
+    if (this.endGameInformations.steps <= 35) {
       this.stars[this.stars.indexOf("vazia")] = "cheia";
     }
-    else if (this.endGameInformations.steps >= 66 && this.endGameInformations.steps <= 75) {
+    else if (this.endGameInformations.steps >= 36 && this.endGameInformations.steps <= 45) {
       this.stars[this.stars.indexOf("vazia")] = "meia";
     }
 
@@ -380,11 +378,9 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
   }
 
   nextPhase() {
-
     if(this.objetivoConcluido()){
 
     }
-
   }
 
   openModalTutorial() {
@@ -417,10 +413,10 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
   getCorPassos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.steps <= 65) {
+    if (this.endGameInformations.steps <= 35) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.steps >= 66 && this.endGameInformations.steps <= 75) {
+    else if (this.endGameInformations.steps >= 36 && this.endGameInformations.steps <= 45) {
       cor = "fdc90f";
     }
 
@@ -430,11 +426,13 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
   getCorComandos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.usedsCommands.length == 6) {
-      cor = "00eb27";
-    }
-    else if (this.endGameInformations.usedsCommands.length > 6 && this.endGameInformations.usedsCommands.length <= 8) {
-      cor = "fdc90f";
+    if (this.endGameInformations.usedsCommands.find(command => command.includes("angle"))) {
+      if (this.endGameInformations.usedsCommands.length == 2) {
+        cor = "00eb27";
+      }
+      else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 4) {
+        cor = "fdc90f";
+      }
     }
 
     return cor;
@@ -443,10 +441,10 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
   getCorTempo() {
     let cor = "da3636";
 
-    if (this.endGameInformations.timeInSeconds <= 9) {
+    if (this.endGameInformations.timeInSeconds <= 2) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.timeInSeconds > 9 && this.endGameInformations.timeInSeconds <= 13) {
+    else if (this.endGameInformations.timeInSeconds > 2 && this.endGameInformations.timeInSeconds <= 4) {
       cor = "fdc90f";
     }
 
@@ -455,13 +453,14 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
 
   getCorElementos() {
     let cor = "da3636";
-
-    if (this.endGameInformations.collectedElements.length == 2) {
+    if (this.endGameInformations.collectedElements.length == 1) {
       cor = "00eb27";
-    } else if (this.endGameInformations.collectedElements.length == 1) {
-      cor = "fdc90f";
     }
-
     return cor;
+  }
+
+  toggleShowAngle() {
+    if(!this.isRunning)
+      this.scene.showAngle = !this.scene.showAngle;
   }
 }

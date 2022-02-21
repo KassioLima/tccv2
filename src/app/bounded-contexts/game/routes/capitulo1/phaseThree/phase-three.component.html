@@ -56,7 +56,14 @@
             </tr>
           </table>
         </td>
-        <td style="width: 37.5%;">
+
+        <td>
+          <div class="direction-control float-end angle" (click)="toggleShowAngle()" [ngClass]="{'opacity-50': isRunning, 'active': scene.showAngle}">
+            <img src="https://media.discordapp.net/attachments/593811885787447297/945126737023496242/reflex-angle.png?width=499&height=499" alt="Mostrar Angulação" title="Mostrar Angulação">
+          </div>
+        </td>
+
+        <td>
           <div class="play-button float-end" (click)="readConsoleText()" *ngIf="!isRunning">
             <img src="https://images.vexels.com/media/users/3/136986/isolated/preview/1267b92546dd4569214069b4ed32f70e-ponta-de-seta-de-triangulo-espesso.png" alt="play" title="Executar código" class="img-button-play">
           </div>
@@ -65,7 +72,7 @@
             <img src="https://iconsplace.com/wp-content/uploads/_icons/ff0000/256/png/stop-icon-14-256.png" alt="stop" title="Parar execução do código" class="img-button-play pause">
           </div>
         </td>
-        <td style="width: 37.5%;">
+        <td>
           <div class="reset-button float-end" (click)="resetCode()">
             <img src="https://icons.veryicon.com/png/o/miscellaneous/component-usage/reset-16.png" alt="reiinicial código" title="Reinicial código" class="img-button-reset">
           </div>
@@ -194,74 +201,18 @@
                   <span style="font-size: large">
                     {{modalTexts[indexText]}}
 
-                    <div *ngIf="indexText == 1" class="pt-3 text-center">
-                      <img class="me-2" src="https://media.discordapp.net/attachments/593811885787447297/938532718344552478/hg.png" style="width: 50px" alt="mercúrio" title="Mercúrio">
-                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532695049392218/h.png" style="width: 50px" alt="hidrogênio" title="Hidrogênio">
+                    <div *ngIf="indexText == 0" class="pt-3 text-center">
+                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532685805150228/n.png" style="width: 50px" alt="mercúrio" title="Mercúrio">
                     </div>
 
-                    <div *ngIf="indexText == 3" class="pt-3 text-center">
-                      <br>
-                      <table>
-                        <tr>
-                          <td>
-                            <table>
-                              <tr>
-                                <td class="direction-control me-1 ms-1 small">
-                                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="UP" title="UP" class="up">
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  up
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                          <td>
-                            <table>
-                              <tr>
-                                <td class="direction-control me-1 ms-1 small">
-                                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="DOWN" title="DOWN" class="down">
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  down
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                          <td>
-                            <table>
-                              <tr>
-                                <td class="direction-control me-1 ms-1 small">
-                                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="LEFT" title="LEFT" class="left">
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  left
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                          <td>
-                            <table>
-                              <tr>
-                                <td class="direction-control ms-1 small">
-                                  <img src="https://imagensemoldes.com.br/wp-content/uploads/2020/04/Emoji-Seta-PNG-1024x1024.png" alt="RIGHT" title="RIGHT" class="right">
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  right
-                                </td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
+                    <div *ngIf="indexText == 2" class="pt-3">
+                      Exemplo: <strong>angle 90</strong>
+                    </div>
 
+                    <div *ngIf="indexText == 3" class="pt-3">
+                      <span class="direction-control angle ms-auto me-auto">
+                        <img src="https://media.discordapp.net/attachments/593811885787447297/945126737023496242/reflex-angle.png?width=499&height=499" alt="Mostrar Angulação" title="Mostrar Angulação">
+                      </span>
                     </div>
                   </span>
                 </td>
