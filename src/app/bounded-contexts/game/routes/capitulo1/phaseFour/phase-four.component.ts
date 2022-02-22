@@ -34,8 +34,9 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   indexText: number = 0;
   modalTexts: string[] = [
     "Precisamos pegar três O (Oxigênio)",
-    "Para isso usarem um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho",
-    "Assim como o comando \"step\", \"angle\", \"repeat\" acompanha um número, que é a quantidade de vezes que os mesmos comandos irão executar.",
+    "Para isso, usaremos um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho",
+    "Assim como o comando \"step\", \"angle\", o \"repeat\" acompanha um número, que é a quantidade de vezes que os mesmos comandos irão executar.",
+    "Com isso, teremos os elementos necessários para forma um Ácido Nítrico.",
   ];
 
   isRunning: boolean = false;
