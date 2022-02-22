@@ -9,12 +9,14 @@ import {AceEditorModule} from "ng2-ace-editor";
 import {LayoutModule} from "../../shared/layout/layout.module";
 import {PhaseTwoComponent} from "./routes/capitulo1/phaseTwo/phase-two.component";
 import {PhaseThreeComponent} from "./routes/capitulo1/phaseThree/phase-three.component";
+import {PhaseFourComponent} from "./routes/capitulo1/phaseFour/phase-four.component";
 
 @NgModule({
   declarations: [
     PhaseOneComponent,
     PhaseTwoComponent,
-    PhaseThreeComponent
+    PhaseThreeComponent,
+    PhaseFourComponent
   ],
     imports: [
         GameRoutingModule,

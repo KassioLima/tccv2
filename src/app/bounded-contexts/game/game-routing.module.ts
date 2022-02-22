@@ -7,6 +7,7 @@ import {NotFoundComponent} from "../../core/http-codes/not-found/not-found.compo
 import {CanDeactivateGuard} from "../../core/interfaces/guard";
 import {PhaseTwoComponent} from "./routes/capitulo1/phaseTwo/phase-two.component";
 import {PhaseThreeComponent} from "./routes/capitulo1/phaseThree/phase-three.component";
+import {PhaseFourComponent} from "./routes/capitulo1/phaseFour/phase-four.component";
 
 const routes: Routes = [
   {
@@ -27,6 +28,11 @@ const routes: Routes = [
   {
     path: 'phaseThree',
     component: PhaseThreeComponent,
+    canDeactivate: [CanDeactivateGuard]
+  },
+  {
+    path: 'phaseFour',
+    component: PhaseFourComponent,
     canDeactivate: [CanDeactivateGuard]
   },
   {

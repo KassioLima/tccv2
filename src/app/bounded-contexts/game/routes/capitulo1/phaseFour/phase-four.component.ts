@@ -6,33 +6,36 @@ import Swal from "sweetalert2";
 import {LineCodeModel} from "../../../model/line-code.model";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {EndGameInformations} from "../../../model/end-game.informations";
-import {ScenePhaseThree} from "../../../model/scenePhaseThree.model";
+import {ScenePhaseFour} from "../../../model/scenePhaseFour.model";
 declare const ace: any;
 
 @Component({
-  selector: 'app-phase-three-component',
-  templateUrl: './phase-three.component.html',
-  styleUrls: ['./phase-three.component.scss']
+  selector: 'app-phase-four-component',
+  templateUrl: './phase-four.component.html',
+  styleUrls: ['./phase-four.component.scss']
 })
 
-export class PhaseThreeComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
+export class PhaseFourComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
   @ViewChild('gameArea', {static: false}) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  initialCode: string = "// O ângulo é contado a partir da direção atual do personagem no sentido horário.\n" +
+  initialCode: string = "// Use o laço de repetição para pegar os três Oxigênios.\n" +
     "\n" +
-    "// Modifique o ângulo abaixo para direcionar o Sapo Alquimista para o Nitrogênio.\n\n" +
-    "angle 45";
+    "// Altere o valor abaixo\n\n" +
+    "repeat 2:" +
+    "\n" +
+    " angle 90" +
+    "\n" +
+    " step 20";
 
   code: string = this.initialCode;
 
   indexText: number = 0;
   modalTexts: string[] = [
-    "Precisamos pegar o N (Nitrogênio)",
-    "O elemento está na diagonal do Sapo Alquimista. Nessas situações podemos usar o comando \"angle\" para girar em direção ao elemento.",
-    "Assim como o comando \"step\", o \"angle\" acompanha um número, que é a rotação desejada em graus.",
-    "Se precisar, você pode clicar no botão abaixo para ver quantos graus tem entre o Sapo Alquimista e o nitrogênio.",
+    "Precisamos pegar três O (Oxigênio)",
+    "Para isso usarem um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho",
+    "Assim como o comando \"step\", \"angle\", \"repeat\" acompanha um número, que é a quantidade de vezes que os mesmos comandos irão executar.",
   ];
 
   isRunning: boolean = false;
@@ -68,8 +71,9 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
     this.comandos.set('down', 'down');
     this.comandos.set('step', new RegExp('step [- +]?[0-9]+', 'g'));
     this.comandos.set('angle', new RegExp('angle [- +]?[0-9]+', 'g'));
+    this.comandos.set('repeat', new RegExp('repeat [+]?[0-9]:', 'g'));
 
-    this.scene = new ScenePhaseThree(this.config);
+    this.scene = new ScenePhaseFour(this.config);
   }
 
   ngAfterViewInit() {
@@ -314,7 +318,7 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
   }
 
   objetivoConcluido() {
-    return this.endGameInformations.collectedElements.length == 1;
+    return this.endGameInformations.collectedElements.length == 3;
   }
 
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
@@ -335,23 +339,23 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
 
   calculaEstrelas() {
 
-    if (this.endGameInformations.collectedElements.length == 1) {
+    if (this.endGameInformations.collectedElements.length == 3) {
       this.stars[this.stars.indexOf("vazia")] = "cheia";
     }
 
-    if (this.endGameInformations.usedsCommands.find(command => command.includes("angle"))) {
-      if (this.endGameInformations.usedsCommands.length == 2) {
+    if (this.endGameInformations.usedsCommands.find(command => command.includes("repeat"))) {
+      if (this.endGameInformations.usedsCommands.length == 3) {
         this.stars[this.stars.indexOf("vazia")] = "cheia";
       }
-      else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 4) {
+      else if (this.endGameInformations.usedsCommands.length > 3 && this.endGameInformations.usedsCommands.length <= 6) {
         this.stars[this.stars.indexOf("vazia")] = "meia";
       }
     }
 
-    if (this.endGameInformations.steps <= 35) {
+    if (this.endGameInformations.steps <= 60) {
       this.stars[this.stars.indexOf("vazia")] = "cheia";
     }
-    else if (this.endGameInformations.steps >= 36 && this.endGameInformations.steps <= 45) {
+    else if (this.endGameInformations.steps >= 61 && this.endGameInformations.steps <= 75) {
       this.stars[this.stars.indexOf("vazia")] = "meia";
     }
 
@@ -379,7 +383,7 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
 
   nextPhase() {
     if(this.objetivoConcluido()){
-      window.location.href = "/game/phaseFour";
+
     }
   }
 

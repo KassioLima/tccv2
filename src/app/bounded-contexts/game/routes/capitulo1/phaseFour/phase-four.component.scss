@@ -1,0 +1,156 @@
+.gameArea {
+  background-image: url("https://static.vecteezy.com/system/resources/thumbnails/000/533/848/small_2x/Brickwall004.jpg");
+  background-position-y: bottom;
+}
+
+.gameArea, .areaCode {
+  position: absolute;
+  display: inline-block;
+  height: 100vh;
+}
+
+.areaCode {
+  right: 0;
+  width: calc(100% - 700px);
+  border: 0 solid black;
+}
+
+.areaCode table {
+  width: 100%;
+}
+
+.play-button, .reset-button {
+  border: none;
+  border-radius: 100%;
+  width: calc(0.6 * 25vh);
+  height: calc(0.6 * 25vh);
+  background-color: #68931e;
+  outline: #68931e solid 2px;
+  transition: .5s;
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 5px 2px 0 3px rgba(0,0,0,0.25);
+}
+
+.reset-button {
+  background-color: #c95151;
+  outline-color: #c95151;
+}
+
+.play-button:hover {
+  outline-color: transparent;
+  outline-offset: calc(0.2 * 25vh);
+}
+
+.reset-button:hover {
+  outline-color: transparent;
+  outline-width: calc(0.2 * 25vh);
+}
+
+.play-button .img-button-play {
+  transition: .5s;
+  width: 60%;
+  margin-left: calc(60% / 16);
+  filter: invert(0) opacity(0.5);
+}
+
+.play-button.pause .img-button-play.pause {
+  transition: .5s;
+  width: 70%;
+  margin-left: 0;
+  filter: invert(0) opacity(0.5);
+}
+
+.reset-button .img-button-reset {
+  transition: .5s;
+  width: 75%;
+  filter: invert(0) opacity(0.5);
+}
+
+.ace-editor {
+  border-radius: 15px;
+  border: 15px solid rgba(0, 0, 0, 0.5);
+}
+
+.direction-control {
+  color: white;
+  border-radius: 100%;
+  width: calc(0.3 * 25vh);
+  height: calc(0.3 * 25vh);
+  background-color: #68931e;
+  outline: #68931e solid 2px;
+  cursor: pointer;
+  transition: .5s;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 5px 2px 0 3px rgba(0,0,0,0.25);
+}
+
+.direction-control.angle {
+  margin-left: 15px;
+  background-color: #47006E;
+  outline: #47006E solid 4px;
+}
+
+.direction-control:hover {
+  outline-color: transparent;
+  outline-offset: calc(0.2 * 25vh);
+}
+
+.direction-control.angle {
+  outline-color: #47006E;
+  outline-offset: 0;
+}
+
+.direction-control.angle:hover {
+  outline-color: rgba(71, 0, 110, 0.37);
+  outline-offset: 10px;
+}
+
+.direction-control img {
+  width: 75%;
+  filter: opacity(0.5);
+}
+
+.angle img {
+  filter: opacity(1);
+}
+
+.direction-control.small {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.direction-control .up {
+  transform: rotateZ(-90deg);
+}
+
+.direction-control .left {
+  transform: rotateZ(-180deg);
+}
+
+.direction-control .down {
+  transform: rotateZ(90deg);
+}
+
+.pular-tudo {
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.pular-tudo:hover {
+  text-decoration: underline;
+}
+
+.pular-tudo:before {
+  content: "Pular tudo";
+}
