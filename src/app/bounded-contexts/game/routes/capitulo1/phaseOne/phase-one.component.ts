@@ -105,7 +105,7 @@ export class PhaseOneComponent extends CanDeactivateComponent implements OnInit,
     this.editor.getEditor().selection.moveCursorFileEnd();
     this.editor.getEditor().focus();
 
-    // this.openModalTutorial();
+    this.openModalTutorial();
   }
 
   async readConsoleText() {
