@@ -414,6 +414,7 @@ export class ScenePhaseFour extends Phaser.Scene {
   }
 
   async repetirComandos(numeroIteracao: number, comandos: LineCodeModel[]) {
+    this.removeAllMarkers();
     let limit = this.getScopeLimit(comandos);
     let commandsCopy = comandos.slice(1, limit);
 
