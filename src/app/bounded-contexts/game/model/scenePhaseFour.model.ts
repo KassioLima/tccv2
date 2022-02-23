@@ -414,7 +414,9 @@ export class ScenePhaseFour extends Phaser.Scene {
   }
 
   async repetirComandos(numeroIteracao: number, comandos: LineCodeModel[]) {
-    let commandsCopy = this.getScope(comandos);
+    let limit = this.getScopeLimit(comandos);
+    let commandsCopy = comandos.slice(1, limit);
+
     for (let i = 0; i < numeroIteracao; i++ ) {
       let commandsCopyCopy = commandsCopy.slice();
       while (commandsCopyCopy.length){
@@ -422,10 +424,10 @@ export class ScenePhaseFour extends Phaser.Scene {
         await this.processarComandos(comando, commandsCopyCopy);
       }
     }
-    comandos.splice(0);
+    comandos.splice(0, limit);
   }
 
-  getScope(comandos: LineCodeModel[]) {
+  getScopeLimit(comandos: LineCodeModel[]) {
     let limit = 0;
     for (let i = 0; i < comandos.length; i++) {
       if (comandos[i].value.includes("repeat")) {
@@ -446,7 +448,7 @@ export class ScenePhaseFour extends Phaser.Scene {
       console.log("Não achou nenhuma chave fechando");
     }
 
-    return comandos.slice(1, limit);
+    return limit;
   }
 
   delay(ms: number) {
