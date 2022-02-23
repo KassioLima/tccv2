@@ -108,6 +108,7 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
       wrap: true,
       useWorker: false,
       animatedScroll: true,
+      tabSize: 2,
     });
 
     this.editor.getEditor().selection.moveCursorFileEnd();
@@ -143,7 +144,7 @@ export class PhaseTwoComponent extends CanDeactivateComponent implements OnInit,
   }
 
   getLinesValid(text: string): string[] {
-    let lines = text.split('\n')/*.filter(c => c.length > 0)*/;
+    let lines = text.split('\n');
 
     lines = lines.map(line => {
       line = line.trim();

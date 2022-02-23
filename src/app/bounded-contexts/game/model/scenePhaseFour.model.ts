@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import {LineCodeModel} from "./line-code.model";
 import {EndGameInformations} from "./end-game.informations";
 import moment from "moment";
+import { ValueTransformer } from "@angular/compiler/src/util";
 
 declare const ace: any;
 
@@ -21,6 +22,8 @@ export class ScenePhaseFour extends Phaser.Scene {
   sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
 
   comandos: LineCodeModel[] = [];
+
+  comandosIgnorados: string[] = ["}"];
 
   angulos = new Map();
 
@@ -317,23 +320,7 @@ export class ScenePhaseFour extends Phaser.Scene {
       this.editor.resize(true);
       this.editor.scrollToLine(comando.line, true, true, function () {});
 
-      if (!comando.value.includes(' ')) {
-        await this.virarPersonagemParaLado(comando.value);
-      }
-
-      else {
-        let tipoComando = comando.value.split(' ')[0];
-        if (tipoComando == 'step') {
-          let passos = Number(comando.value.split(' ')[1]);
-          await this.andarSapo(passos);
-        }
-        else if (tipoComando == 'angle') {
-          let angulo = Number(comando.value.split(' ')[1]);
-          await this.virarPersonagemComAngulo(angulo);
-        }
-      }
-
-      this.comandos.splice(0, 1);
+      await this.processarComandos(comando);
 
       this.removeAllMarkers();
     }
@@ -346,6 +333,44 @@ export class ScenePhaseFour extends Phaser.Scene {
     endGameInformations.collectedElements = this.collectedElements;
 
     return endGameInformations;
+
+  }
+
+  async processarComandos(comando: LineCodeModel){
+
+    if (this.comandosIgnorados.includes(comando.value)){
+      this.comandos.splice(0, 1);
+      return;
+    }
+
+
+    // this.editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
+
+    // this.editor.resize(true);
+    // this.editor.scrollToLine(comando.line, true, true, function () {});
+
+
+    if (!comando.value.includes(' ')) {
+      await this.virarPersonagemParaLado(comando.value);
+    }
+
+    else {
+      let tipoComando = comando.value.split(' ')[0];
+      let valor = Number(comando.value.split(' ')[1]);
+
+      if (tipoComando == 'step') {
+        await this.andarSapo(valor);
+      }
+      else if (tipoComando == 'angle') {
+        await this.virarPersonagemComAngulo(valor);
+      }
+      else if (tipoComando == 'repeat') {
+        await this.repetirComandos(valor);
+      }
+    }
+
+    this.comandos.splice(0, 1);
+    this.removeAllMarkers();
 
   }
 
@@ -393,6 +418,25 @@ export class ScenePhaseFour extends Phaser.Scene {
     await this.delay(Math.abs(passos) * 80);
     this.sapoAlquimista.setVelocity(0, 0);
     this.sapoAlquimista.anims.stop();
+  }
+
+  async repetirComandos(numeroIteracao: number){
+
+    this.comandos.splice(0, 1);
+
+    for (let i = 0; i < numeroIteracao; i++ ){
+      let j = 0;
+      while (this.comandos[j].value != "}"){
+        let comando = this.comandos[0];
+        await this.processarComandos(comando);
+        j++;
+        if (i == numeroIteracao - 1){
+          this.comandos.splice(0, 1);
+          j = 0;
+        }
+      }
+    }
+
   }
 
   delay(ms: number) {

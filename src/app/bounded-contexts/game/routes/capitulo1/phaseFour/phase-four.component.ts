@@ -23,11 +23,13 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   initialCode: string = "// Use o laço de repetição para pegar os três Oxigênios.\n" +
     "\n" +
     "// Altere o valor abaixo\n\n" +
-    "repeat 2:" +
+    "repeat 2 {" +
     "\n" +
-    " angle 90" +
+    "\tangle 90" +
     "\n" +
-    " step 20";
+    "\tstep 20" +
+    "\n" +
+    "}";
 
   code: string = this.initialCode;
 
@@ -72,7 +74,8 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     this.comandos.set('down', 'down');
     this.comandos.set('step', new RegExp('step [- +]?[0-9]+', 'g'));
     this.comandos.set('angle', new RegExp('angle [- +]?[0-9]+', 'g'));
-    this.comandos.set('repeat', new RegExp('repeat [+]?[0-9]:', 'g'));
+    this.comandos.set('repeat', new RegExp('repeat [+]?[0-9]+ {', 'g'));
+    this.comandos.set('}', '}');
 
     this.scene = new ScenePhaseFour(this.config);
   }
@@ -108,6 +111,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
       wrap: true,
       useWorker: false,
       animatedScroll: true,
+      tabSize: 2,
     });
 
     this.editor.getEditor().selection.moveCursorFileEnd();
@@ -143,7 +147,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   }
 
   getLinesValid(text: string): string[] {
-    let lines = text.split('\n')/*.filter(c => c.length > 0)*/;
+    let lines = text.split('\n');
 
     lines = lines.map(line => {
       line = line.trim();

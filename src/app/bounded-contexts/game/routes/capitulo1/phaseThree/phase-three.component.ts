@@ -138,7 +138,7 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
   }
 
   getLinesValid(text: string): string[] {
-    let lines = text.split('\n')/*.filter(c => c.length > 0)*/;
+    let lines = text.split('\n');
 
     lines = lines.map(line => {
       line = line.trim();
