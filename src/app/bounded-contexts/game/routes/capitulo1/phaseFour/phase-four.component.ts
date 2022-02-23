@@ -127,7 +127,9 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
       if (!comandosDigitados.invalidComands.length && comandosDigitados.validComands.length) {
         this.isRunning = true;
+        this.editor.getEditor().setReadOnly(true);
         let endGameInformations = await this.scene.executeCommands(comandosDigitados.validComands, this.editor.getEditor());
+        this.editor.getEditor().setReadOnly(false);
         this.isRunning = false;
         this.verificaEstadoDoJogo(endGameInformations);
       }
@@ -265,6 +267,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
       if (result.isConfirmed) {
         this.scene.restart();
         this.removeAllMarkers();
+        this.editor.getEditor().setReadOnly(false);
         this.code = this.initialCode;
         this.editor.setText(this.code);
         this.isRunning = false;
@@ -337,6 +340,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   stopExecution() {
     this.closeModalFimDeFase();
     this.scene.restart();
+    this.editor.getEditor().setReadOnly(false);
     this.removeAllMarkers();
     this.isRunning = false;
   }
