@@ -2,11 +2,12 @@ import Phaser from "phaser";
 import {LineCodeModel} from "./line-code.model";
 import {EndGameInformations} from "./end-game.informations";
 import moment from "moment";
-import { ValueTransformer } from "@angular/compiler/src/util";
 
 declare const ace: any;
 
 export class ScenePhaseFour extends Phaser.Scene {
+  Range = ace.require('ace/range').Range;
+
   sapoAlquimista!: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
   elementos!: Phaser.Physics.Arcade.StaticGroup;
   music!: Phaser.Sound.BaseSound;
@@ -299,8 +300,6 @@ export class ScenePhaseFour extends Phaser.Scene {
       endGameInformations.steps += steps.reduce((a, b) => a + b);
     }
 
-    const Range = ace.require('ace/range').Range;
-
     this.comandos = comandos;
 
     this.passos = this.sound.add('passos');
@@ -315,12 +314,7 @@ export class ScenePhaseFour extends Phaser.Scene {
 
       let comando = this.comandos[0];
 
-      this.editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
-
-      this.editor.resize(true);
-      this.editor.scrollToLine(comando.line, true, true, function () {});
-
-      await this.processarComandos(comando);
+      await this.processarComandos(comando, this.comandos);
 
       this.removeAllMarkers();
     }
@@ -336,18 +330,17 @@ export class ScenePhaseFour extends Phaser.Scene {
 
   }
 
-  async processarComandos(comando: LineCodeModel){
+  async processarComandos(comando: LineCodeModel, comandos: LineCodeModel[]){
 
     if (this.comandosIgnorados.includes(comando.value)){
-      this.comandos.splice(0, 1);
+      comandos.splice(0, 1);
       return;
     }
 
+    this.editor.session.addMarker(new this.Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
 
-    // this.editor.session.addMarker(new Range(comando.line, 0, comando.line, 1), "marcadorDeLinhaEmExecucao", "fullLine");
-
-    // this.editor.resize(true);
-    // this.editor.scrollToLine(comando.line, true, true, function () {});
+    this.editor.resize(true);
+    this.editor.scrollToLine(comando.line, true, true, function () {});
 
 
     if (!comando.value.includes(' ')) {
@@ -365,11 +358,11 @@ export class ScenePhaseFour extends Phaser.Scene {
         await this.virarPersonagemComAngulo(valor);
       }
       else if (tipoComando == 'repeat') {
-        await this.repetirComandos(valor);
+        await this.repetirComandos(valor, comandos);
       }
     }
 
-    this.comandos.splice(0, 1);
+    comandos.splice(0, 1);
     this.removeAllMarkers();
 
   }
@@ -420,23 +413,40 @@ export class ScenePhaseFour extends Phaser.Scene {
     this.sapoAlquimista.anims.stop();
   }
 
-  async repetirComandos(numeroIteracao: number){
+  async repetirComandos(numeroIteracao: number, comandos: LineCodeModel[]) {
+    let commandsCopy = this.getScope(comandos);
+    for (let i = 0; i < numeroIteracao; i++ ) {
+      let commandsCopyCopy = commandsCopy.slice();
+      while (commandsCopyCopy.length){
+        let comando = commandsCopyCopy[0];
+        await this.processarComandos(comando, commandsCopyCopy);
+      }
+    }
+    comandos.splice(0);
+  }
 
-    this.comandos.splice(0, 1);
-
-    for (let i = 0; i < numeroIteracao; i++ ){
-      let j = 0;
-      while (this.comandos[j].value != "}"){
-        let comando = this.comandos[0];
-        await this.processarComandos(comando);
-        j++;
-        if (i == numeroIteracao - 1){
-          this.comandos.splice(0, 1);
-          j = 0;
+  getScope(comandos: LineCodeModel[]) {
+    let limit = 0;
+    for (let i = 0; i < comandos.length; i++) {
+      if (comandos[i].value.includes("repeat")) {
+        for (let j = limit + 1; j < comandos.length; j++) {
+          if (comandos[j].value == "}") {
+            limit = j;
+            break;
+          }
         }
+        continue;
+      }
+      if (i == limit) {
+        break;
       }
     }
 
+    if (limit == 0) {
+      console.log("Não achou nenhuma chave fechando");
+    }
+
+    return comandos.slice(1, limit);
   }
 
   delay(ms: number) {
@@ -455,8 +465,6 @@ export class ScenePhaseFour extends Phaser.Scene {
 
   restart() {
     clearTimeout(this.timeout);
-    this.removeAllMarkers()
-
     this.comandos = [];
     this.passos?.stop();
     this.scene.restart();

@@ -198,6 +198,19 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
       }
     }
 
+    if (lines.filter(line => line.includes("repeat")).length != lines.filter(line => line.includes("}")).length) {
+      for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+        let line = lines[lineIndex];
+        if(line.includes("repeat")) {
+          invalidComands.push({line: lineIndex, value: line} as LineCodeModel);
+          if (showError) {
+            this.alertCodeError(line, lineIndex);
+            break;
+          }
+        }
+      }
+    }
+
     return {
       invalidComands: invalidComands,
       validComands: validComands
@@ -225,13 +238,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
         let lines = this.getLinesValid(this.code);
         let comandosDigitados = this.getComands(lines, false);
 
-        const prevMarkers = this.editor.getEditor().session.getMarkers(false);
-        if (prevMarkers) {
-          const prevMarkersArr = Object.keys(prevMarkers);
-          for (let item of prevMarkersArr) {
-            this.editor.getEditor().session.removeMarker(prevMarkers[item].id);
-          }
-        }
+        this.removeAllMarkers();
 
         if (comandosDigitados.invalidComands.length) {
           const Range = ace.require('ace/range').Range;
@@ -257,11 +264,22 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     }).then((result) => {
       if (result.isConfirmed) {
         this.scene.restart();
+        this.removeAllMarkers();
         this.code = this.initialCode;
         this.editor.setText(this.code);
         this.isRunning = false;
       }
     });
+  }
+
+  removeAllMarkers() {
+    const prevMarkers = this.editor.getEditor().session.getMarkers(false);
+    if (prevMarkers) {
+      const prevMarkersArr = Object.keys(prevMarkers);
+      for (let item of prevMarkersArr) {
+        this.editor.getEditor().session.removeMarker(prevMarkers[item].id);
+      }
+    }
   }
 
   async inserirComando(comando: string) {
