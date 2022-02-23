@@ -337,6 +337,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   stopExecution() {
     this.closeModalFimDeFase();
     this.scene.restart();
+    this.removeAllMarkers();
     this.isRunning = false;
   }
 
