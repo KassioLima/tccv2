@@ -8,6 +8,7 @@ import {CanDeactivateGuard} from "../../core/interfaces/guard";
 import {PhaseTwoComponent} from "./routes/capitulo1/phaseTwo/phase-two.component";
 import {PhaseThreeComponent} from "./routes/capitulo1/phaseThree/phase-three.component";
 import {PhaseFourComponent} from "./routes/capitulo1/phaseFour/phase-four.component";
+import {PhaseFiveComponent} from "./routes/capitulo1/phaseFive/phase-five.component";
 
 const routes: Routes = [
   {
@@ -33,6 +34,11 @@ const routes: Routes = [
   {
     path: 'phaseFour',
     component: PhaseFourComponent,
+    canDeactivate: [CanDeactivateGuard]
+  },
+  {
+    path: 'phaseFive',
+    component: PhaseFiveComponent,
     canDeactivate: [CanDeactivateGuard]
   },
   {
