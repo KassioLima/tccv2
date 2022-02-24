@@ -53,6 +53,9 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   @ViewChild('modalMolecula', {static: false}) modalMolecula!: TemplateRef<any>
   modalMoleculaRef!: BsModalRef;
 
+  @ViewChild('modalConclusaoJogo', {static: false}) modalConclusaoJogo!: TemplateRef<any>
+  modalConclusaoJogoRef!: BsModalRef;
+
   endGameInformations!: EndGameInformations;
 
   stars: string[] = [];
@@ -359,7 +362,7 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
     this.calculaEstrelas();
 
     if(this.objetivoConcluido()){
-      setTimeout(() => {this.openModalFimDeFase()}, 6000);
+      setTimeout(() => {this.openModalConclusaoJogo()}, 6000);
       setTimeout(() => {this.scene.musicArvore()}, 6000);
     }
     else{
@@ -427,6 +430,21 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
 
   closeModalMolecula() {
     this.modalMoleculaRef?.hide();
+  }
+
+  openModalConclusaoJogo() {
+
+    let config = {
+      keyboard: false,
+      class: 'modal-fullscreen',
+      ignoreBackdropClick: true
+    };
+
+    this.modalConclusaoJogoRef = this.modalService.show(this.modalConclusaoJogo, config);
+  }
+
+  closeModalConclusaoJogo() {
+    this.modalConclusaoJogoRef?.hide();
   }
 
   openModalTutorial() {
