@@ -20,25 +20,16 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   @ViewChild('gameArea', {static: false}) gameArea!: ElementRef;
   @ViewChild('editor') editor!: AceEditorComponent;
 
-  initialCode: string = "// Use o laço de repetição para pegar os três Oxigênios.\n" +
+  initialCode: string = "// Use sua imaginação\n" +
     "\n" +
-    "// Altere o valor abaixo\n\n" +
-    "repeat 2 {" +
-    "\n" +
-    "\tangle 90" +
-    "\n" +
-    "\tstep 20" +
-    "\n" +
-    "}";
+    "// Aproveite todos os conceitos que você aprendeu até agora\n\n";
 
   code: string = this.initialCode;
 
   indexText: number = 0;
   modalTexts: string[] = [
-    "Precisamos pegar três O (Oxigênio)",
-    "Para isso, usaremos um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho",
-    "Assim como o comando \"step\", \"angle\", o \"repeat\" acompanha um número, que é a quantidade de vezes que os mesmos comandos irão executar.",
-    "Com isso, teremos os elementos necessários para forma um Ácido Nítrico.",
+    "Iremos fazer a molécula da água (H20)",
+    "Precisamos coletar dois elementos de H (Hidrogênio) e um O de (Oxigênio). E a pedra filosofal será produzida através da árvore dos filósofos.",
   ];
 
   isRunning: boolean = false;
@@ -58,6 +49,9 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
 
   @ViewChild('modalTutorial', {static: false}) modalTutorial!: TemplateRef<any>
   modalTutorialRef!: BsModalRef;
+
+  @ViewChild('modalMolecula', {static: false}) modalMolecula!: TemplateRef<any>
+  modalMoleculaRef!: BsModalRef;
 
   endGameInformations!: EndGameInformations;
 
@@ -346,6 +340,9 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   }
 
   objetivoConcluido() {
+
+    this.openModalMolecula();
+    setTimeout(() => {this.closeModalMolecula();}, 5000);
     return this.endGameInformations.collectedElements.length == 3;
   }
 
@@ -361,7 +358,9 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
 
     this.calculaEstrelas();
 
-    this.openModalFimDeFase();
+    setTimeout(() => {this.openModalFimDeFase()}, 5000);
+
+    //this.openModalFimDeFase();
 
   }
 
@@ -372,10 +371,10 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
     }
 
     if (this.endGameInformations.usedsCommands.find(command => command.includes("repeat"))) {
-      if (this.endGameInformations.usedsCommands.length == 3) {
+      if (this.endGameInformations.usedsCommands.length == 8) {
         this.stars[this.stars.indexOf("vazia")] = "cheia";
       }
-      else if (this.endGameInformations.usedsCommands.length > 3 && this.endGameInformations.usedsCommands.length <= 6) {
+      else if (this.endGameInformations.usedsCommands.length > 8 && this.endGameInformations.usedsCommands.length <= 15) {
         this.stars[this.stars.indexOf("vazia")] = "meia";
       }
     }
@@ -409,10 +408,19 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
     this.modalFimDeFaseRef?.hide();
   }
 
-  nextPhase() {
-    if(this.objetivoConcluido()){
+  openModalMolecula() {
 
-    }
+    let config = {
+      keyboard: false,
+      class: 'modal-fullscreen',
+      ignoreBackdropClick: true
+    };
+
+    this.modalMoleculaRef = this.modalService.show(this.modalMolecula, config);
+  }
+
+  closeModalMolecula() {
+    this.modalMoleculaRef?.hide();
   }
 
   openModalTutorial() {

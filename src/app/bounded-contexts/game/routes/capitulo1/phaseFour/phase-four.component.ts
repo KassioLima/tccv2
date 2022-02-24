@@ -59,6 +59,9 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   @ViewChild('modalTutorial', {static: false}) modalTutorial!: TemplateRef<any>
   modalTutorialRef!: BsModalRef;
 
+  @ViewChild('modalMolecula', {static: false}) modalMolecula!: TemplateRef<any>
+  modalMoleculaRef!: BsModalRef;
+
   endGameInformations!: EndGameInformations;
 
   stars: string[] = [];
@@ -354,6 +357,9 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     this.endGameInformations = endGameInformations;
 
     if(this.objetivoConcluido()) {
+      this.openModalMolecula();
+      setTimeout(() => {this.closeModalMolecula();}, 5000);
+
       this.scene.musicSuccess();
     } else {
       this.scene.musicFail();
@@ -361,7 +367,13 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
     this.calculaEstrelas();
 
-    this.openModalFimDeFase();
+    if(this.objetivoConcluido()){
+      setTimeout(() => {this.openModalFimDeFase()}, 6000);
+    }
+    else{
+      this.openModalFimDeFase();
+    }
+
 
   }
 
@@ -372,10 +384,10 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     }
 
     if (this.endGameInformations.usedsCommands.find(command => command.includes("repeat"))) {
-      if (this.endGameInformations.usedsCommands.length == 3) {
+      if (this.endGameInformations.usedsCommands.length == 4) {
         this.stars[this.stars.indexOf("vazia")] = "cheia";
       }
-      else if (this.endGameInformations.usedsCommands.length > 3 && this.endGameInformations.usedsCommands.length <= 6) {
+      else if (this.endGameInformations.usedsCommands.length > 4 && this.endGameInformations.usedsCommands.length <= 6) {
         this.stars[this.stars.indexOf("vazia")] = "meia";
       }
     }
@@ -407,6 +419,21 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
   closeModalFimDeFase() {
     this.modalFimDeFaseRef?.hide();
+  }
+
+  openModalMolecula() {
+
+    let config = {
+      keyboard: false,
+      class: 'modal-fullscreen',
+      ignoreBackdropClick: true
+    };
+
+    this.modalMoleculaRef = this.modalService.show(this.modalMolecula, config);
+  }
+
+  closeModalMolecula() {
+    this.modalMoleculaRef?.hide();
   }
 
   nextPhase() {

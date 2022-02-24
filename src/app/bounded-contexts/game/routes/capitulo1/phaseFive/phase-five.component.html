@@ -136,7 +136,7 @@
                     </table>
                   </td>
 
-                  <td style="width: 33%"><img style="height: 230px" src="assets/images/personagem.gif"></td>
+                  <td style="width: 33%"><img style="height: 230px" src="assets/images/arvore.gif"></td>
 
                   <td style="width: 33%">
                     <table style="height: 230px; width: 100%">
@@ -172,10 +172,11 @@
               </table>
               </div>
 
+              <td>Parabéns!! Conseguimos produzir a pedra filosofal graças a sua ajuda, até a próxima!!</td>
+
               <div class="row mt-0 mb-3">
                 <div class="col-12 col-md-12" style="text-align: center">
                   <img src="assets/images/game/repeat.png" alt="Reiniciar" title="Tentar Novamente" (click)="stopExecution()" class="pointer me-5 button-modal-fim-de-fase">
-                  <img src="assets/images/game/next.png" alt="Próxima fase" title="Próxima fase" [ngClass]="{'opacity-50': !objetivoConcluido()}" (click)="nextPhase()" class="pointer button-modal-fim-de-fase">
                 </div>
               </div>
             </div>
@@ -192,7 +193,7 @@
       <div style="overflow: hidden; background-color: #310c7c; border-radius: 50px 50px 0px 0px; height: 300px; width: 700px; position: absolute; top: calc(600px - 300px); left: 0;">
         <div class="row">
           <div class="col-md-7">
-            <img style="width: 100%" src="assets/images/personagem.gif"> <!-- https://media.discordapp.net/attachments/593811885787447297/942190906424049724/sapo.png -->
+            <img style="width: 100%" src="assets/images/personagem.gif">
           </div>
           <div class="col-md-5 text-white">
             <table style="width: 100%; height: 300px;">
@@ -202,22 +203,13 @@
                     {{modalTexts[indexText]}}
 
                     <div *ngIf="indexText == 0" class="pt-3 text-center">
-                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png" style="width: 50px" alt="oxigênio" title="oxigênio">
+                      <img src="https://media.discordapp.net/attachments/946243449173200907/946253010575695892/agua.png" style="width: 150px" alt="oxigênio" title="oxigênio">
                     </div>
 
                     <div *ngIf="indexText == 2" class="pt-3">
                       Exemplo: <strong>repeat 5:</strong>
                     </div>
 
-                    <div *ngIf="indexText == 3" class="pt-3 text-center"> Hidrogênio
-                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532695049392218/h.png" style="width: 45px" alt="hidrogenio" title="hidrogenio">
-                    </div>
-                    <div *ngIf="indexText == 3" class="pt-3 text-center"> Oxigênio
-                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png" style="width: 45px" alt="oxigênio" title="oxigênio">
-                    </div>
-                    <div *ngIf="indexText == 3" class="pt-3 text-center"> Nitrogênio
-                      <img  src="https://media.discordapp.net/attachments/593811885787447297/938532685805150228/n.png" style="width: 45px" alt="nitrogenio" title="nitrogenio">
-                    </div>
                   </span>
                 </td>
               </tr>
@@ -236,6 +228,12 @@
         </div>
       </div>
     </div>
+  </div>
+</ng-template>
+
+<ng-template #modalMolecula>
+  <div style="overflow: hidden; height: 600px; width: 700px; position: absolute;">
+    <img src="assets/images/agua.gif">
   </div>
 </ng-template>
 

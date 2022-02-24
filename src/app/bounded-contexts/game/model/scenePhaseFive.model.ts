@@ -66,10 +66,10 @@ export class ScenePhaseFive extends Phaser.Scene {
     this.load.spritesheet('sapoAlquimista', 'http://media.discordapp.net/attachments/593811885787447297/936132479281168434/spriteSapo.png',
       {frameWidth: 527, frameHeight: 331});
 
-      this.load.image('oxigenio', 'https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png');
+    this.load.image('oxigenio', 'https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png');
+    this.load.image('hidrogenio', 'https://media.discordapp.net/attachments/593811885787447297/938532695049392218/h.png');
+    this.load.image('baker', 'assets/images/game/obstaculos/baker.png');
 
-    // this.load.image('reguaVertical', 'assets/images/reguaVertical.png');
-    // this.load.image('reguaHorizontal', 'assets/images/reguaHorizontal.png');
 
     this.load.audio('soundtrack', [
       'assets/sonoplastia/happy-menu.mp3',
@@ -113,6 +113,7 @@ export class ScenePhaseFive extends Phaser.Scene {
     this.loadObjects(objetos);
     this.loadElementos();
     this.loadSapoAlquimista(objetos);
+
 
     this.graphics = this.add.graphics({ lineStyle: { width: 4, color: 0x47006E } });
 
@@ -174,6 +175,7 @@ export class ScenePhaseFive extends Phaser.Scene {
     this.loadMesa(objetos);
     this.loadArmarios(objetos);
     this.loadTocha(objetos);
+    this.loadBaker(objetos);
   }
 
   loadParede(objetos: any) {
@@ -218,6 +220,14 @@ export class ScenePhaseFive extends Phaser.Scene {
     tocha.anims.play('acender');
   }
 
+  loadBaker(objetos: any) {
+    let baker = this.add.sprite(this.game.scale.width - 150, this.game.scale.height - 180, 'baker')
+      .setOrigin(0, 0)
+      .setScale(0.15, 0.15);
+
+    objetos.add(baker, true);
+  }
+
   loadMesa(objetos: any) {
     let mesaScaleX = 0.5;
     let mesaScaleY = 0.5;
@@ -226,19 +236,19 @@ export class ScenePhaseFive extends Phaser.Scene {
   }
 
   loadElementos() {
-    let oxigenio = this.add.image(100, (this.game.scale.height - 140), 'oxigenio').setScale(0.35, 0.35); //193
+    let hidrogenio = this.add.image(150, this.game.scale.height - 50, 'hidrogenio').setScale(0.35, 0.35); //193
+    this.elementos.add(hidrogenio, true);
+
+    let hidrogenio2 = this.add.image(150, 200, 'hidrogenio').setScale(0.35, 0.35); //193
+    this.elementos.add(hidrogenio2, true);
+
+    let oxigenio = this.add.image((this.game.scale.width/2) + 155, 200, 'oxigenio').setScale(0.35, 0.35); //193
     this.elementos.add(oxigenio, true);
-
-    let oxigenio2 = this.add.image(100, 200, 'oxigenio').setScale(0.35, 0.35); //193
-    this.elementos.add(oxigenio2, true);
-
-    let oxigenio3 = this.add.image((this.game.scale.height/2) + 50, 200, 'oxigenio').setScale(0.35, 0.35); //193
-    this.elementos.add(oxigenio3, true);
   }
 
   loadSapoAlquimista(objetos: any) {
     this.sapoAlquimista = this.physics.add
-      .sprite(this.game.scale.width / 2, this.game.scale.height / 1.3, 'sapoAlquimista')
+      .sprite(this.game.scale.width - 100, this.game.scale.height - 50, 'sapoAlquimista')
       .setOrigin(0, 0);
 
     this.sapoAlquimista.scaleX = .15;
