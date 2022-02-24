@@ -209,15 +209,12 @@
                       Exemplo: <strong>repeat 5:</strong>
                     </div>
 
-                    <div *ngIf="indexText == 3" class="pt-3 text-center"> Hidrogênio
-                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532695049392218/h.png" style="width: 45px" alt="hidrogenio" title="hidrogenio">
+                    <div *ngIf="indexText == 3" class="pt-3 text-center">
+                      <img class="me-2" src="https://media.discordapp.net/attachments/593811885787447297/938532695049392218/h.png" style="width: 50px" alt="hidrogênio" title="hidrogênio">
+                      <img class="me-2" src="https://media.discordapp.net/attachments/593811885787447297/938532685805150228/n.png" style="width: 50px" alt="Nitrogênio" title="nitrogênio">
+                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png" style="width: 50px" alt="oxigênio" title="oxigênio">
                     </div>
-                    <div *ngIf="indexText == 3" class="pt-3 text-center"> Oxigênio
-                      <img src="https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png" style="width: 45px" alt="oxigênio" title="oxigênio">
-                    </div>
-                    <div *ngIf="indexText == 3" class="pt-3 text-center"> Nitrogênio
-                      <img  src="https://media.discordapp.net/attachments/593811885787447297/938532685805150228/n.png" style="width: 45px" alt="nitrogenio" title="nitrogenio">
-                    </div>
+
                   </span>
                 </td>
               </tr>
@@ -240,8 +237,8 @@
 </ng-template>
 
 <ng-template #modalMolecula>
-  <div style="overflow: hidden; height: 600px; width: 700px; position: absolute; top: 0; left: 0">
-    <img style="width: 100%;" src="assets/images/acidonitrico.gif">
+  <div style="overflow: hidden; height: 600px; width: 700px; position: absolute;">
+    <img src="assets/images/acidonitrico.gif">
   </div>
 </ng-template>
 

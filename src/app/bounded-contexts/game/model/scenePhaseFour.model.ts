@@ -13,6 +13,7 @@ export class ScenePhaseFour extends Phaser.Scene {
   music!: Phaser.Sound.BaseSound;
   passos!: Phaser.Sound.BaseSound;
   coleta!: Phaser.Sound.BaseSound;
+  molecula!: Phaser.Sound.BaseSound;
   sucesso!: Phaser.Sound.BaseSound;
   falha!: Phaser.Sound.BaseSound;
 
@@ -91,6 +92,11 @@ export class ScenePhaseFour extends Phaser.Scene {
       'assets/sonoplastia/levelUp.mp3',
     ]);
 
+    this.load.audio('molecula', [
+      'assets/sonoplastia/molecula.wav',
+      'assets/sonoplastia/molecula.mp3',
+    ]);
+
     this.load.audio('coletou', [
       'assets/sonoplastia/coletouElemento.wav',
       'assets/sonoplastia/coletouElemento.mp3',
@@ -122,6 +128,7 @@ export class ScenePhaseFour extends Phaser.Scene {
     this.loadSomFundo();
 
     this.coleta = this.sound.add('coletou');
+    this.molecula = this.sound.add('molecula');
     this.sucesso = this.sound.add('sucesso');
     this.falha = this.sound.add('falhou');
 
@@ -476,6 +483,16 @@ export class ScenePhaseFour extends Phaser.Scene {
   emitSoundKeyPress() {
     const teclas = this.sound?.add('teclas');
     teclas?.play({volume: this.sfxVolume*2});
+  }
+
+  musicMolecula(){
+
+    this.molecula.play({
+      mute: false,
+      loop: false,
+      volume: this.sfxVolume,
+    });
+
   }
 
   musicSuccess(){

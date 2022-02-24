@@ -13,7 +13,8 @@ export class ScenePhaseFive extends Phaser.Scene {
   music!: Phaser.Sound.BaseSound;
   passos!: Phaser.Sound.BaseSound;
   coleta!: Phaser.Sound.BaseSound;
-  sucesso!: Phaser.Sound.BaseSound;
+  molecula!: Phaser.Sound.BaseSound;
+  arvore!: Phaser.Sound.BaseSound;
   falha!: Phaser.Sound.BaseSound;
 
   timeout!: any;
@@ -86,9 +87,14 @@ export class ScenePhaseFive extends Phaser.Scene {
       'assets/sonoplastia/personagem/som passos.mp3',
     ]);
 
-    this.load.audio('sucesso', [
-      'assets/sonoplastia/levelUp.wav',
-      'assets/sonoplastia/levelUp.mp3',
+    this.load.audio('molecula', [
+      'assets/sonoplastia/molecula.wav',
+      'assets/sonoplastia/molecula.mp3',
+    ]);
+
+    this.load.audio('arvore', [
+      'assets/sonoplastia/BellTree.wav',
+      'assets/sonoplastia/BellTree.mp3',
     ]);
 
     this.load.audio('coletou', [
@@ -123,7 +129,8 @@ export class ScenePhaseFive extends Phaser.Scene {
     this.loadSomFundo();
 
     this.coleta = this.sound.add('coletou');
-    this.sucesso = this.sound.add('sucesso');
+    this.molecula = this.sound.add('molecula');
+    this.arvore = this.sound.add('arvore');
     this.falha = this.sound.add('falhou');
 
   }
@@ -488,9 +495,19 @@ export class ScenePhaseFive extends Phaser.Scene {
     teclas?.play({volume: this.sfxVolume*2});
   }
 
-  musicSuccess(){
+  musicMolecula(){
 
-    this.sucesso.play({
+    this.molecula.play({
+      mute: false,
+      loop: false,
+      volume: this.sfxVolume,
+    });
+
+  }
+
+  musicArvore(){
+
+    this.arvore.play({
       mute: false,
       loop: false,
       volume: this.sfxVolume,

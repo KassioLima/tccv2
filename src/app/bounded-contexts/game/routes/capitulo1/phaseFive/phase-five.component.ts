@@ -340,9 +340,6 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   }
 
   objetivoConcluido() {
-
-    this.openModalMolecula();
-    setTimeout(() => {this.closeModalMolecula();}, 5000);
     return this.endGameInformations.collectedElements.length == 3;
   }
 
@@ -351,14 +348,23 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
     this.endGameInformations = endGameInformations;
 
     if(this.objetivoConcluido()) {
-      this.scene.musicSuccess();
+      this.openModalMolecula();
+      setTimeout(() => {this.closeModalMolecula();}, 5000);
+
+      this.scene.musicMolecula();
     } else {
       this.scene.musicFail();
     }
 
     this.calculaEstrelas();
 
-    setTimeout(() => {this.openModalFimDeFase()}, 5000);
+    if(this.objetivoConcluido()){
+      setTimeout(() => {this.openModalFimDeFase()}, 6000);
+      setTimeout(() => {this.scene.musicArvore()}, 6000);
+    }
+    else{
+      this.openModalFimDeFase();
+    }
 
     //this.openModalFimDeFase();
 
@@ -453,10 +459,10 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   getCorPassos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.steps <= 35) {
+    if (this.endGameInformations.steps <= 68) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.steps >= 36 && this.endGameInformations.steps <= 45) {
+    else if (this.endGameInformations.steps >= 69 && this.endGameInformations.steps <= 75) {
       cor = "fdc90f";
     }
 
@@ -466,11 +472,11 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   getCorComandos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.usedsCommands.find(command => command.includes("angle"))) {
-      if (this.endGameInformations.usedsCommands.length == 2) {
+    if (this.endGameInformations.usedsCommands.find(command => command.includes("repeat"))) {
+      if (this.endGameInformations.usedsCommands.length == 8) {
         cor = "00eb27";
       }
-      else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 4) {
+      else if (this.endGameInformations.usedsCommands.length > 8 && this.endGameInformations.usedsCommands.length <= 10) {
         cor = "fdc90f";
       }
     }
@@ -481,10 +487,10 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   getCorTempo() {
     let cor = "da3636";
 
-    if (this.endGameInformations.timeInSeconds <= 2) {
+    if (this.endGameInformations.timeInSeconds <= 12) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.timeInSeconds > 2 && this.endGameInformations.timeInSeconds <= 4) {
+    else if (this.endGameInformations.timeInSeconds > 12 && this.endGameInformations.timeInSeconds <= 15) {
       cor = "fdc90f";
     }
 
@@ -493,7 +499,7 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
 
   getCorElementos() {
     let cor = "da3636";
-    if (this.endGameInformations.collectedElements.length == 1) {
+    if (this.endGameInformations.collectedElements.length == 3) {
       cor = "00eb27";
     }
     return cor;

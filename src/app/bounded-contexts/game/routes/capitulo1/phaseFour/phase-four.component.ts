@@ -38,7 +38,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     "Precisamos pegar três O (Oxigênio)",
     "Para isso, usaremos um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho",
     "Assim como o comando \"step\", \"angle\", o \"repeat\" acompanha um número, que é a quantidade de vezes que os mesmos comandos irão executar.",
-    "Com isso, teremos os elementos necessários para forma um Ácido Nítrico.",
+    "Com isso, ao juntar com os elementos que foram pegados nas fases anteriores, teremos o necessário para forma um Ácido Nítrico.",
   ];
 
   isRunning: boolean = false;
@@ -360,7 +360,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
       this.openModalMolecula();
       setTimeout(() => {this.closeModalMolecula();}, 5000);
 
-      this.scene.musicSuccess();
+      this.scene.musicMolecula();
     } else {
       this.scene.musicFail();
     }
@@ -369,6 +369,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
     if(this.objetivoConcluido()){
       setTimeout(() => {this.openModalFimDeFase()}, 6000);
+      setTimeout(() => {this.scene.musicSuccess()}, 6000);
     }
     else{
       this.openModalFimDeFase();
@@ -438,7 +439,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
   nextPhase() {
     if(this.objetivoConcluido()){
-
+      window.location.href = "/game/phaseFive";
     }
   }
 
@@ -472,10 +473,10 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   getCorPassos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.steps <= 35) {
+    if (this.endGameInformations.steps <= 60) {
       cor = "00eb27";
     }
-    else if (this.endGameInformations.steps >= 36 && this.endGameInformations.steps <= 45) {
+    else if (this.endGameInformations.steps >= 61 && this.endGameInformations.steps <= 75) {
       cor = "fdc90f";
     }
 
@@ -485,11 +486,11 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   getCorComandos() {
     let cor = "da3636";
 
-    if (this.endGameInformations.usedsCommands.find(command => command.includes("angle"))) {
-      if (this.endGameInformations.usedsCommands.length == 2) {
+    if (this.endGameInformations.usedsCommands.find(command => command.includes("repeat"))) {
+      if (this.endGameInformations.usedsCommands.length == 4) {
         cor = "00eb27";
       }
-      else if (this.endGameInformations.usedsCommands.length > 2 && this.endGameInformations.usedsCommands.length <= 4) {
+      else if (this.endGameInformations.usedsCommands.length > 4 && this.endGameInformations.usedsCommands.length <= 6) {
         cor = "fdc90f";
       }
     }
@@ -500,7 +501,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
   getCorTempo() {
     let cor = "da3636";
 
-    if (this.endGameInformations.timeInSeconds <= 2) {
+    if (this.endGameInformations.timeInSeconds <= 8) {
       cor = "00eb27";
     }
     else if (this.endGameInformations.timeInSeconds > 2 && this.endGameInformations.timeInSeconds <= 4) {
@@ -512,7 +513,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
   getCorElementos() {
     let cor = "da3636";
-    if (this.endGameInformations.collectedElements.length == 1) {
+    if (this.endGameInformations.collectedElements.length == 3) {
       cor = "00eb27";
     }
     return cor;
