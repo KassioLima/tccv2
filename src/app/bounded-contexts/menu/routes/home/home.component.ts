@@ -91,7 +91,7 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
       audio: {
         disableWebAudio: true,
       },
-      transparent: false
+      transparent: true
     };
     this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);
