@@ -7,6 +7,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SceneMenu} from "../../model/sceneMenu.model";
 import {Router} from "@angular/router";
 import {CanDeactivateComponent} from "../../../../core/components/can-deactivate.component";
+import {UserService} from "../../services/menu/user.service";
+import Swal from "sweetalert2";
+import {User} from "../../model/user.model";
 
 @Component({
   selector: 'app-home',
@@ -16,57 +19,102 @@ import {CanDeactivateComponent} from "../../../../core/components/can-deactivate
 
 export class HomeComponent extends CanDeactivateComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('modalRank', { static: false }) modalRank!: TemplateRef<any>
-  modalRankRef!: BsModalRef;
+  @ViewChild('modalCreateUser', { static: false }) modalCreateUser!: TemplateRef<any>
+  modalCreateUserRef!: BsModalRef;
+
+  @ViewChild('modalLogin', { static: false }) modalLogin!: TemplateRef<any>
+  modalLoginRef!: BsModalRef;
 
   @ViewChild('gameArea', { static: false }) gameArea!: ElementRef;
 
-  formRankSubmitted: boolean = false;
+  formCreateUserSubmitted: boolean = false;
+  formLoginSubmitted: boolean = false;
 
-  formRank = new FormGroup({});
+  formCreateUser = new FormGroup({});
+  formLogin = new FormGroup({});
 
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
 
-  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService) {
+  emailToCreate = null;
+
+  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService, private userService: UserService) {
     super();
   }
 
   ngOnInit(): void {
     moment.locale('pt-br');
     this.scene = new SceneMenu(this.config, null, null);
+    localStorage.removeItem("userEmail");
   }
 
   startGame() {
-    this.openModalRank();
+    this.openModalLogin();
     this.scene.emitSoundClick();
   }
 
-  openModalRank() {
-    this.initRankForm();
-    this.modalRankRef = this.modalService.show(this.modalRank);
-    this.modalRankRef.setClass('modal-dialog-centered modal-dialog-scrollable');
+  openModalCreateUser() {
+    this.initCreateUserForm();
+    this.modalCreateUserRef = this.modalService.show(this.modalCreateUser);
+    this.modalCreateUserRef.setClass('modal-dialog-centered modal-dialog-scrollable');
   }
 
-  closeModalRank() {
-    this.modalRankRef.hide();
+  closeModalCreateUser() {
+    this.modalCreateUserRef.hide();
   }
 
-  initRankForm() {
-    this.formRankSubmitted = false;
-    this.formRank = new FormGroup({
+  openModalLogin() {
+    this.initLoginForm();
+    this.modalLoginRef = this.modalService.show(this.modalLogin);
+    this.modalLoginRef.setClass('modal-dialog-centered modal-dialog-scrollable');
+  }
+
+  closeModalLogin() {
+    this.modalLoginRef.hide();
+  }
+
+  initCreateUserForm() {
+    this.formCreateUserSubmitted = false;
+    this.formCreateUser = new FormGroup({
       name: new FormControl(null, Validators.required),
       age: new FormControl(null, [Validators.required, Validators.min(6)]),
+      email: new FormControl(this.emailToCreate, Validators.required),
+    });
+  }
+
+  initLoginForm() {
+    this.formLoginSubmitted = false;
+    this.formLogin = new FormGroup({
       email: new FormControl(null, Validators.required),
     });
   }
 
-  enter() {
-    this.formRankSubmitted = true;
+  save() {
+    this.formCreateUserSubmitted = true;
 
-    if(this.formRank.valid) {
-      this.closeModalRank();
-      this.router.navigate(['game']);
+    if(this.formCreateUser.valid) {
+      this.spinner.show();
+      const user = new User();
+
+      Object.assign(user, this.formCreateUser.value);
+
+      this.userService.create(user).subscribe((response) => {
+        setTimeout(() => {
+          this.spinner.hide();
+          this.closeModalCreateUser();
+          localStorage.setItem("userEmail", response.email);
+          this.router.navigate(['game']);
+        }, 2000);
+      },
+        (error) => {
+          Swal.fire({
+            title: 'Oops!...',
+            text: error.error.message || error.message,
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          });
+        });
     }
   }
 
@@ -95,5 +143,43 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
     };
     this.config.scene = this.scene;
     this.game = new Phaser.Game(this.config);
+  }
+
+  async tryLogin() {
+    this.formLoginSubmitted = true;
+
+    if(this.formLogin.valid) {
+      const email = this.formLogin.get("email")?.value;
+        this.spinner.show();
+        await this.userService.readByEmail(email).subscribe((response) => {
+          setTimeout(() => {
+            this.spinner.hide();
+            if (response) {
+              this.closeModalLogin();
+              localStorage.setItem("userEmail", email);
+              this.router.navigate(['game']);
+            }
+            else {
+              this.emailToCreate = email;
+              this.closeModalLogin();
+              this.openModalCreateUser();
+            }
+          }, 2000);
+        },
+        (error) => {
+          this.spinner.hide();
+          Swal.fire({
+            title: 'Oops!...',
+            text: error.error.message || error.message,
+            icon: 'error',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK',
+          });
+        });
+
+
+      // this.closeModalCreateUser();
+      // this.router.navigate(['game']);
+    }
   }
 }

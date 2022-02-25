@@ -1,20 +1,22 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "large" color = "#fff" type = "ball-atom" [fullScreen] = "true"></ngx-spinner>
+
 <div class="fundo-menu"></div>
 <div class="play-button" (click)="startGame()"></div>
 
 <div class="gameArea" #gameArea></div>
 
-<ng-template #modalRank>
+<ng-template #modalCreateUser>
   <div class="modal-content">
     <div class="modal-header bg-success">
       <h4 class="modal-title text-white">
         Preencha seus dados
       </h4>
 
-      <button type="button" class="btn-close" title="Fechar" style="filter: invert(1) brightness(5)" data-bs-dismiss="modal" aria-label="Close" (click)="closeModalRank()"></button>
+      <button type="button" class="btn-close" title="Fechar" style="filter: invert(1) brightness(5)" data-bs-dismiss="modal" aria-label="Close" (click)="closeModalCreateUser()"></button>
     </div>
     <div class="modal-body p-4">
 
-      <form [formGroup]="formRank" class="needs-validation" [ngClass]="{'was-validated': formRankSubmitted}" novalidate>
+      <form [formGroup]="formCreateUser" class="needs-validation" [ngClass]="{'was-validated': formCreateUserSubmitted}" novalidate>
         <div class="row mb-2">
           <div class="col-12 col-md-12">
             <label class="label requerido" for="name">Nome</label>
@@ -41,11 +43,45 @@
   </div>
   <div class="row mt-3 mb-3 me-3">
     <div class="col-12 col-md-12" style="text-align: right">
-      <button class="btn btn-success me-2" (click)="enter()">
+      <button class="btn btn-success me-2" (click)="save()">
+        Cadastrar
+      </button>
+
+      <button class="btn btn-secondary" (click)="closeModalCreateUser()">
+        Cancelar
+      </button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #modalLogin>
+  <div class="modal-content">
+    <div class="modal-header bg-success">
+      <h4 class="modal-title text-white">
+        Digite seu email
+      </h4>
+
+      <button type="button" class="btn-close" title="Fechar" style="filter: invert(1) brightness(5)" data-bs-dismiss="modal" aria-label="Close" (click)="closeModalLogin()"></button>
+    </div>
+    <div class="modal-body p-4">
+
+      <form [formGroup]="formLogin" class="needs-validation" [ngClass]="{'was-validated': formLoginSubmitted}" novalidate>
+        <div class="row">
+          <div class="col-12 col-md-12">
+            <label class="label requerido" for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="fulano@email.com" required formControlName="email">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="row mt-3 mb-3 me-3">
+    <div class="col-12 col-md-12" style="text-align: right">
+      <button class="btn btn-success me-2" (click)="tryLogin()">
         Entrar
       </button>
 
-      <button class="btn btn-secondary" (click)="closeModalRank()">
+      <button class="btn btn-secondary" (click)="closeModalLogin()">
         Cancelar
       </button>
     </div>

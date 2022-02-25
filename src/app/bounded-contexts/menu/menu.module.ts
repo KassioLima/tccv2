@@ -5,6 +5,7 @@ import {MenuRoutingModule} from "./menu-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ModalModule} from "ngx-bootstrap/modal";
+import {UserService} from "./services/menu/user.service";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,9 @@ import {ModalModule} from "ngx-bootstrap/modal";
   ],
   exports: [
     MenuRoutingModule
+  ],
+  providers: [
+    UserService,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
