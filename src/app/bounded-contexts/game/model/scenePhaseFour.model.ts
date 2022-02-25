@@ -64,7 +64,7 @@ export class ScenePhaseFour extends Phaser.Scene {
     this.load.spritesheet('tocha', 'https://media.discordapp.net/attachments/847914147944857631/928718585734512670/spriteTocha.png',
       { frameWidth: 50, frameHeight: 100});
 
-    this.load.spritesheet('sapoAlquimista', 'http://media.discordapp.net/attachments/593811885787447297/936132479281168434/spriteSapo.png',
+    this.load.spritesheet('sapoAlquimista', 'https://media.discordapp.net/attachments/593811885787447297/936132479281168434/spriteSapo.png',
       {frameWidth: 527, frameHeight: 331});
 
       this.load.image('oxigenio', 'https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png');

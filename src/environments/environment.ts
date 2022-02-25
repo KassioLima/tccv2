@@ -5,7 +5,6 @@
 export const environment = {
   production: false,
   API:'http://localhost:3000/api/v1',
-  IK_ENDPOINT:'https://ik.imagekit.io/bmcorpdevteam/',
 };
 
 /*
