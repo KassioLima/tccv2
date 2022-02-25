@@ -17,7 +17,7 @@ export class SceneMenu extends Phaser.Scene {
 
   preload (){
 
-    this.load.spritesheet('menu', 'http://media.discordapp.net/attachments/593811885787447297/924780848434274305/menujogo.png',
+    this.load.spritesheet('menu', 'https://media.discordapp.net/attachments/593811885787447297/924780848434274305/menujogo.png',
     { frameWidth: 1310, frameHeight: 667});
 
     this.load.audio('theme', [

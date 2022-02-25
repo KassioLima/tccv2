@@ -27,7 +27,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     "\n" +
     "\tangle 90" +
     "\n" +
-    "\tstep 20" +
+    "\tstep 10" +
     "\n" +
     "}";
 
@@ -35,9 +35,9 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
   indexText: number = 0;
   modalTexts: string[] = [
-    "Precisamos pegar três O (Oxigênio)",
-    "Para isso, usaremos um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho",
-    "Assim como o comando \"step\", \"angle\", o \"repeat\" acompanha um número, que é a quantidade de vezes que os mesmos comandos irão executar.",
+    "Precisamos pegar três O (Oxigênio).",
+    "Para isso, usaremos um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho.",
+    "O comando \"repeat\" tem à sua direita um número que indica quantas vezes o código entre as chaves será executado. Ex.:",
     "Com isso, ao juntar com os elementos que foram pegos nas fases anteriores, teremos o necessário para formar um Ácido Nítrico.",
   ];
 
@@ -358,24 +358,13 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
     if(this.objetivoConcluido()) {
       this.openModalMolecula();
-      setTimeout(() => {this.closeModalMolecula();}, 5000);
-
       this.scene.musicMolecula();
     } else {
+      this.openModalFimDeFase();
       this.scene.musicFail();
     }
 
     this.calculaEstrelas();
-
-    if(this.objetivoConcluido()){
-      setTimeout(() => {this.openModalFimDeFase()}, 6000);
-      setTimeout(() => {this.scene.musicSuccess()}, 6000);
-    }
-    else{
-      this.openModalFimDeFase();
-    }
-
-
   }
 
   calculaEstrelas() {
@@ -416,6 +405,10 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     };
 
     this.modalFimDeFaseRef = this.modalService.show(this.modalFimDeFase, config);
+
+    if (this.objetivoConcluido()) {
+      this.scene.musicSuccess();
+    }
   }
 
   closeModalFimDeFase() {
@@ -435,6 +428,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
 
   closeModalMolecula() {
     this.modalMoleculaRef?.hide();
+    this.openModalFimDeFase();
   }
 
   nextPhase() {

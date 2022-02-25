@@ -91,113 +91,13 @@
   <div class="modal-content p-0">
     <div class="modal-body p-0">
       <table cellpadding="0" cellspacing="0" style="height: 100vh; width: 100vw">
-        <tr>
-          <td style="text-align: center">
-            <div class="text-white p-4 text-start content-fim-fase text-center">
-              <div class="row">
-                <div class="col-md-12">
-                  <div>
-                    <img src="assets/images/game/estrelas/estrela cheia.png" class="star-end-phase" *ngFor="let star of filtraEstrelas('cheia')">
-                    <img src="assets/images/game/estrelas/meia estrela.png" class="star-end-phase" *ngFor="let star of filtraEstrelas('meia')">
-                    <img src="assets/images/game/estrelas/estrela vazia.png" class="star-end-phase" *ngFor="let star of filtraEstrelas('vazia')">
-                  </div>
-                </div>
-              </div>
-
-              <br>
-
-              <div style="padding: 15px; margin-bottom: 50px; margin-top: 5px;">
-              <table style="width: 100%;">
-                <tr>
-                  <td style="width: 33%">
-                    <table style="height: 230px; width: 100%">
-                      <tr>
-                        <td>
-                          <table>
-                            <tr>
-                              <td>
-                                <img src="{{'assets/images/game/pe/' + getCorPassos() + '.png'}}" style="width: 30px;">
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="color: #{{getCorPassos()}}">{{endGameInformations?.steps}} passos</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <table>
-                            <tr>
-                              <td>
-                                <img src="{{'assets/images/game/comandos/' + getCorComandos() + '.png'}}" style="width: 30px"></td>
-                            </tr>
-                            <tr>
-                              <td style="color: #{{getCorComandos()}}">{{endGameInformations?.usedsCommands?.length || 0}} comandos</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-
-                  <td style="width: 33%"><img style="height: 230px" src="assets/images/personagem.gif"></td>
-
-                  <td style="width: 33%">
-                    <table style="height: 230px; width: 100%">
-                      <tr>
-                        <td>
-                          <table style="float: right">
-                            <tr>
-                              <td>
-                                <img src="{{'assets/images/game/tempo/' + getCorTempo() + '.png'}}" style="width: 30px">
-                              </td>
-                            </tr>
-                            <tr>
-                              <td style="color: #{{getCorTempo()}}">{{endGameInformations?.timeInSeconds}} segundos</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <table style="float: right">
-                            <tr>
-                              <td><img src="{{'assets/images/game/elemento/' + getCorElementos() + '.png'}}" style="width: 30px;"></td>
-                            </tr>
-                            <tr>
-                              <td style="color: #{{getCorElementos()}}">{{endGameInformations?.collectedElements?.length || 0}} elementos</td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-              </div>
-              <div class="row mt-0 mb-3">
-                <div class="col-12 col-md-12" style="text-align: center">
-                  <img src="assets/images/game/repeat.png" alt="Reiniciar" title="Tentar Novamente" (click)="stopExecution()" class="pointer me-5 button-modal-fim-de-fase">
-                </div>
-              </div>
-            </div>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #modalConclusaoJogo>
-  <div class="modal-content p-0">
-    <div class="modal-body p-0">
-      <table cellpadding="0" cellspacing="0" style="height: 100vh; width: 100vw">
-        <div style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 10px darkblue; font-family: 'Sedgwick Ave Display'; text-align: center; margin-top: 1%;">
-          <h1>Parabéns!!!</h1>
-        </div>
-        <div style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 10px darkblue; font-family: 'VT323'; text-align: center;">
-          <h2>Conseguimos produzir a pedra filosofal graças a sua ajuda, até a próxima!!</h2>
+        <div *ngIf="objetivoConcluido()" style="position: absolute; width: 384px" class="ps-4 pt-4">
+          <div style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 10px darkblue; font-family: 'Sedgwick Ave Display'; text-align: center; margin-top: 1%;">
+            <h1>Parabéns!!!</h1>
+          </div>
+          <div style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 10px darkblue; font-family: 'VT323'; text-align: center;">
+            <h2>Conseguimos produzir a pedra filosofal graças a sua ajuda, até a próxima!!</h2>
+          </div>
         </div>
         <tr>
           <td style="text-align: center">
@@ -249,7 +149,10 @@
                     </table>
                   </td>
 
-                  <td style="width: 33%"><img style="height: 230px" src="assets/images/arvore.gif"></td>
+                  <td style="width: 33%">
+                    <img style="height: 230px" src="https://media.discordapp.net/attachments/593811885787447297/946622437750095872/arvore.gif" *ngIf="objetivoConcluido()">
+                    <img style="height: 230px" src="assets/images/personagem.gif" *ngIf="!objetivoConcluido()">
+                  </td>
 
                   <td style="width: 33%">
                     <table style="height: 230px; width: 100%">
@@ -286,7 +189,7 @@
               </div>
               <div class="row mt-0 mb-3">
                 <div class="col-12 col-md-12" style="text-align: center">
-                  <img src="assets/images/game/repeat.png" alt="Reiniciar" title="Tentar Novamente" (click)="stopExecution()" class="pointer me-5 button-modal-fim-de-fase">
+                  <img src="assets/images/game/repeat.png" alt="Reiniciar" title="Tentar Novamente" (click)="stopExecution()" class="pointer button-modal-fim-de-fase">
                 </div>
               </div>
             </div>
@@ -296,6 +199,114 @@
     </div>
   </div>
 </ng-template>
+
+<!--<ng-template #modalConclusaoJogo>-->
+<!--  <div class="modal-content p-0">-->
+<!--    <div class="modal-body p-0">-->
+<!--      <table cellpadding="0" cellspacing="0" style="height: 100vh; width: 100vw">-->
+<!--        <div style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 10px darkblue; font-family: 'Sedgwick Ave Display'; text-align: center; margin-top: 1%;">-->
+<!--          <h1>Parabéns!!!</h1>-->
+<!--        </div>-->
+<!--        <div style="color: white; text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 10px darkblue; font-family: 'VT323'; text-align: center;">-->
+<!--          <h2>Conseguimos produzir a pedra filosofal graças a sua ajuda, até a próxima!!</h2>-->
+<!--        </div>-->
+<!--        <tr>-->
+<!--          <td style="text-align: center">-->
+<!--            <div class="text-white p-4 text-start content-fim-fase text-center">-->
+<!--              <div class="row">-->
+<!--                <div class="col-md-12">-->
+<!--                  <div>-->
+<!--                    <img src="assets/images/game/estrelas/estrela cheia.png" class="star-end-phase" *ngFor="let star of filtraEstrelas('cheia')">-->
+<!--                    <img src="assets/images/game/estrelas/meia estrela.png" class="star-end-phase" *ngFor="let star of filtraEstrelas('meia')">-->
+<!--                    <img src="assets/images/game/estrelas/estrela vazia.png" class="star-end-phase" *ngFor="let star of filtraEstrelas('vazia')">-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <br>-->
+
+<!--              <div style="padding: 15px; margin-bottom: 50px; margin-top: 5px;">-->
+<!--              <table style="width: 100%;">-->
+<!--                <tr>-->
+<!--                  <td style="width: 33%">-->
+<!--                    <table style="height: 230px; width: 100%">-->
+<!--                      <tr>-->
+<!--                        <td>-->
+<!--                          <table>-->
+<!--                            <tr>-->
+<!--                              <td>-->
+<!--                                <img src="{{'assets/images/game/pe/' + getCorPassos() + '.png'}}" style="width: 30px;">-->
+<!--                              </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                              <td style="color: #{{getCorPassos()}}">{{endGameInformations?.steps}} passos</td>-->
+<!--                            </tr>-->
+<!--                          </table>-->
+<!--                        </td>-->
+<!--                      </tr>-->
+<!--                      <tr>-->
+<!--                        <td>-->
+<!--                          <table>-->
+<!--                            <tr>-->
+<!--                              <td>-->
+<!--                                <img src="{{'assets/images/game/comandos/' + getCorComandos() + '.png'}}" style="width: 30px"></td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                              <td style="color: #{{getCorComandos()}}">{{endGameInformations?.usedsCommands?.length || 0}} comandos</td>-->
+<!--                            </tr>-->
+<!--                          </table>-->
+<!--                        </td>-->
+<!--                      </tr>-->
+<!--                    </table>-->
+<!--                  </td>-->
+
+<!--                  <td style="width: 33%"><img style="height: 230px" src="assets/images/arvore.gif" *ngIf="objetivoConcluido()"></td>-->
+
+<!--                  <td style="width: 33%">-->
+<!--                    <table style="height: 230px; width: 100%">-->
+<!--                      <tr>-->
+<!--                        <td>-->
+<!--                          <table style="float: right">-->
+<!--                            <tr>-->
+<!--                              <td>-->
+<!--                                <img src="{{'assets/images/game/tempo/' + getCorTempo() + '.png'}}" style="width: 30px">-->
+<!--                              </td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                              <td style="color: #{{getCorTempo()}}">{{endGameInformations?.timeInSeconds}} segundos</td>-->
+<!--                            </tr>-->
+<!--                          </table>-->
+<!--                        </td>-->
+<!--                      </tr>-->
+<!--                      <tr>-->
+<!--                        <td>-->
+<!--                          <table style="float: right">-->
+<!--                            <tr>-->
+<!--                              <td><img src="{{'assets/images/game/elemento/' + getCorElementos() + '.png'}}" style="width: 30px;"></td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                              <td style="color: #{{getCorElementos()}}">{{endGameInformations?.collectedElements?.length || 0}} elementos</td>-->
+<!--                            </tr>-->
+<!--                          </table>-->
+<!--                        </td>-->
+<!--                      </tr>-->
+<!--                    </table>-->
+<!--                  </td>-->
+<!--                </tr>-->
+<!--              </table>-->
+<!--              </div>-->
+<!--              <div class="row mt-0 mb-3">-->
+<!--                <div class="col-12 col-md-12" style="text-align: center">-->
+<!--                  <img src="assets/images/game/repeat.png" alt="Reiniciar" title="Tentar Novamente" (click)="stopExecution()" class="pointer me-5 button-modal-fim-de-fase">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</ng-template>-->
 
 <ng-template #modalTutorial style="background-color: transparent">
   <div class="modal-content p-0" style="background-color: transparent">
@@ -343,7 +354,8 @@
 
 <ng-template #modalMolecula>
   <div style="overflow: hidden; height: 600px; width: 700px; position: absolute;">
-    <img src="assets/images/agua.gif">
+    <span style="position: absolute;" class="text-white ps-3 pt-3 pointer" (click)="closeModalMolecula()">Fechar</span>
+    <img src="https://media.discordapp.net/attachments/593811885787447297/946621802258497556/agua.gif">
   </div>
 </ng-template>
 

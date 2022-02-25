@@ -205,8 +205,8 @@
                       <img src="https://media.discordapp.net/attachments/593811885787447297/938532702582341652/o.png" style="width: 50px" alt="oxigênio" title="oxigênio">
                     </div>
 
-                    <div *ngIf="indexText == 2" class="pt-3">
-                      Exemplo: <strong>repeat 5:</strong>
+                    <div *ngIf="indexText == 2" class="pt-2">
+                      <strong>repeat <span style="color: #ae81ff">5</span> &#123; <br><span class="ps-4">step <span style="color: #ae81ff">10</span></span><br> &#125; <br></strong>
                     </div>
 
                     <div *ngIf="indexText == 3" class="pt-3 text-center">
@@ -238,7 +238,8 @@
 
 <ng-template #modalMolecula>
   <div style="overflow: hidden; height: 600px; width: 700px; position: absolute;">
-    <img src="assets/images/acidonitrico.gif">
+    <span style="position: absolute;" class="text-white ps-3 pt-3 pointer" (click)="closeModalMolecula()">Fechar</span>
+    <img src="https://media.discordapp.net/attachments/593811885787447297/946621321624817684/acidonitrico.gif" style="margin-left: -44px;">
   </div>
 </ng-template>
 

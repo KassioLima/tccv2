@@ -53,8 +53,8 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
   @ViewChild('modalMolecula', {static: false}) modalMolecula!: TemplateRef<any>
   modalMoleculaRef!: BsModalRef;
 
-  @ViewChild('modalConclusaoJogo', {static: false}) modalConclusaoJogo!: TemplateRef<any>
-  modalConclusaoJogoRef!: BsModalRef;
+  // @ViewChild('modalConclusaoJogo', {static: false}) modalConclusaoJogo!: TemplateRef<any>
+  // modalConclusaoJogoRef!: BsModalRef;
 
   endGameInformations!: EndGameInformations;
 
@@ -352,25 +352,13 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
 
     if(this.objetivoConcluido()) {
       this.openModalMolecula();
-      setTimeout(() => {this.closeModalMolecula();}, 5000);
-
       this.scene.musicMolecula();
     } else {
+      this.openModalFimDeFase();
       this.scene.musicFail();
     }
 
     this.calculaEstrelas();
-
-    if(this.objetivoConcluido()){
-      setTimeout(() => {this.openModalConclusaoJogo()}, 6000);
-      setTimeout(() => {this.scene.musicArvore()}, 6000);
-    }
-    else{
-      this.openModalFimDeFase();
-    }
-
-    //this.openModalFimDeFase();
-
   }
 
   calculaEstrelas() {
@@ -380,7 +368,7 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
     }
 
     if (this.endGameInformations.usedsCommands.find(command => command.includes("repeat"))) {
-      if (this.endGameInformations.usedsCommands.length == 8) {
+      if (this.endGameInformations.usedsCommands.length <= 8) {
         this.stars[this.stars.indexOf("vazia")] = "cheia";
       }
       else if (this.endGameInformations.usedsCommands.length > 8 && this.endGameInformations.usedsCommands.length <= 15) {
@@ -388,10 +376,10 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
       }
     }
 
-    if (this.endGameInformations.steps <= 60) {
+    if (this.endGameInformations.steps <= 68) {
       this.stars[this.stars.indexOf("vazia")] = "cheia";
     }
-    else if (this.endGameInformations.steps >= 61 && this.endGameInformations.steps <= 75) {
+    else if (this.endGameInformations.steps >= 69 && this.endGameInformations.steps <= 75) {
       this.stars[this.stars.indexOf("vazia")] = "meia";
     }
 
@@ -411,6 +399,10 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
     };
 
     this.modalFimDeFaseRef = this.modalService.show(this.modalFimDeFase, config);
+
+    if(this.objetivoConcluido()){
+      this.scene.musicArvore();
+    }
   }
 
   closeModalFimDeFase() {
@@ -430,22 +422,23 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
 
   closeModalMolecula() {
     this.modalMoleculaRef?.hide();
+    this.openModalFimDeFase();
   }
 
-  openModalConclusaoJogo() {
-
-    let config = {
-      keyboard: false,
-      class: 'modal-fullscreen',
-      ignoreBackdropClick: true
-    };
-
-    this.modalConclusaoJogoRef = this.modalService.show(this.modalConclusaoJogo, config);
-  }
-
-  closeModalConclusaoJogo() {
-    this.modalConclusaoJogoRef?.hide();
-  }
+  // openModalConclusaoJogo() {
+  //
+  //   let config = {
+  //     keyboard: false,
+  //     class: 'modal-fullscreen',
+  //     ignoreBackdropClick: true
+  //   };
+  //
+  //   this.modalConclusaoJogoRef = this.modalService.show(this.modalConclusaoJogo, config);
+  // }
+  //
+  // closeModalConclusaoJogo() {
+  //   this.modalConclusaoJogoRef?.hide();
+  // }
 
   openModalTutorial() {
     let config = {
