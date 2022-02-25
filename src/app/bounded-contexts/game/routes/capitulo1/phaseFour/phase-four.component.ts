@@ -38,7 +38,7 @@ export class PhaseFourComponent extends CanDeactivateComponent implements OnInit
     "Precisamos pegar três O (Oxigênio)",
     "Para isso, usaremos um laço de repetição para que o Sapo Alquimista possa percorrer todo caminho",
     "Assim como o comando \"step\", \"angle\", o \"repeat\" acompanha um número, que é a quantidade de vezes que os mesmos comandos irão executar.",
-    "Com isso, ao juntar com os elementos que foram pegados nas fases anteriores, teremos o necessário para forma um Ácido Nítrico.",
+    "Com isso, ao juntar com os elementos que foram pegos nas fases anteriores, teremos o necessário para formar um Ácido Nítrico.",
   ];
 
   isRunning: boolean = false;
