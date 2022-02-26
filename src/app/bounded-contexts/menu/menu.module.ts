@@ -6,6 +6,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ModalModule} from "ngx-bootstrap/modal";
 import {UserService} from "./services/menu/user.service";
+import {AttemptsService} from "../game/services/attempts.service";
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import {UserService} from "./services/menu/user.service";
     MenuRoutingModule
   ],
   providers: [
+    AttemptsService,
     UserService,
   ],
   schemas: [
