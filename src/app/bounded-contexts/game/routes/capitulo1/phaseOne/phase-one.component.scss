@@ -19,7 +19,7 @@
   width: 100%;
 }
 
-.play-button, .reset-button {
+.play-button, .reset-button, .pause-button {
   border: none;
   border-radius: 100%;
   width: calc(0.6 * 25vh);
@@ -37,14 +37,21 @@
   box-shadow: 5px 2px 0 3px rgba(0,0,0,0.25);
 }
 
+.play-button {
+  animation-name: pulseOutlineInfinit;
+  animation-duration: 0.6s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pulseOutlineInfinit {
+  0%  {outline-offset: 0;}
+  100% {outline-offset: calc(0.2 * 25vh);}
+}
+
 .reset-button {
   background-color: #c95151;
   outline-color: #c95151;
-}
-
-.play-button:hover {
-  outline-color: transparent;
-  outline-offset: calc(0.2 * 25vh);
 }
 
 .reset-button:hover {
@@ -59,7 +66,7 @@
   filter: invert(0) opacity(0.5);
 }
 
-.play-button.pause .img-button-play.pause {
+.pause-button.pause .img-button-play.pause {
   transition: .5s;
   width: 70%;
   margin-left: 0;
