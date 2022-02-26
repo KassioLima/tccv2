@@ -36,7 +36,7 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
   config!: Phaser.Types.Core.GameConfig;
   game!: Phaser.Game;
 
-  emailToCreate = null;
+  emailToCreate!: string;
 
   constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService, private userService: UserService) {
     super();
@@ -92,43 +92,33 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
   save() {
     this.formCreateUserSubmitted = true;
 
-    if (this.formCreateUser.value.email != this.emailToCreate) {
-      Swal.fire({
-        title: 'Parece que temos um espertinho...',
-        text: "",
-        icon: 'info',
-        confirmButtonColor: '#3085d6',
-        confirmButtonText: 'OK',
-      });
-      this.closeModalCreateUser();
-      return;
-    }
+    if (this.formCreateUser.invalid) return;
 
-    if(this.formCreateUser.valid) {
-      this.spinner.show();
-      const user = new User();
+    this.spinner.show();
+    let user = new User();
 
-      Object.assign(user, this.formCreateUser.value);
+    Object.assign(user, this.formCreateUser.value);
+    user.email = this.emailToCreate;
 
-      this.userService.create(user).subscribe((response) => {
-        setTimeout(() => {
-          this.spinner.hide();
-          this.closeModalCreateUser();
-          localStorage.setItem("userEmail", response.email);
-          this.router.navigate(['game']);
-        }, 2000);
-      },
-        (error) => {
-          this.spinner.hide();
-          Swal.fire({
-            title: 'Oops!...',
-            text: error.error.message || error.message,
-            icon: 'error',
-            confirmButtonColor: '#3085d6',
-            confirmButtonText: 'OK',
-          });
+    this.userService.create(user).subscribe((response) => {
+      setTimeout(() => {
+        this.spinner.hide();
+        this.closeModalCreateUser();
+        localStorage.setItem("userEmail", response.email);
+        this.router.navigate(['game']);
+      }, 2000);
+    },
+      (error) => {
+        this.spinner.hide();
+        Swal.fire({
+          title: 'Oops!...',
+          text: error.error.message || error.message,
+          icon: 'error',
+          confirmButtonColor: '#3085d6',
+          confirmButtonText: 'OK',
         });
-    }
+      });
+
   }
 
   ngAfterViewInit(): void {
