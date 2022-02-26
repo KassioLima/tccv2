@@ -78,7 +78,7 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
     this.formCreateUser = new FormGroup({
       name: new FormControl(null, Validators.required),
       age: new FormControl(null, [Validators.required, Validators.min(6)]),
-      email: new FormControl(this.emailToCreate, Validators.required),
+      email: new FormControl({value: this.emailToCreate, disabled: true}, Validators.required),
     });
   }
 
@@ -91,6 +91,18 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
 
   save() {
     this.formCreateUserSubmitted = true;
+
+    if (this.formCreateUser.value.email != this.emailToCreate) {
+      Swal.fire({
+        title: 'Parece que temos um espertinho...',
+        text: "",
+        icon: 'info',
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'OK',
+      });
+      this.closeModalCreateUser();
+      return;
+    }
 
     if(this.formCreateUser.valid) {
       this.spinner.show();
@@ -107,6 +119,7 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
         }, 2000);
       },
         (error) => {
+          this.spinner.hide();
           Swal.fire({
             title: 'Oops!...',
             text: error.error.message || error.message,
