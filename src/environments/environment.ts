@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // API:'http://localhost:3000/api/v1',
-  API: 'https://sapo-alquimista-backend.herokuapp.com/api/v1/'
+  API: 'https://sapo-alquimista-backend.herokuapp.com/api/v1'
 };
 
 /*
