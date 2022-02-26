@@ -11,8 +11,8 @@ export class CanDeactivateComponent implements OnComponentDeactivate {
   }
   scene: any;
 
-  volumePrincipal = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) : 20;
-  efeitosSonoros = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) : 100;
+  volumePrincipal = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) : 4;
+  efeitosSonoros = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) : 40;
 
   abrirMenuLateral() {
     $("#content-right-side-bar").addClass("show");

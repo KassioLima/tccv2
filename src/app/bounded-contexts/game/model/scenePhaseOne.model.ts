@@ -14,8 +14,8 @@ export class ScenePhaseOne extends Phaser.Scene {
   sucesso!: Phaser.Sound.BaseSound;
   falha!: Phaser.Sound.BaseSound;
 
-  musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.2;
-  sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 1;
+  musicVolume: number = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) / 100 : 0.04;
+  sfxVolume: number = localStorage.getItem('efeitosSonoros') ? Number(localStorage.getItem('efeitosSonoros')) / 100 : 0.4;
 
   comandos: LineCodeModel[] = [];
 
