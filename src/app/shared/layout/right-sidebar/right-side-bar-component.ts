@@ -8,4 +8,8 @@ import {CanDeactivateComponent} from "../../../core/components/can-deactivate.co
 
 export class RightSideBar extends CanDeactivateComponent {
   @Input() scene: any;
+
+  getEmailUsuario() {
+    return localStorage.getItem("userEmail");
+  }
 }
