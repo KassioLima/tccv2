@@ -8,7 +8,7 @@ export class SceneMenu extends Phaser.Scene {
   musicConfig = {
     mute: false,
     loop: true,
-    volume: 0.2
+    volume: 0.07
   }
 
   constructor (config: any, FromInGame: any, preloadStatus: any){
