@@ -24,7 +24,8 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
 
   initialCode: string = "// Use sua imaginação\n" +
     "\n" +
-    "// Aproveite todos os conceitos que você aprendeu até agora\n\n";
+    "// Aproveite todos os conceitos que você aprendeu até agora\n\n" +
+    "// Comandos: step, up ↑, down ↓, left ←, right →, angle e repeat\n\n";
 
   code: string = this.initialCode;
 
@@ -198,6 +199,8 @@ export class PhaseFiveComponent extends CanDeactivateComponent implements OnInit
         }
       }
     }
+
+    lines = lines.filter(line => !line.startsWith("//"));
 
     if (lines.filter(line => line.includes("repeat")).length != lines.filter(line => line.includes("}")).length) {
       for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
