@@ -1,8 +1,14 @@
 import {Observable} from "rxjs";
 import {OnComponentDeactivate} from "../interfaces/guard";
+import {User} from "../../bounded-contexts/menu/model/user.model";
+import {Router} from "@angular/router";
+import {AttemptsService} from "../../bounded-contexts/game/services/attempts.service";
 declare let $: any
 
 export class CanDeactivateComponent implements OnComponentDeactivate {
+
+  constructor(protected router: Router, protected attemptsService: AttemptsService) {
+  }
   scene: any;
 
   volumePrincipal = localStorage.getItem('volumePrincipal') ? Number(localStorage.getItem('volumePrincipal')) : 20;
@@ -37,5 +43,26 @@ export class CanDeactivateComponent implements OnComponentDeactivate {
   stopSound(): Observable<boolean> | boolean {
     this.scene.sound.stopAll();
     return true;
+  }
+
+  saveAttempt(endGameInformations: any) {
+    this.attemptsService.create({
+      user: {
+        id: JSON.parse(localStorage.getItem("user") + "").id
+      } as User,
+      endGameInformations: {
+        steps: endGameInformations.steps,
+        timeInSeconds: endGameInformations.timeInSeconds,
+        success: endGameInformations.success,
+        usedsCommands: endGameInformations.usedsCommands.join(","),
+        collectedElements: endGameInformations.collectedElements.join(","),
+      },
+      phase: this.router.url.split("/")[this.router.url.split("/").length - 1],
+    }).subscribe((response) => {
+        // console.log(response);
+      },
+      (error) => {
+        // console.log(error)
+      });
   }
 }

@@ -10,6 +10,7 @@ import {CanDeactivateComponent} from "../../../../core/components/can-deactivate
 import {UserService} from "../../services/menu/user.service";
 import Swal from "sweetalert2";
 import {User} from "../../model/user.model";
+import {AttemptsService} from "../../../game/services/attempts.service";
 
 @Component({
   selector: 'app-home',
@@ -38,14 +39,14 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
 
   emailToCreate!: string;
 
-  constructor(private router: Router, private spinner: NgxSpinnerService, private modalService: BsModalService, private userService: UserService) {
-    super();
+  constructor(protected router: Router, protected attemptsService: AttemptsService, private spinner: NgxSpinnerService, private modalService: BsModalService, private userService: UserService) {
+    super(router, attemptsService);
   }
 
   ngOnInit(): void {
     moment.locale('pt-br');
     this.scene = new SceneMenu(this.config, null, null);
-    localStorage.removeItem("userEmail");
+    localStorage.removeItem("user");
   }
 
   startGame() {
@@ -104,7 +105,7 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
       setTimeout(() => {
         this.spinner.hide();
         this.closeModalCreateUser();
-        localStorage.setItem("userEmail", response.email);
+        localStorage.setItem("user", JSON.stringify({email: response.email, id: response.id}));
         this.router.navigate(['game']);
       }, 2000);
     },
@@ -159,7 +160,7 @@ export class HomeComponent extends CanDeactivateComponent implements OnInit, Aft
             this.spinner.hide();
             if (response) {
               this.closeModalLogin();
-              localStorage.setItem("userEmail", email);
+              localStorage.setItem("user", JSON.stringify({email: response.email, id: response.id}));
               this.router.navigate(['game']);
             }
             else {

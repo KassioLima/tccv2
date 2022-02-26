@@ -11,6 +11,7 @@ import {PhaseTwoComponent} from "./routes/capitulo1/phaseTwo/phase-two.component
 import {PhaseThreeComponent} from "./routes/capitulo1/phaseThree/phase-three.component";
 import {PhaseFourComponent} from "./routes/capitulo1/phaseFour/phase-four.component";
 import {PhaseFiveComponent} from "./routes/capitulo1/phaseFive/phase-five.component";
+import {AttemptsService} from "./services/attempts.service";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,9 @@ import {PhaseFiveComponent} from "./routes/capitulo1/phaseFive/phase-five.compon
     ],
   exports: [
     GameRoutingModule
+  ],
+  providers: [
+    AttemptsService,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

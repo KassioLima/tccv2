@@ -8,6 +8,6 @@ export class PhasesGuard implements CanActivate {
 
     const urlTree = this.router.parseUrl('/');
 
-    return !!localStorage.getItem("userEmail") ? true : urlTree;
+    return !!localStorage.getItem("user") ? true : urlTree;
   }
 }

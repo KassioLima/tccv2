@@ -7,6 +7,8 @@ import {LineCodeModel} from "../../../model/line-code.model";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {EndGameInformations} from "../../../model/end-game.informations";
 import {ScenePhaseThree} from "../../../model/scenePhaseThree.model";
+import {AttemptsService} from "../../../services/attempts.service";
+import {Router} from "@angular/router";
 declare const ace: any;
 
 @Component({
@@ -57,8 +59,8 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
 
   stars: string[] = [];
 
-  constructor(private modalService: BsModalService) {
-    super();
+  constructor(private modalService: BsModalService, protected attemptsService: AttemptsService, protected router: Router) {
+    super(router, attemptsService);
   }
 
   ngOnInit() {
@@ -320,6 +322,9 @@ export class PhaseThreeComponent extends CanDeactivateComponent implements OnIni
   verificaEstadoDoJogo(endGameInformations: EndGameInformations) {
     this.stars = ["vazia", "vazia", "vazia"];
     this.endGameInformations = endGameInformations;
+
+    endGameInformations.success = this.objetivoConcluido();
+    this.saveAttempt(endGameInformations);
 
     if(this.objetivoConcluido()) {
       this.scene.musicSuccess();
